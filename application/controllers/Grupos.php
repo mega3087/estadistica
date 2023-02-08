@@ -15,13 +15,17 @@ class Grupos extends CI_Controller {
         $data = array();
         
         if( is_permitido(null,'grupos','ver_grupos')) {
+            $this->db->join('entrega', 'ENIdPlantel = CPLClave', 'left');
             $this->db->where('CPLTipo', '35');
             $this->db->or_where('CPLTipo', '36');            
         } elseif( is_permitido(null,'grupos','ver_grupos_plantel')) { 
             $this->db->join('nousuario', 'UPlantel = CPLClave', 'left');
-            $this->db->join('totalex', 'TEIdPlantel = CPLClave', 'left');
+            $this->db->join('entrega', 'ENIdPlantel = CPLClave', 'left');
             $this->db->where('UNCI_usuario',get_session('UNCI_usuario'));
         }
+        $this->db->where('CPLTipo', '35');
+        $this->db->or_where('CPLTipo', '36');         
+        $this->db->join('entrega', 'ENIdPlantel = CPLClave', 'left');
         
         $data["planteles"] = $this->plantel_model->find_all();
 

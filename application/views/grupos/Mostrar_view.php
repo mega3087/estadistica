@@ -34,7 +34,7 @@
 							<tr>
 								<th>#</th>
 								<th>Plantel</th>
-								
+                                <th COLSPAN=2>Estatus</th>
                                 <th width="130px">Acción</th> 
 							</tr>	
 						</thead>
@@ -45,8 +45,88 @@
 								?>
 								<tr>
 									<td class="text-left"><?php echo folio($list['CPLClave']); ?></td> 
-									<td class="text-left"><?php echo $list['CPLNombre']; ?></td>								
-									
+									<td class="text-left"><?php echo $list['CPLNombre']; ?></td>
+                                    
+                                    <!-- ************ EN PROCESO DE CAPTURA *********** -->
+                                    <?php if ( $list['ENEstatus'] == 0) {?>
+						            
+                                        <td class="text-left">
+                                            <div class="alert alert-default">
+                                                En proceso de Captura...
+                                            </div>
+                                        </td> 
+                                        <td>
+
+                                        </td>       
+				                    
+                                    <?php }?>
+                                    
+
+                                     <!-- ************ EN PROCESO DE VALIDACION *********** -->
+                                    <?php if ( $list['ENEstatus'] == 1) {?>
+						        
+                                        <td class="text-left">
+                                            <div class="alert alert-warning">
+                                                En proceso de validación...
+                                                
+                                            </div>
+                                        </td>
+
+                                        <td class="text-left">
+                                                
+                                        <?php if( is_permitido(null,'entregamatricula','valida_aceptado') ){ ?>
+                                    
+                                            <?php echo form_open('entregamatricula/valida_aceptado', array('name' => 'Formacepta', 'id' => 'Formacepta', 'role' => 'form', 'class' => 'form-horizontal panel-body')); ?>
+                                            <?php echo form_close(); ?>
+                                                    
+                                            
+                                                <button class="btn btn-primary btn-sm aceptar" type="button"><i class="fa fa-check"></i>&nbsp;Aceptar</button>
+                                                <button class="btn btn-warning btn-sm aceptar" type="button"><i class="fa fa-pencil"></i>&nbsp;Corregir</button>
+                                                        
+                                        <?php } ?>
+                                        </td>
+					                <?php }?>
+
+                                    <!-- ************ ACEPTADO *********** -->        
+                                    <?php if ( $list['ENEstatus'] == 2) {?>
+						                <td>
+                                            <div class="alert alert-success">
+                            	                Aceptado
+                        	                </div>
+                                        </td>
+
+                                        <td class="text-left">
+                                                
+                                        <?php if( is_permitido(null,'entregamatricula','valida_aceptado') ){ ?>
+                                    
+                                            <?php echo form_open('entregamatricula/valida_aceptado', array('name' => 'Formacepta', 'id' => 'Formacepta', 'role' => 'form', 'class' => 'form-horizontal panel-body')); ?>
+                                            <?php echo form_close(); ?>
+                                                    
+                                            
+                                                <button class="btn btn-info btn-sm aceptar" type="button"><i class="fa fa-edit"></i>&nbsp;Aperturar</button>
+                                   
+                                                        
+                                        <?php } ?>
+                                        </td>
+
+				                    <?php }?>
+
+                                    <!-- ************ EN PROCESO DE CORRECCIÓN *********** -->         
+                                    <?php if ( $list['ENEstatus'] == 3) {?>
+						                <td>
+                                            <div class="alert alert-danger">
+                                                En proceso de Ccorrección...
+                                            </div>
+                                        </td>
+
+                                        <td class="text-left">
+                                                
+                                       
+                                        </td>
+				                    <?php }?>
+                                    
+                                    
+                                   </td>								
 									<td>
                                     <?php if( is_permitido(null,'grupos','save') ){ ?>
                                     <button class="btn btn-primary btn-sm open"
