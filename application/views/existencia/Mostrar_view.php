@@ -1,3 +1,5 @@
+
+
 <link href="<?php echo base_url('assets/inspinia/css/plugins/dataTables/datatables.min.css');?>" rel="stylesheet">
 <link href="<?php echo base_url('assets/inspinia/css/plugins/chosen/chosen.css'); ?>" rel="stylesheet">
 <!--color boox-->
@@ -11,6 +13,8 @@
 		</div>
 	</div>
 </div>
+<div class="ibox-content">
+     
 <div class="row">
 	<div class="col-lg-12">
 		<?php muestra_mensaje(); ?>
@@ -708,17 +712,31 @@
 						<?php } ?>
 						<?php } ?>
 					</div>
+
+
+					
+					<button class="btn btn-default btn-sm openGrupos"
+                                        data-target="#modal_ver_grupos" 
+                                        data-toggle="modal"
+                                        
+                                        ><i class="fa fa-eye"></i> Ver Grupos1
+                                    </button>
+
+					
+
+
 				</div>
 					</div>
 				</div>
+				
 			</div>
 			
 		</div>
 		
-
 	</div>
 </div>
 
+									
 
 <!--*************** Modal existencia del semestral ********************* -->
 
@@ -871,6 +889,7 @@
 						<?php } ?>
 					</div>
 				</div>
+				
 				<?php echo form_close(); ?>
 			</div>
 		</div>
@@ -878,6 +897,51 @@
 </div>
 <!-- ******************* FIN Modal Existencia ********************* -->
 
+<!--Ventana modal de ver Grupos-->
+<div class="modal inmodal" id="modal_ver_grupos" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content animated flipInY">
+            
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                <h4 class="modal-title"><i class="fa fa-building-o"></i>&nbsp;&nbsp; CENTRO EDUCATIVO: <div id="PlantelNombre"></div> </h4><div class="border-bottom"><br /></div>
+                <input type="hidden" name="PlantelId" id="PlantelId">
+                <input type="hidden" name="ClavePlantelRep" id="ClavePlantelRep">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="">Periodo Escolar: <em>*</em></label>
+                        <div class="col-lg-9">
+                            <select name="SemestrePeriodo" id="SemestrePeriodo" class="form-control SemestrePeriodo">
+                            <option value="">-Periodo-</option>
+                            <?php foreach ($periodos as $key => $listPeriodo) { 
+                                $periodo=$listPeriodo['PAnio'].'-'.$listPeriodo['PPeriodo'];
+                                ?>
+                                <option value="<?=$periodo?>">
+                                    <?=$periodo?>
+                                </option>
+                            <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <form action="#" method='POST' name='perido_grupos' id='perido_grupos'>
+                            <div class="msgGrupos"></div>
+                            <div class="resultGrupos"></div>
+                        </form>
+                    </div>
+                    <div class="loading"></div>
+                    <div class="form-group">
+                    <div class="col-lg-offset-3 col-lg-9">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="" target="_blank" id="ImprimirGrupos" type="button" class="btn btn-success btn-sm"><i class="fa fa-print"></i> Imprimir</a>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+<!--Fin de ventana ver grupos-->
 
 
 
@@ -946,7 +1010,54 @@
 			});
 		});//----->fin	
 
+		/* Ventana modal ver grupos*/
+		$(document).on("click", ".openGrupos", function () {
+        var valor = $(this).data('nombre_plantel');
+        document.getElementById("PlantelNombre").innerHTML = valor;
 
+        var idPlantel = $(this).data('clave_plantel');
+        $(".modal-header #PlantelId").val( $(this).data('clave_plantel'));
+
+        $(".modal-header #ClavePlantelRep").val( $(this).data('rclave_plantel') );
+
+        $(".resultGrupos").empty(); 
+        $(".loading").empty();
+        abrirReporte();
+    });
+
+    $(document).on("change", ".SemestrePeriodo", function (event) {
+        abrirReporte();       
+    });
+
+    function abrirReporte() {
+        var valorSem = $(".SemestrePeriodo option:selected").val();
+        var searchSem = window.btoa(unescape(encodeURIComponent(valorSem))).replace("=","").replace("=","");
+        var idPlantelRep = document.getElementById("ClavePlantelRep").value;
+        
+        var valor = $(".SemestrePeriodo option:selected").val();
+        var PlantelId = document.getElementById("PlantelId").value;
+        
+
+        $("#ImprimirGrupos").attr("href","<?php echo base_url("grupos/ImprimirGrupos"); ?>/"+idPlantelRep+"/"+searchSem);
+
+        var sem = valor.split('-')[1];
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url("grupos/listaGrupos"); ?>",
+            data: {idPlantel: PlantelId, periodo: valor},
+            dataType: "html",
+            beforeSend: function(){
+                //carga spinner
+                $(".loading").html("<div class=\"spiner-example\"><div class=\"sk-spinner sk-spinner-three-bounce\"><div class=\"sk-bounce1\"></div><div class=\"sk-bounce2\"></div><div class=\"sk-bounce3\"></div></div></div>");
+            },
+            success: function(data){
+                $(".msgGrupos").empty();
+                $(".resultGrupos").empty();
+                $(".resultGrupos").append(data);
+                $(".loading").empty();
+            }
+        });
+    }
 	
 	$(".final").click(function() {
 		var opcion = confirm("Una vez finalizado, no podrá realizar modificaciones");
