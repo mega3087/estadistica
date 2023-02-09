@@ -18,8 +18,26 @@
 			$data = array();
 			//$this->db->join('terreno','CPLClave = TIdPlantel','INNER');
 			//$data = $this->plantel_model->get( $CPLClave);
+			$this->db->where('PIdPeriodo','((SELECT MAX(PIdPeriodo) FROM periodo )-1)', false);
+			$data['periodoAnt'] = $this->generaperiodo_model->find_all();
+			$peridoAnt = $data['periodoAnt'][0]['PAnio'].'-'.$data['periodoAnt'][0]['PPeriodo'];
+
+			$this->db->where('PEstatus',1);
+			$data['periodoAct'] = $this->generaperiodo_model->find_all();
+
+			$semAnt = 'GRSemestre';
+			$this->db->where('GRPeriodo', $peridoAnt);
+			$this->db->group_by('GRSemestre');
+			$semestres = $this->grupos_model->find_all(null, $semAnt);
 			
-			$data['modulo'] = 'info';
+			foreach($semestres as $s => $list){
+				$select = 'GRSemestre, SUM(GRMasculino) Hombres, SUM(GRFemenino) Mujeres, SUM(GRCupo) Total';
+				$this->db->where('GRPeriodo', $peridoAnt);
+				$this->db->where('GRSemestre', $list['GRSemestre']);
+				$data['totales'][$s] = $this->grupos_model->find_all(null, $select);
+			}
+						
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'bginterno/Ver_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -33,7 +51,7 @@
 			$where = array( 'OEIdPlantel' => $CPLClave);
 			$data['oferta'] = $this->oferta_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'indicadores/Oferta_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -47,7 +65,7 @@
 			$where = array( 'MNIIdPlantel' => $CPLClave);
 			$data['matricula'] = $this->matricula_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'indicadores/Matricula_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -61,7 +79,7 @@
 			$where = array( 'IAIdPlantel' => $CPLClave);
 			$data['indice'] = $this->indice_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'indicadores/Indice_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -76,7 +94,7 @@
 			$where = array( 'IIdPlantel' => $CPLClave);
 			$data['data'] = $this->cobertura_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'indicadores/Cobertura_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -90,7 +108,7 @@
 			$where = array( 'MICIdPlantel' => $CPLClave);
 			$data['cursos'] = $this->cursos_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'indicadores/Cursos_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -104,7 +122,7 @@
 			$where = array( 'AIdPlantel' => $CPLClave);
 			$data['data'] = $this->aprobacion_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'indicadores/Aprobacion_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -118,7 +136,7 @@
 			$where = array( 'ETIdPlantel' => $CPLClave);
 			$data['data'] = $this->eficiencia_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'indicadores/Eficiencia_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -132,7 +150,7 @@
 			$where = array( 'AIdPlantel' => $CPLClave);
 			$data['data'] = $this->abandono_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'indicadores/Abandono_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -146,7 +164,7 @@
 			$where = array( 'EIIdPlantel' => $CPLClave);
 			$data['data'] = $this->egresados_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'indicadores/Egresados_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -172,7 +190,7 @@
 			}
 			
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'indicadores/Planea_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -186,7 +204,7 @@
 			$where = array( 'CAIdPlantel' => $CPLClave);
 			$data['data'] = $this->costo_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'indicadores/Costo_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -200,7 +218,7 @@
 			$where = array( 'PMIdPlantel' => $CPLClave);
 			$data['data'] = $this->proyecciones_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'indicadores/Proyecciones_view';			
 			$this->load->view('plantilla_general', $data);
 		}

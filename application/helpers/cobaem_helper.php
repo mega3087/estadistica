@@ -482,5 +482,14 @@
 		</div>";
 		exit();
 	}
+
+	function setMes($m = '') {
+		if (strlen($m) == 2) {
+			$mes = $f;
+		} else {
+			$mes = "0" . $m;
+		}
+	return $mes;
+	}
 	
 ?>
