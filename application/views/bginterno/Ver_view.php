@@ -4,9 +4,6 @@
 <link href="<?php echo base_url('assets/inspinia/css/plugins/datapicker/datepicker3.css'); ?>" rel="stylesheet" />
 <link href="<?php echo base_url('assets/inspinia/css/plugins/clockpicker/clockpicker.css'); ?>" rel="stylesheet" />
 
-
-
-	
 <div class="row">
 	<div class="col-lg-12">
 		<div class="ibox">
@@ -14,8 +11,27 @@
 				<h2><label>
 					Bachillerato General-Levantamiento Estadístico Interno Intersemestral.
 				</label></h2>
-				<p>
-				</p>
+				<h2> Datos de Identificación</h2>
+					<div class="row">
+						<label class="col-md-2" style="text-align:right">Clave del Centro de Trabajo:</label>
+						<div class="col-md-3">
+							<div class="form-group">
+								
+							</div>
+						</div>
+					<label class="col-md-2" style="text-align:right">Centro Educativo:</label>
+						<div class="col-md-3">
+							<div class="form-group">
+								<select name="PEPLantel" id="PEPLantel" class="form-control">
+									<option value="">-Todos-</option>
+									<?php foreach($planteles as $p => $listPl){ ?>
+										<option value="<?= $listPl['CPLClave'] ?>"><?= $listPl['CPLNombre']?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+					</label>
+
 				<form id="form" action="#" class="wizard-big">
 				<h1> Datos de Identificación</h1>
 					<fieldset>

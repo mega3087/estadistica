@@ -21,7 +21,7 @@
 			$where = array( 'PEstatus' => '1');
 			$data['periodo_act']= $this->generaperiodo_model->find_all($where);
 
-			$this->db->order_by('PIdPeriodo','ASC');
+			$this->db->order_by('PIdPeriodo','DESC');
 			$data['periodos']= $this->generaperiodo_model->find_all();
 			
 			$data['formacion']= $this->formacion_model->find_all();
@@ -207,8 +207,6 @@
 				redirect( $this->router->fetch_class() );
 				
 			$data= post_to_array('_skip');
-			echo json_encode($data);
-			exit;
 			
 			$CPLClave = get_session('CPLActual');
 
@@ -244,7 +242,7 @@
 				$entrega['ENEstado']= 'En Validación';
 				$entrega['ENFecha']= $fecha;
 				$entrega['ENSeccion']= 'Matricula';
-				$this->entrega_model->update($entrega);
+				$this->entrega_model->insert($entrega);
 				set_mensaje("Se há notificado la entrega",'success::');
 		
 		}

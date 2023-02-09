@@ -14,6 +14,8 @@
 		
 		public function index(){
 			$CPLClave = get_session('CPLActual');
+			echo $CPLClave;
+			exit;              
 			
 			$data = array();
 			//$this->db->join('terreno','CPLClave = TIdPlantel','INNER');
@@ -36,6 +38,10 @@
 				$this->db->where('GRSemestre', $list['GRSemestre']);
 				$data['totales'][$s] = $this->grupos_model->find_all(null, $select);
 			}
+
+			$select = "CPLClave, CPLNombre, CPLCCT, CPLTipo, CPLTurnos";
+			$this->db->where('CPLTipo = 35 OR CPLTipo = 36');
+			$data['planteles'] = $this->plantel_model->find_all(null, $select);
 						
 			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'bginterno/Ver_view';			

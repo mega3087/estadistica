@@ -684,12 +684,12 @@
 											$("#result").empty();
 											$("#result").html(data[0]);
 											$(".loading").html('');
-											//location.href ='<?php echo base_url("existencia/save_totales/"); ?>';
+											location.href ='<?php echo base_url("existencia/save_totales/"); ?>';
 									}
 								}
 							});
 						}
-						//window.location.reload();
+						window.location.reload();
 
 					});
 					</script>
