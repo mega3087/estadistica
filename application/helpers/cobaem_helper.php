@@ -55,6 +55,11 @@
 		
 		if(! $accion )// Método por defecto es index
 		$accion = ($CI->router->fetch_method())? $CI->router->fetch_method() : 'index';
+
+		//permitir sin revision de permisos
+		if (substr($accion,strrpos($accion,'_')+1)=='skip'){
+			return true;
+		}
 		
 		$modulo = strtoupper( $modulo );
 		$accion = strtoupper( $accion );		

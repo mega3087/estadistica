@@ -19,12 +19,14 @@
 			$data = $this->plantel_model->get( $CPLClave);
 			
 			$where = array( 'PEstatus' => '1');
-			$data['periodo']= $this->generaperiodo_model->find_all($where);
+			$data['periodo_act']= $this->generaperiodo_model->find_all($where);
 
+			$this->db->order_by('PIdPeriodo','ASC');
+			$data['periodos']= $this->generaperiodo_model->find_all();
 			
 			$data['formacion']= $this->formacion_model->find_all();
 					
-			$periodo = $data['periodo'][0]['PAnio']."-".$data['periodo'][0]['PPeriodo'];
+			$periodo = $data['periodo_act'][0]['PAnio']."-".$data['periodo_act'][0]['PPeriodo'];
 			
 			$this->db->join('formacion', 'FIdFormacion=GRCClave','left' );
 			$this->db->where( 'GRCPlantel', $CPLClave);
@@ -67,13 +69,55 @@
 			$data['subvista'] = 'existencia/Mostrar_view';			
 			$this->load->view('plantilla_general', $data);
 
-
-
-
-
 		}
 
+		public function verPeriodos_skip($idPlantel = null, $periodo = null){
+			$idPlantel = $this->input->post('idPlantel');
+			$CPLClave = $this->encrypt->decode($idPlantel);
+			$data['periodo'] = $this->input->post('periodo');
 
+		
+			$data['formacion']= $this->formacion_model->find_all();
+			
+			$this->db->join('formacion', 'FIdFormacion=GRCClave','left' );
+			$this->db->where( 'GRCPlantel', $CPLClave);
+			$this->db->where( 'GRPeriodo', $data['periodo']);
+			$this->db->where( 'GRTurno', '1');
+			$this->db->order_by('GRGrupo', 'ASC');
+			$data['gruposm'] = $this->grupos_model->find_all();
+
+
+			$this->db->join('formacion', 'FIdFormacion=GRCClave','left' );
+			$this->db->where( 'GRCPlantel', $CPLClave);
+			$this->db->where( 'GRPeriodo', $data['periodo']);
+			$this->db->where( 'GRTurno', '2');
+			$this->db->order_by('GRGrupo', 'ASC');
+			$data['gruposv'] = $this->grupos_model->find_all();
+			/*
+			$whereV = array( 'GRCPlantel' => $CPLClave, 'GRPeriodo' => $data['periodo'],   'GRTurno' => '2');
+			$data['gruposv'] = $this->grupos_model->find_all( $whereV );*/	
+			
+			$this->db->where( 'ENIdPlantel', $CPLClave);
+			$this->db->where( 'ENPeriodo', $data['periodo']);
+			$this->db->where( 'ENSeccion', 'Matricula');
+			$data['estatus']= $this->entrega_model->find_all();
+			
+			/*echo json_encode($data['estatus']);
+			exit;*/
+
+			if($data['estatus']){
+				$data['entrega']='1';
+
+			}
+			else {
+				$data['entrega']='0';
+			}
+
+			/*echo json_encode($data['entrega']);
+			exit;*/			
+			$this->load->view('existencia/Mostrar_Periodos', $data);
+
+		}
 
 		public function ver_matricula(){
 			$CPLClave = get_session('CPLActual');
@@ -221,5 +265,73 @@
 			}
 			// fin de la funcion _set_rules
 		}
-		
+
+		public function ImprimirGrupos($idPlantel = null, $periodo = null) {
+			$idPlantel = $this->encrypt->decode($idPlantel);
+			$GRPeriodo = base64_decode($periodo);
+					
+			$selectNom = "CPLClave, CPLNombre";
+			$this->db->where('CPLClave', $idPlantel);
+			$data['plantel'] = $this->plantel_model->find_all(null, $selectNom);
+	
+		   $data['periodo']=$GRPeriodo;
+	
+			$select = 'COUNT(GRSemestre) noGrupos, GRSemestre';
+			$this->db->where('GRCPlantel', $idPlantel);
+			$this->db->where('GRPeriodo', $GRPeriodo);
+			$this->db->group_by('GRSemestre');
+			$data['total'] = $this->grupos_model->find_all(null, $select);
+			
+			foreach ($data['total'] as $key => $listTot) {
+				
+				$selectMat = "GRClave, GRGrupo, GRSemestre, FNombre, GRMasculino, GRFemenino,  GRCupo, GRTurno";
+				$this->db->join('formacion', 'FIdFormacion = GRCClave','left');
+				if($listTot['GRSemestre'] > 2) {
+					$this->db->where('GRSemestre', $listTot['GRSemestre']);
+				} 
+				$this->db->where('GRPeriodo', $GRPeriodo);
+				$this->db->where('GRTurno', '1');
+				$this->db->where('GRSemestre', $listTot['GRSemestre']);
+				$this->db->where('GRCPlantel', $idPlantel);
+				$this->db->group_by('GRClave');
+				$data['total'][$key]['gruposMat'] = $this->grupos_model->find_all(null, $selectMat);
+				
+				//Grupos Vespertinos
+				$selectVes = "GRClave, GRGrupo, GRSemestre, FNombre, GRMasculino, GRFemenino,  GRCupo, GRTurno";
+				$this->db->join('formacion', 'FIdFormacion = GRCClave','left');
+				if($listTot['GRSemestre'] > 2) {
+					$this->db->where('GRSemestre', $listTot['GRSemestre']);
+				} 
+				$this->db->where('GRPeriodo', $GRPeriodo);
+				$this->db->where('GRTurno', '2');
+				$this->db->where('GRSemestre', $listTot['GRSemestre']);
+				$this->db->where('GRCPlantel', $idPlantel);
+				$this->db->group_by('GRClave');
+				$data['total'][$key]['gruposVes'] = $this->grupos_model->find_all(null, $selectVes);
+	
+				//Sumas
+				$selectVes = "SUM(GRMasculino) AS tothom, SUM(GRFemenino) AS totfem, GRSemestre";
+				if($listTot['GRSemestre'] > 2) {
+					$this->db->where('GRSemestre', $listTot['GRSemestre']);
+				} 
+				$this->db->where('GRPeriodo', $GRPeriodo);
+				$this->db->where('GRSemestre', $listTot['GRSemestre']);
+				$this->db->where('GRCPlantel', $idPlantel);
+				$data['total'][$key]['sumas'] = $this->grupos_model->find_all(null, $selectVes);
+			}
+			
+			///////2022 - 2 del 2022-08-15 al 2023-01-19////
+			
+			//echo json_encode ($data['total']);
+			//exit;
+			$this->load->library('Dpdf');
+			$data['subvista'] = 'grupos/Ver_pdf_view';
+			$data['titulo'] = "<p style='font-size:10px;'><br>COLEGIO DE BACHILLERES DEL ESTADO DE MÉXICO<br></p>";
+	
+			$this->dpdf->load_view('grupos/plantilla_general_pdf',$data);
+			$this->dpdf->setPaper('letter', 'portrait');
+			$this->dpdf->render();
+			$this->dpdf->stream("Grupos.pdf",array("Attachment"=>false));
+		}
+	
 	}
