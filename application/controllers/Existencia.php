@@ -207,6 +207,8 @@
 				redirect( $this->router->fetch_class() );
 				
 			$data= post_to_array('_skip');
+			echo json_encode($data);
+			exit;
 			
 			$CPLClave = get_session('CPLActual');
 
@@ -242,7 +244,7 @@
 				$entrega['ENEstado']= 'En Validación';
 				$entrega['ENFecha']= $fecha;
 				$entrega['ENSeccion']= 'Matricula';
-				$this->entrega_model->insert($entrega);
+				$this->entrega_model->update($entrega);
 				set_mensaje("Se há notificado la entrega",'success::');
 		
 		}

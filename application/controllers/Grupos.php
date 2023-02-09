@@ -13,23 +13,30 @@ class Grupos extends CI_Controller {
 
     public function index() {
         $data = array();
+
+        $this->db->where('PEstatus','1');
+        $data['periodos'] = $this->generaperiodo_model->find_all();
+
+
+        $periodo = $data['periodos'][0]['PAnio']."-".$data['periodos'][0]['PPeriodo'];
         
-        if( is_permitido(null,'grupos','ver_grupos')) {
-            $this->db->join('entrega', 'ENIdPlantel = CPLClave', 'left');
+        $select = "CPLClave, CPLNombre, CPLTurnos,CPLTipo,
+        (SELECT ENIdEntrega FROM entrega WHERE ENPeriodo = '$periodo' AND ENIdPlantel = CPLClave) ENIdEntrega,
+        (SELECT ENEstatus FROM entrega WHERE ENPeriodo = '$periodo' AND ENIdPlantel = CPLClave) ENEstatus";
+        if( is_permitido(null,'grupos','ver_grupos')) {            
             $this->db->where('CPLTipo', '35');
             $this->db->or_where('CPLTipo', '36');            
         } elseif( is_permitido(null,'grupos','ver_grupos_plantel')) { 
-            $this->db->join('nousuario', 'UPlantel = CPLClave', 'left');
-            $this->db->join('entrega', 'ENIdPlantel = CPLClave', 'left');
+            $this->db->join('nousuario', 'UPlantel = CPLClave', 'left');            
             $this->db->where('UNCI_usuario',get_session('UNCI_usuario'));
         }
+        
         $this->db->where('CPLTipo', '35');
         $this->db->or_where('CPLTipo', '36');         
-        $this->db->join('entrega', 'ENIdPlantel = CPLClave', 'left');
-        
-        $data["planteles"] = $this->plantel_model->find_all();
+        $this->db->order_by('CPLClave','ASC');
+        $data["planteles"] = $this->plantel_model->find_all(null, $select);
 
-         /*echo json_encode($data['planteles']);
+        /*echo json_encode($data['planteles']);
         exit;*/
 
         /*foreach ($data['planteles'] as $key => $listP) {

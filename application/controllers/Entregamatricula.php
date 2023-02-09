@@ -55,3 +55,45 @@ class Entregamatricula extends CI_Controller {
             set_mensaje("Se há notificado la entrega",'success::');
     
     }
+
+
+    public function validaciones_skip() {
+        $data= post_to_array('_skip');
+
+        $where = array( 'PEstatus' => '1');
+        $data['periodo']= $this->generaperiodo_model->find_all($where);		
+        $periodo = $data['periodo'][0]['PAnio']."-".$data['periodo'][0]['PPeriodo'];
+        
+        $idEntrega= $this->input->post('idEntrega');
+        $validar= $this->input->post('validar');
+        
+        if($validar == "aceptar"){
+
+            $datos['ENEstatus'] = '2';
+
+            $this->entrega_model->update($idEntrega,$datos);
+            set_mensaje("Se cambio el estatus a aceptado.",'success::');
+				echo "OK";
+        }
+
+        if($validar == "corregir"){
+
+            $datos['ENEstatus'] = '3';
+
+            $this->entrega_model->update($idEntrega,$datos);
+            set_mensaje("Se cambio el estatus a aceptado.",'success::');
+				echo "OK";
+        }
+
+        if($validar == "apertura"){
+
+            $datos['ENEstatus'] = '0';
+
+            $this->entrega_model->update($idEntrega,$datos);
+            set_mensaje("Se cambio el estatus a aceptado.",'success::');
+				echo "OK";
+        }
+        exit;
+    }
+}
+

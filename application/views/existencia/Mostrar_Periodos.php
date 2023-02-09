@@ -562,9 +562,9 @@
 
 
 
-
 						?>
 
+						<!--<input type="hidden" id="ENIdEntrega" name="ENIdEntrega" value='<?php echo $entrega; ?>'/>-->
 						<input type="hidden" id="TEPeriodo" name="TEPeriodo" value='<?php echo $TEPeriodo; ?>'/>
 						<!-- Totales Contabilidad -->		
 						<input type="hidden" id="TEF134" name="TEF134" value='<?php echo $fom134; ?>'/>
@@ -651,6 +651,9 @@
 						<input type="hidden" id="TE56VM" name="TE56VM" value='<?php echo $totalF6; ?>'/>
 						<input type="hidden" id="TE56VTotal" name="TE56VTotal" value='<?php echo $totalT6; ?>'/>
 						<input type="hidden" id="TE56VG" name="TE56VG" value='<?php echo $TE56VG; ?>'/>	
+
+							
+						
 						
 	
 						<?php echo form_close(); ?>
@@ -661,7 +664,35 @@
 						<?php } ?>
 						<?php } ?>
 					</div>
-			
+					<script type="text/javascript">
+							$(".final").click(function() {
+							var opcion = confirm("Una vez finalizado, no podrá realizar modificaciones");
+							if (opcion == true) {
+
+							$.ajax({
+								type: "POST",
+								url: "<?php echo base_url("existencia/save_totales"); ?>",
+								data: $('#Formtotales').serialize(),
+								dataType: "html",
+								beforeSend: function(){
+									//carga spinner
+									$(".loading").html("<div class=\"spiner-example\"><div class=\"sk-spinner sk-spinner-three-bounce\"><div class=\"sk-bounce1\"></div><div class=\"sk-bounce2\"></div><div class=\"sk-bounce3\"></div></div></div>");
+								},
+								success: function(data) {
+									var data = data.split("::");
+										if(data[1]=='OK'){
+											$("#result").empty();
+											$("#result").html(data[0]);
+											$(".loading").html('');
+											//location.href ='<?php echo base_url("existencia/save_totales/"); ?>';
+									}
+								}
+							});
+						}
+						//window.location.reload();
+
+					});
+					</script>
 					
 
 

@@ -21,28 +21,43 @@
 				<div class="pull-right">
 				<button class="btn-default btn-sm back"><i class="fa fa-mail-reply"> </i> Atras</button> 
 				</div><br><br>
-				<?php if ( $entrega == 0) {?>
+				<?php /*if ( $entrega == 0) {?>
 						<h3>&nbsp;PLANTEL <?=nvl($CPLNombre)?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 						<div class="alert alert-default">
                             En proceso de Captura...
                         </div></h3>
-				<?php }?>
-				<?php if ( $entrega == 1) {?>
+				<?php } */?>
+				<?php //if ( $entrega == 1) {?>
 					<?php foreach($estatus as $key => $lista ){ ?>
-						<?php if ( $lista['ENEstatus'] == '1') {?>
+						
+						<input type="hidden" id="ENIdEntrega" name="ENIdEntrega" value='<?php echo $lista['ENIdEntrega']; ?>'/>
+						<?php if ( nvl($lista['ENEstatus']) == '0' || nvl($lista['ENEstatus']) == 'NULL' ) {?>
+							
+							<h3>&nbsp;PLANTEL <?=nvl($CPLNombre)?>&nbsp;&nbsp;&nbsp; 
+							<div class="alert alert-default">
+                            	En proceso de captura...
+                        	</div></h3>
+						<?php }?>
+						<?php if ( nvl($lista['ENEstatus']) == '1') {?>
 							<h3>&nbsp;PLANTEL <?=nvl($CPLNombre)?>&nbsp;&nbsp;&nbsp;
 							<div class="alert alert-warning">
                            	 	En proceso de validación...
                         	</div></h3>
 						<?php }?>
-						<?php if ( $lista['ENEstatus'] == '2') {?>
+						<?php if ( nvl($lista['ENEstatus']) == '2') {?>
 							<h3>&nbsp;PLANTEL <?=nvl($CPLNombre)?>&nbsp;&nbsp;&nbsp; 
 							<div class="alert alert-success">
-                            	Aceptado
+                            	Se ha aceptado la captura.
+                        	</div></h3>
+						<?php }?>
+						<?php if ( nvl($lista['ENEstatus']) == '3') {?>
+							<h3>&nbsp;PLANTEL <?=nvl($CPLNombre)?>&nbsp;&nbsp;&nbsp; 
+							<div class="alert alert-danger">
+                            	En proceso de corrección.
                         	</div></h3>
 						<?php }?>
 					<?php }?>
-				<?php }?>
+				<?php// }?>
 			</div>
 
 			<div class="form-group">
@@ -291,33 +306,6 @@
 			});
 		});//----->fin	
 	
-	$(".final").click(function() {
-		var opcion = confirm("Una vez finalizado, no podrá realizar modificaciones");
-        if (opcion == true) {
-
-		$.ajax({
-			type: "POST",
-			url: "<?php echo base_url("existencia/save_totales"); ?>",
-			data: $('#Formtotales').serialize(),
-			dataType: "html",
-			beforeSend: function(){
-				//carga spinner
-				$(".loading").html("<div class=\"spiner-example\"><div class=\"sk-spinner sk-spinner-three-bounce\"><div class=\"sk-bounce1\"></div><div class=\"sk-bounce2\"></div><div class=\"sk-bounce3\"></div></div></div>");
-			},
-			success: function(data) {
-				var data = data.split("::");
-					if(data[1]=='OK'){
-						$("#result").empty();
-						$("#result").html(data[0]);
-						$(".loading").html('');
-						location.href ='<?php echo base_url("existencia/save_totales/"); ?>';
-				}
-			}
-		});
-	}
-	window.location.reload();
-
-});
 		
     $(document).on("change", ".SemPeriodos", function (event) {
         abrirPeriodos();

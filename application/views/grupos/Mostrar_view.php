@@ -48,7 +48,7 @@
 									<td class="text-left"><?php echo $list['CPLNombre']; ?></td>
                                     
                                     <!-- ************ EN PROCESO DE CAPTURA *********** -->
-                                    <?php if ( $list['ENEstatus'] == 0) {?>
+                                    <?php if ( nvl($list['ENEstatus']) == NULL ) {?>
 						            
                                         <td class="text-left">
                                             <div class="alert alert-default">
@@ -63,7 +63,7 @@
                                     
 
                                      <!-- ************ EN PROCESO DE VALIDACION *********** -->
-                                    <?php if ( $list['ENEstatus'] == 1) {?>
+                                    <?php if ( nvl($list['ENEstatus']) == 1) {?>
 						        
                                         <td class="text-left">
                                             <div class="alert alert-warning">
@@ -76,19 +76,19 @@
                                                 
                                         <?php if( is_permitido(null,'entregamatricula','valida_aceptado') ){ ?>
                                     
-                                            <?php echo form_open('entregamatricula/valida_aceptado', array('name' => 'Formacepta', 'id' => 'Formacepta', 'role' => 'form', 'class' => 'form-horizontal panel-body')); ?>
-                                            <?php echo form_close(); ?>
-                                                    
-                                            
+                                            <?php echo form_open('entregamatricula/validaciones', array('name' => 'Formacepta', 'id' => 'Formacepta', 'role' => 'form', 'class' => 'form-horizontal panel-body')); ?>
+                                            <input type="hidden" name="idEntrega" id="idEntrega" value="<?php echo $list['ENIdEntrega']; ?>">
+                                            <input type="hidden" name="aceptarMat" id="aceptarMat" value="aceptar">
+                                            <?php echo form_close(); ?>                                            
                                                 <button class="btn btn-primary btn-sm aceptar" type="button"><i class="fa fa-check"></i>&nbsp;Aceptar</button>
-                                                <button class="btn btn-warning btn-sm aceptar" type="button"><i class="fa fa-pencil"></i>&nbsp;Corregir</button>
+                                                <button class="btn btn-warning btn-sm corregir" type="button"><i class="fa fa-pencil"></i>&nbsp;Corregir</button>
                                                         
                                         <?php } ?>
                                         </td>
 					                <?php }?>
 
                                     <!-- ************ ACEPTADO *********** -->        
-                                    <?php if ( $list['ENEstatus'] == 2) {?>
+                                    <?php if ( nvl($list['ENEstatus']) == 2) {?>
 						                <td>
                                             <div class="alert alert-success">
                             	                Aceptado
@@ -100,10 +100,12 @@
                                         <?php if( is_permitido(null,'entregamatricula','valida_aceptado') ){ ?>
                                     
                                             <?php echo form_open('entregamatricula/valida_aceptado', array('name' => 'Formacepta', 'id' => 'Formacepta', 'role' => 'form', 'class' => 'form-horizontal panel-body')); ?>
+                                            <input type="hidden" name="idEntrega" id="idEntrega" value="<?php echo $list['ENIdEntrega']; ?>">
+                                            <input type="hidden" name="aceptarMat" id="aceptarMat" value="aceptar">
                                             <?php echo form_close(); ?>
                                                     
                                             
-                                                <button class="btn btn-info btn-sm aceptar" type="button"><i class="fa fa-edit"></i>&nbsp;Aperturar</button>
+                                                <button class="btn btn-info btn-sm apertura" type="button"><i class="fa fa-edit"></i>&nbsp;Aperturar</button>
                                    
                                                         
                                         <?php } ?>
@@ -112,10 +114,10 @@
 				                    <?php }?>
 
                                     <!-- ************ EN PROCESO DE CORRECCIÓN *********** -->         
-                                    <?php if ( $list['ENEstatus'] == 3) {?>
+                                    <?php if ( nvl($list['ENEstatus']) == 3) {?>
 						                <td>
                                             <div class="alert alert-danger">
-                                                En proceso de Ccorrección...
+                                                En proceso de Corrección...
                                             </div>
                                         </td>
 
@@ -132,10 +134,10 @@
                                     <button class="btn btn-primary btn-sm open"
                                         data-target="#modal_grupos" 
                                         data-toggle="modal"
-                                        data-pclave_plantel="<?php echo $list['CPLClave']; ?>" 
+                                        data-pclave_plantel="<?php echo $list['CPLClave']; ?>"
                                         data-pnombre_plantel="<?php echo $list['CPLNombre']; ?>" 
-                                        data-pturnos="<?php echo $list['CPLTurnos']; ?>" 
-                                        data-ptipo_plantel="<?php echo $list['CPLTipo']; ?>" 
+                                        data-pturnos="<?php echo $list['CPLTurnos']; ?>"
+                                        data-ptipo_plantel="<?php echo $list['CPLTipo']; ?>"
                                         ><i class="fa fa-plus"></i> Agregar Grupos
                                     </button>
                                     <?php } ?>
@@ -481,6 +483,97 @@
                 
             }
         });
+    });//----->fin
+
+    $(".aceptar").click(function() {
+        var idEntrega = document.getElementById("idEntrega").value;
+        var aceptarMat = 'aceptar';
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url("entregamatricula/validaciones_skip"); ?>",
+            data: {idEntrega: idEntrega, validar:aceptarMat},
+            dataType: "html",
+            beforeSend: function(){
+                //carga spinner
+                $(".loading").html("<div class=\"spiner-example\"><div class=\"sk-spinner sk-spinner-three-bounce\"><div class=\"sk-bounce1\"></div><div class=\"sk-bounce2\"></div><div class=\"sk-bounce3\"></div></div></div>");
+            },
+            success: function(data){
+                var data = data.split(";");
+                if(data[0]==' OK'){
+                    $(".msg").empty();
+                    $(".msg").append(data[1]);
+                    $('#FormGrupos')[0].reset();
+                    $(".loading").html("");
+                } else {
+                    $("#error").empty();
+                    $("#error").append(data);   
+                    $(".loading").html(""); 
+                }
+                
+            }
+        });
+        window.location.reload();
+    });//----->fin
+
+
+    $(".corregir").click(function() {
+        var idEntrega = document.getElementById("idEntrega").value;
+        var corregirMat = 'corregir';
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url("entregamatricula/validaciones_skip"); ?>",
+            data: {idEntrega: idEntrega, validar:corregirMat},
+            dataType: "html",
+            beforeSend: function(){
+                //carga spinner
+                $(".loading").html("<div class=\"spiner-example\"><div class=\"sk-spinner sk-spinner-three-bounce\"><div class=\"sk-bounce1\"></div><div class=\"sk-bounce2\"></div><div class=\"sk-bounce3\"></div></div></div>");
+            },
+            success: function(data){
+                var data = data.split(";");
+                if(data[0]==' OK'){
+                    $(".msg").empty();
+                    $(".msg").append(data[1]);
+                    $('#FormGrupos')[0].reset();
+                    $(".loading").html("");
+                } else {
+                    $("#error").empty();
+                    $("#error").append(data);   
+                    $(".loading").html(""); 
+                }
+                
+            }
+        });
+        window.location.reload();
+    });//----->fin
+
+    $(".apertura").click(function() {
+        var idEntrega = document.getElementById("idEntrega").value;
+        var aperturaMat = 'apertura';
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url("entregamatricula/validaciones_skip"); ?>",
+            data: {idEntrega: idEntrega, validar:aperturaMat},
+            dataType: "html",
+            beforeSend: function(){
+                //carga spinner
+                $(".loading").html("<div class=\"spiner-example\"><div class=\"sk-spinner sk-spinner-three-bounce\"><div class=\"sk-bounce1\"></div><div class=\"sk-bounce2\"></div><div class=\"sk-bounce3\"></div></div></div>");
+            },
+            success: function(data){
+                var data = data.split(";");
+                if(data[0]==' OK'){
+                    $(".msg").empty();
+                    $(".msg").append(data[1]);
+                    $('#FormGrupos')[0].reset();
+                    $(".loading").html("");
+                } else {
+                    $("#error").empty();
+                    $("#error").append(data);   
+                    $(".loading").html(""); 
+                }
+                
+            }
+        });
+        window.location.reload();
     });//----->fin
 
     /* Ventana modal ver grupos*/
