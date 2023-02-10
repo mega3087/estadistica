@@ -52,20 +52,6 @@
 			$this->load->view('plantilla_general', $data);
 		}
 		
-		/*public function indice(){
-			$CPLClave = get_session('CPLActual');
-			
-			$data = array();
-			$data = $this->plantel_model->get( $CPLClave);
-			
-			$where = array( 'IAIdPlantel' => $CPLClave);
-			$data['indice'] = $this->indice_model->find_all( $where );
-			
-			$data['modulo'] = 'info';
-			$data['subvista'] = 'indicadores/Indice_view';			
-			$this->load->view('plantilla_general', $data);
-		}*/
-		
 		public function indice(){
 			$CPLClave = get_session('CPLActual');
 			
@@ -79,7 +65,7 @@
 			$data['subvista'] = 'indicadores/Indice_view';			
 			$this->load->view('plantilla_general', $data);
 		}
-
+		
 		public function cobertura(){
 			$CPLClave = get_session('CPLActual');
 			
@@ -184,17 +170,8 @@
 					$data['data'][$key]['periodo'][$key_p]['materia'] = $this->planea_model->find_all( $where );
 				}	
 			}
-
-			$select="PMateria";
-			$where = array( 'PIdPlantel' => $CPLClave);
-			$this->db->group_by('PMateria');
-			$data['materias'] = $this->planea_model->find_all($where, $select);
-
-			foreach ($data['materias'] as $mat => $list_m) {
-				$where_m = array( 'PIdPlantel' => $CPLClave, 'PMateria' => $list_m['PMateria']);
-				$data['materias'][$mat]['matPer'] = $this->planea_model->find_all( $where_m, 'PIdPlanea,PPeriodo, PPorcentaje' );	
-			}
-
+			
+			
 			$data['modulo'] = 'info';
 			$data['subvista'] = 'indicadores/Planea_view';			
 			$this->load->view('plantilla_general', $data);
@@ -359,31 +336,7 @@
 		}
 		
 		
-		/*
-		public function save_indice(){
-			if(! $_POST)
-				redirect( $this->router->fetch_class() );
-				
-			$data= post_to_array('_skip');
-			//echo json_encode($data);
-			//print_r ($data);
-			//exit();
-			$this->_set_rulesindicea('p',$data); //validamos los datos
-			if($this->form_validation->run() === FALSE){
-				set_mensaje(validation_errors());
-				muestra_mensaje();
-			}else{
-				$IAIdIndice=$this->input->post('IAIdIndice');
-				
-				$this->indice_model->update($IAIdIndice,$data);
-				set_mensaje("Índice de Atención a la Demanda (Absorción), se modifico con éxito",'success::');
-				echo "OK";
-				
-			}
 		
-		}*/
-
-
 		public function save_indice(){
 			if(! $_POST)
 				redirect( $this->router->fetch_class() );
@@ -397,13 +350,14 @@
 				set_mensaje(validation_errors());
 				muestra_mensaje();
 			}else{
-				$IAIdIndice=$this->input->post('IAIdIndice');
+				$IAId_Indice=$this->input->post('IAId_Indice');
 				
-				$this->indice_model->update($IAIdIndice,$data);
+				$this->indice_model->update($IAId_Indice,$data);
 				set_mensaje("Índice de Atención a la Demanda (Absorción), se modifico con éxito",'success::');
 				echo "OK";
 				
 			}
+
 		
 		}
 		public function agregar_indice(){
@@ -431,7 +385,6 @@
 			}
 		}
 		
-
 		public function save_cobertura(){
 			if(! $_POST)
 				redirect( $this->router->fetch_class() );
@@ -654,6 +607,7 @@
 			
 			$datos['AIdPlantel'] = $CPLClave;
 			$datos['APeriodo'] = $data['APeriodo'];
+			$datos['ABABS'] = $data['ABABS'];
 			$datos['APorcentaje'] = $data['APorcentaje'];
 			//echo json_encode($data);
 			//print_r ($datos);
@@ -742,8 +696,6 @@
 				
 			}
 		}
-		
-
 		public function agregar_planea(){
 			if(! $_POST)
 				redirect( $this->router->fetch_class() );
@@ -951,7 +903,7 @@
 		function _set_rulesindicea($c='',$data = array()){
 			
 			if($c=='p'){
-				$this->form_validation->set_rules('IAPeriodo', 'El periodo, debe ser en el formato aaaa-aaaa,', "trim|required|min_length[9]|max_length[9]");
+				$this->form_validation->set_rules('IAPeriodo', 'Periodo', "trim|required|min_length[9]|max_length[9]");
 				$this->form_validation->set_rules('IATotal', 'Índice de Atención a la Demanda (Absorción)', "trim|required|min_length[1]|max_length[15]");
 			}
 			// fin de la funcion _set_rules
@@ -988,6 +940,7 @@
 			
 			if($c=='p'){
 				$this->form_validation->set_rules('APeriodo', 'Periodo', "trim|required|min_length[9]|max_length[9]");
+				$this->form_validation->set_rules('ABABS', 'Abandono Escolar', "trim|required|min_length[1]|max_length[5]");
 				$this->form_validation->set_rules('APorcentaje', 'Abandono Escolar', "trim|required|min_length[1]|max_length[5]");
 			}
 			// fin de la funcion _set_rules
@@ -1003,22 +956,12 @@
 			// fin de la funcion _set_rules
 		}
 		
-		function _set_rulescobertura($c='',$data = array()){
-			
-			if($c=='p'){
-				$this->form_validation->set_rules('APeriodo', 'CICLO', "trim|required|min_length[9]|max_length[9]");
-				$this->form_validation->set_rules('ICobertura', 'COBERTURA', "trim|required|min_length[1]|max_length[6]");
-				
-			}
-			// fin de la funcion _set_rules
-		}
-		
 		
 		function _set_rulesplanea($c='',$data = array()){
 			
 			if($c=='p'){
-				$this->form_validation->set_rules('PPeriodo', 'CICLO', "trim|required|min_length[1]|max_length[4]");
-				$this->form_validation->set_rules('PPorcentaje', 'PORCENTAJE', "trim|required|min_length[1]|max_length[5]");
+				$this->form_validation->set_rules('PPeriodo', 'Periodo', "trim|required|min_length[1]|max_length[4]");
+				$this->form_validation->set_rules('PPorcentaje', 'Porcentaje', "trim|required|min_length[1]|max_length[5]");
 				
 			}
 			// fin de la funcion _set_rules
