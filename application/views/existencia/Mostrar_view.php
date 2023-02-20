@@ -146,7 +146,7 @@
 				<div class="form-group">
 					<div class="col-lg-offset-3 col-lg-9">
 					
-                                <?php if ( $entrega == 0) {?>
+                        <?php if ( $entrega == 0) {?>
 						
 						<?php if( is_permitido(null,'existencia','save_existencia') ){ ?>
 						<input type="hidden" id="GRClave" name="GRClave"/>

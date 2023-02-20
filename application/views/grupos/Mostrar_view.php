@@ -83,6 +83,7 @@
                                                 <button class="btn btn-primary btn-sm aceptar" type="button"><i class="fa fa-check"></i>&nbsp;Aceptar</button>
                                                 <button class="btn btn-warning btn-sm corregir" type="button"><i class="fa fa-pencil"></i>&nbsp;Corregir</button>
                                                         
+                                                
                                         <?php } ?>
                                         </td>
 					                <?php }?>

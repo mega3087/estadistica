@@ -657,7 +657,7 @@
 						
 	
 						<?php echo form_close(); ?>
-						<?php if ( $entrega == 0) {?>
+						<?php if ( ($entrega == 0) || ($entrega == 3)) {?>
 						<div  class="btn-group">
 							<button type="submit"  class="btn btn-danger pull-right final float-left"> <i class="fa fa-send"></i> Finalizar</button>
 						</div>

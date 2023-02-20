@@ -364,6 +364,15 @@ class Grupos extends CI_Controller {
         }
     }
 
+    public function eliminar() {
+        
+        $data= post_to_array('_skip');
+        $GRClave = $data['GRClave'];
+        $this->grupos_model->delete($GRClave);
+        $this->load->view('grupos/Mostrar_grupos', $data);
+    }
+
+
     public function selectGrupos() {
         $GRCPlantel = $this->input->post('GRCPlantel');
         $this->db->where('GRCPlantel',$GRCPlantel);
@@ -374,7 +383,9 @@ class Grupos extends CI_Controller {
     }
 
     public function deleteGrupo() {
-        $GRClave = $this->encrypt->decode($this->input->post('GRClave'));
+        //$GRClave = $this->encrypt->decode($this->input->post('GRClave'));
+        $data= post_to_array('_skip');
+        $GRClave = $data['GRClave'];
         $data = array(
             'GRStatus' => '0',
             'GRFechaInactivo' => date('Y-m-d H:i:s'),
@@ -384,6 +395,7 @@ class Grupos extends CI_Controller {
         set_mensaje("EL grupo se elimino con éxito",'success::');
         muestra_mensaje();
         
+
         $GRCPlantel = $this->input->post('PlantelId');
         $this->db->where('GRCPlantel',$GRCPlantel);
         $this->db->where('GRStatus','1');

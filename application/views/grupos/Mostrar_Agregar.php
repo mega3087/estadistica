@@ -58,12 +58,14 @@
                                                             <th>2° Semestre</th>
                                                             <th>4° Semestre</th>
                                                             <th>6° Semestre</th>
+                                                            <th>Acción</th>
                                                             <?php } ?>
                                                             
                                                             <?php  if ($sem == 'B' || $sem == '2') { ?>
                                                                 <th>1° Semestre</th>
                                                                 <th>3° Semestre</th>
                                                                 <th>5° Semestre</th>
+                                                                <th>Acción</th>
                                                             <?php } ?>
                                                             
                                                         </tr>
@@ -71,10 +73,13 @@
                                                     </thead>
 
                                                     <tbody>
-                                                    <?php foreach($gruposm as $key => $list ){ ?>
+                                                    <?php foreach($gruposm as $key => $listMat ){ ?>
                                                         <tr>
-                                                    <?php if ($list['GRSemestre'] == 2 || $list['GRSemestre'] == 1) { ?>
-                                                        <td><?=$list['GRGrupo']?></td>
+                                                    <?php if ($listMat['GRSemestre'] == 2 || $listMat['GRSemestre'] == 1) { ?>
+                                                        <td><?=$listMat['GRGrupo']?> 
+                                                            <input type="hidden" value="<?=$listMat['GRClave']?>" id="GRClaveMat" name="GRClave"/>
+                                                            <input type="hidden" value="<?=$listMat['GRGrupo']?>" id="GRGrupo" name="GRGrupo"/>
+                                                        </td>
                                                         
                                                     <?php } else { ?>
                                                         <td><??></td>
@@ -83,8 +88,10 @@
                                                     <?php } ?>
                                                     
                                                 
-                                                    <?php if ( $list['GRSemestre'] == 4  || $list['GRSemestre'] == 3) { ?>
-                                                        <td><?=$list['GRGrupo']?></td>
+                                                    <?php if ( $listMat['GRSemestre'] == 4  || $listMat['GRSemestre'] == 3) { ?>
+                                                        <td><?=$listMat['GRGrupo']?> <input type="hidden" value="<?=$listMat['GRClave']?>" id="GRClaveMat" name="GRClave"/>
+                                                            <input type="hidden" value="<?=$listMat['GRGrupo']?>" id="GRGrupo" name="GRGrupo"/>
+                                                        </td>
                                                 
                                                     <?php } else {?>
                                                         <td><??></td>
@@ -93,8 +100,10 @@
                                                     <?php } ?>
 
 
-                                                    <?php if ($list['GRSemestre'] == 6  || $list['GRSemestre'] == 5) {?>
-                                                        <td><?=$list['GRGrupo']?></td>
+                                                    <?php if ($listMat['GRSemestre'] == 6  || $listMat['GRSemestre'] == 5) {?>
+                                                        <td><?=$listMat['GRGrupo']?> <input type="hidden" value="<?=$listMat['GRClave']?>" id="GRClaveMat" name="GRClave"/>
+                                                            <input type="hidden" value="<?=$listMat['GRGrupo']?>" id="GRGrupo" name="GRGrupo"/>
+                                                        </td>
                                                         
                                                     <?php } else {?>
 
@@ -102,8 +111,20 @@
                                                         
                                                     <?php } ?>
 
-                                                    
+                                                            <td>
+                                                                <div class="col-lg-offset-3 col-lg-9">
+                                                                    <?php if( is_permitido(null,'grupos','eliminar') ){ ?>
+                                                                   <!-- <button class="btn btn-danger btn-xs" type="button" onclick="eliminar('<?=$listMat['GRClave']?>')">
+                                                                    
+                                                                    <i class="fa fa-trash"></i>&nbsp;Eliminar</button> -->
+                                                                    <button type="button" class="btn btn-danger btn-xs" onclick="eliminar('<?= $listMat['GRClave'] ?>','<?= $listMat['GRGrupo'] ?>')"><i class="fa fa-trash"></i> Eliminar </button>
+                                                                    <?php } ?>
+                                                                </div>
+                                                                
+                                                            </td>
+
                                                         </tr>
+                                                        
                                                         <?php } ?>
                                                     </tbody>
                                                     </table>
@@ -138,12 +159,14 @@
                                                             <th>2° Semestre</th>
                                                             <th>4° Semestre</th>
                                                             <th>6° Semestre</th>
+                                                            <th>Acción</th>
                                                             <?php } ?>
                                                             
                                                             <?php  if ($sem == 'B' || $sem == '2') { ?>
                                                                 <th>1° Semestre</th>
                                                                 <th>3° Semestre</th>
                                                                 <th>5° Semestre</th>
+                                                                <th>Acción</th>
                                                             <?php } ?>
                                                             
                                                         </tr>
@@ -182,7 +205,9 @@
                                                         
                                                     <?php } ?>
 
-                                                    
+                                                            <td>
+                                                                
+                                                            </td>
                                                         </tr>
                                                         <?php } ?>
                                                     </tbody>
@@ -195,6 +220,10 @@
                             </div>
                         </div>
                     </div>
+
+
+
+<!-- ******* Modal eliminar ******* -->
 
 
 
@@ -361,11 +390,13 @@
                         </div>
         </div>
     </div>
+                        </div>
 
 
 
 
 <!-- ******************* FIN Modal Existencia ********************* -->
+
 
 
 <script src="<?php echo base_url('assets/inspinia/js/plugins/dataTables/datatables.min.js'); ?>"></script>
@@ -419,6 +450,9 @@
 			});
 		});//----->fin	
 		
+
+
+        
 		$("#Formagregar_proyecciones").submit(function(e) {
 			e.preventDefault();
 			$.ajax({
@@ -444,6 +478,14 @@
 			});
 		});//----->fin
 		
+   
+    
+
+
+
+
+    
+
 		$(".save").click(function() {
 
             var opcion = confirm("Los grupos se sumarán a los ya existentes. ¿Quieres continuar?");
@@ -474,9 +516,43 @@
                 
             }
         });
-    }
+        }
         window.location.reload();
-    });//----->fin
+        });//----->fin
 
 	});
+
+    function eliminar(GRClave=null,GRGrupo=null){
+        
+       
+        var opcion = confirm("Se va a eliminar el grupo "+GRGrupo+". ¿Quieres continuar?");
+        if (opcion == true) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url("grupos/eliminar"); ?>",
+            data: {GRClave: GRClave},
+            dataType: "html",
+            beforeSend: function(){
+                //carga spinner
+                $(".loading").html("<div class=\"spiner-example\"><div class=\"sk-spinner sk-spinner-three-bounce\"><div class=\"sk-bounce1\"></div><div class=\"sk-bounce2\"></div><div class=\"sk-bounce3\"></div></div></div>");
+            },
+            success: function(data){
+                var data = data.split(";");
+                if(data[0]==' OK'){
+                    $(".msg").empty();
+                    $(".msg").append(data[1]);
+                    $('#Formacepta')[0].reset();
+                    $(".loading").html("");
+                } else {
+                    $("#error").empty();
+                    $("#error").append(data);   
+                    $(".loading").html(""); 
+                }
+                
+            }
+        });
+        }
+
+        window.location.reload();
+    }//);//----->fin
 </script>
