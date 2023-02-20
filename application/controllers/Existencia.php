@@ -50,15 +50,17 @@
 			$this->db->where( 'ENPeriodo', $periodo);
 			$this->db->where( 'ENSeccion', 'Matricula');
 			$data['estatus']= $this->entrega_model->find_all();
-			
-			/*echo json_encode($data['estatus']);
+
+			$row=count($data['estatus']);
+			/*echo json_encode($row);
 			exit;*/
 
-			if($data['estatus']){
-				$data['entrega']='1';
-
+			if($row == 1){
+				$data['entrega']=$data['estatus'][0]['ENEstatus'];
+				/*echo json_encode($data['entrega']);
+				exit;*/
 			}
-			else {
+			if($row == 0){
 				$data['entrega']='0';
 			}
 
@@ -102,19 +104,28 @@
 			$this->db->where( 'ENSeccion', 'Matricula');
 			$data['estatus']= $this->entrega_model->find_all();
 			
-			/*echo json_encode($data['estatus']);
+			
+			
+			/*echo json_encode($entrega);
 			exit;*/
 
-			if($data['estatus']){
-				$data['entrega']='1';
+			$row=count($data['estatus']);
+			/*echo json_encode($row);
+			exit;*/
+
+			if($row == 1){
+				$data['entrega']=$data['estatus'][0]['ENEstatus'];
+				$entrega=$data['estatus'][0]['ENEstatus'];
 
 			}
-			else {
+			if($row == 0){
 				$data['entrega']='0';
+				$entrega=0;
 			}
 
-			/*echo json_encode($data['entrega']);
-			exit;*/			
+			/*echo json_encode($entrega);
+			exit;*/
+			
 			$this->load->view('existencia/Mostrar_Periodos', $data);
 
 		}
@@ -215,26 +226,40 @@
 			/*echo json_encode($data);
 			exit;*/
 
-				/*$datos=array(
-					'GRMasculino' => $data['GRMasculino'],
-					'GRFemenino' => $data['GRFemenino'],
-					'GRCClave' => $formacion,
-					'GRCupo' => $GRCupo,
+			$this->totalex_model->insert($data);
+			
 
-				);*/
+			$where = array( 'PEstatus' => '1');
+			$data['periodo']= $this->generaperiodo_model->find_all($where);		
+			$periodo = $data['periodo'][0]['PAnio']."-".$data['periodo'][0]['PPeriodo'];
+
+			$this->db->where( 'ENIdPlantel', $CPLClave);
+			$this->db->where( 'ENPeriodo', $periodo);
+			$this->db->where( 'ENSeccion', 'Matricula');
+			$data['estatus']= $this->entrega_model->find_all();
+
+			/*echo json_encode($entrega);
+			exit;*/
+
+			$row=count($data['estatus']);
+
+			if($row == 1){
 				
+				set_mensaje("si entra",'success::');
+
+				$IDEntrega=$data['estatus'][0]['ENIdEntrega'];
 
 
-				$this->totalex_model->insert($data);
-				set_mensaje("Los alumnos se registraron con éxito con éxito",'success::');
+				$data = array(
+					'ENEstatus' => '1',
+				);
+
+				$this->entrega_model->update($IDEntrega,$data);
+
 				
-				echo "OK";
-				
+			}
 
-				$where = array( 'PEstatus' => '1');
-				$data['periodo']= $this->generaperiodo_model->find_all($where);		
-				$periodo = $data['periodo'][0]['PAnio']."-".$data['periodo'][0]['PPeriodo'];
-
+			if($row == 0){
 				$fecha=date('Y-m-d H:i:s');
 				$entrega['ENIdPlantel']= $CPLClave;
 				$entrega['ENperiodo']= $periodo;
@@ -244,6 +269,13 @@
 				$entrega['ENSeccion']= 'Matricula';
 				$this->entrega_model->insert($entrega);
 				set_mensaje("Se há notificado la entrega",'success::');
+			}
+
+			set_mensaje("Los alumnos se registraron con éxito",'success::');
+				
+			echo "OK";
+				
+			
 		
 		}
 		
