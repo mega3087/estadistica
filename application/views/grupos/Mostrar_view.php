@@ -47,7 +47,7 @@
 									<td class="text-left"><?php echo folio($list['CPLClave']); ?></td> 
 									<td class="text-left"><?php echo $list['CPLNombre']; ?></td>
                                     
-                                    <!-- ************ EN PROCESO DE CAPTURA *********** -->
+                                    <!-- ************ EN PROCESO DE CAPTURA ************* -->
                                     <?php if ( nvl($list['ENEstatus']) == NULL ) {?>
 						            
                                         <td class="text-left">
@@ -61,8 +61,8 @@
 				                    
                                     <?php }?>
                                     
-
-                                     <!-- ************ EN PROCESO DE VALIDACION *********** -->
+                                    
+                                     <!-- ************ EN PROCESO DE VALIDACION ************* -->
                                     <?php if ( nvl($list['ENEstatus']) == 1) {?>
 						        
                                         <td class="text-left">
