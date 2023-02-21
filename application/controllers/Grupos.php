@@ -509,7 +509,8 @@ class Grupos extends CI_Controller {
         //exit;
         $this->load->library('Dpdf');
         $data['subvista'] = 'grupos/Ver_pdf_view';
-        $data['titulo'] = "<p style='font-size:10px;'><br>COLEGIO DE BACHILLERES DEL ESTADO DE MÉXICO<br></p>";
+        $data['titulo'] = "<p style='font-size:13px;'><br>COLEGIO DE BACHILLERES DEL ESTADO DE MÉXICO<br>
+                                                         PORTAL ESTADÍSTICO <br><br></p>";
 
         $this->dpdf->load_view('grupos/plantilla_general_pdf',$data);
         $this->dpdf->setPaper('letter', 'portrait');

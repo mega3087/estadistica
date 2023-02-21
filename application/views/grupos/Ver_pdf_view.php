@@ -1,6 +1,6 @@
 <h2 class="text-left" ><b>MATRICULA DEL CENTRO EDUCATIVO: <?= $plantel[0]['CPLNombre']; ?></b></h2>
-<h2 class="text-left" ><b>SEMESTRE: <?= $periodo; ?></b></h2>
-
+<h2 class="text-left" ><b>CICLO ESCOLAR: <?= $periodo; ?></b></h2>
+	
 <?php 
 //total general (TOTAL MATRICULA)
 $TotalGG=0;
@@ -63,6 +63,7 @@ foreach ($total as $k => $list) {
 				<th>TOTAL</th>
 				<th style='width: 300px;'>FORMACIÓN PARA EL TRABAJO</th>                        
 			</tr>
+
 			<tbody>
 				<?php 
 				$totalAlMat = 0;
@@ -113,7 +114,6 @@ foreach ($total as $k => $list) {
 					</tr>
 					
 			</tbody>
-
 		</thead>
 	</table>      
 <br><br>
@@ -267,22 +267,48 @@ if (count($list['gruposVes']) != 0) {	?>
 		</tbody>
 	</thead>
 </table>
+<br><br><br>
 
 
+
+<div style="width: 33%; float:left"><h2 class="text-center" ><b>Elaboró</b></h2><br><br>
+<h2 class="text-center" ><b>________________________</b></h2>
+
+<h2 class="text-center" ><b>Nombre y firma del  <br>
+							Responsable Control Escolar </b></h2>
+</div>
+
+<div style="width: 33%; float:left"><h2 class="text-center" ><b>Validó</b></h2><br><br>
+<h2 class="text-center" ><b>________________________</b></h2>
+
+<h2 class="text-center" ><b>Nombre del Director <br>
+						    del Plantel o Responsable <br> del CEMSAD </b></h2>
+</div>
+
+<div style="width: 33%; float:left"><h2 class="text-center" ><b>Sello Centro Educativo</b></h2><br><br>
+<h2 class="text-center" ><b>________________________</b></h2>
+
+<?php $fecha=date("d / m / Y");?>
+<h2 class="text-center" ><b>Fecha de solicitud :<?php echo $fecha;?> </b></h2>
+
+
+
+</div>
+
+<br><br><br><br>
 <style type="text/css">
   table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
   color: #333;
-
 }
-
-
 
 .no-border { 
     border:none !important; 
      
 }
+
+
 
 .border-bottom { border-bottom: 1px solid black; border-collapse: collapse;}
 .border-top { border-top: 1px solid black; border-collapse: collapse;}
@@ -291,5 +317,6 @@ if (count($list['gruposVes']) != 0) {	?>
 .no-border-right    { border-right: hidden !important; }
 .no-border-top      { border-top: hidden !important; }
 .no-border-bottom   { border-bottom: hidden !important; }
+   
 
 </style>
