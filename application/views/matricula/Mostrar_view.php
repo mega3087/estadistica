@@ -31,13 +31,13 @@
 							<thead>
 								<tr>
 									<th rowspan="4" style="background-color: rgb(226, 248, 245 );">PLANTELES</th>
-									<th COLSPAN="40" style="background-color: rgb(226, 248, 245 );">MATRÍCULA PRELIMINAR CICLO 2022-2023</th>
+									<th COLSPAN="40" style="background-color: rgb(226, 248, 245 );">MATRÍCULA PRELIMINAR CICLO 2023-1</th>
 									<th COLSPAN="28" style="background-color: rgb(118, 215, 196 );">MATRÍCULA CICLO POR FORMACIÓN PARA EL TRABAJO</th>
 								</tr>
                                 <tr>
-                                    <th COLSPAN="10">PRIMER SEMESTRE</th>
-                                    <th COLSPAN="10">TERCER SEMESTRE</th>
-                                    <th COLSPAN="10">QUINTO SEMESTRE</th>
+                                    <th COLSPAN="10">SEGUNDO SEMESTRE</th>
+                                    <th COLSPAN="10">CUARTO SEMESTRE</th>
+                                    <th COLSPAN="10">SEXTO SEMESTRE</th>
                                     <th COLSPAN="10">MATRICULA POR CENTRO EDUCATIVO</th>
                                     <!-- INICIA APARTADO FORMACIÓN PARA EL TRABAJO -->
                                     <th COLSPAN="3" style="background-color: rgb(254, 255, 217 );">CONTABILIDAD</th>
@@ -49,25 +49,25 @@
                                     <th COLSPAN="3" style="background-color: rgb(254, 255, 217 );">INTERPRETACIÓN Y TRADUCCIÓN DEL IDIOMA</th>
                                     <th COLSPAN="3">TURISMO</th>
                                     <th COLSPAN="3" style="background-color: rgb(254, 255, 217 );">DIBUJO ARQUITECTÓNICO Y DE CONSTRUCCIÓN</th>
-                                    <th rowspan="3">MATRÍCULA TOTAL DE 3er. Y  5o. SEM. </th>
+                                    <th rowspan="3">MATRÍCULA TOTAL DE 4°. Y  6o. SEM. </th>
                                     <!--FIN APARTADO FORMACIÓN PARA EL TRABAJO -->
                                 </tr>
                                 <tr>
                                     <th COLSPAN="4">MATUTINO</th>
                                     <th COLSPAN="4">VESPERTINO</th>
-                                    <th rowspan="2" style="background-color: rgb(254, 255, 217 );">MATRÍCULA 1er SEM </th>  
-                                    <th rowspan="2" style="background-color: rgb(254, 255, 217 );">GRUPOS 1er SEM </th>
+                                    <th rowspan="2" style="background-color: rgb(254, 255, 217 );">MATRÍCULA 2° SEM </th>  
+                                    <th rowspan="2" style="background-color: rgb(254, 255, 217 );">GRUPOS 2° SEM </th>
                                     <th COLSPAN="4">MATUTINO</th>
                                     <th COLSPAN="4">VESPERTINO</th>
-                                    <th rowspan="2" style="background-color: rgb(254, 255, 217 );">MATRÍCULA 3er SEM </th>
-                                    <th rowspan="2" style="background-color: rgb(254, 255, 217 );">GRUPOS 3er SEM </th>
+                                    <th rowspan="2" style="background-color: rgb(254, 255, 217 );">MATRÍCULA 4° SEM </th>
+                                    <th rowspan="2" style="background-color: rgb(254, 255, 217 );">GRUPOS 4° SEM </th>
                                     <th COLSPAN="4">MATUTINO</th>
                                     <th COLSPAN="4">VESPERTINO</th>
-                                    <th rowspan="2" style="background-color: rgb(254, 255, 217 );">MATRÍCULA TOTAL 5° SEM </th>
-                                    <th rowspan="2" style="background-color: rgb(254, 255, 217 );">GRUPOS 5° SEM </th>
+                                    <th rowspan="2" style="background-color: rgb(254, 255, 217 );">MATRÍCULA TOTAL 6° SEM </th>
+                                    <th rowspan="2" style="background-color: rgb(254, 255, 217 );">GRUPOS 6° SEM </th>
                                     <th COLSPAN="4">MATUTINO</th>
                                     <th COLSPAN="4">VESPERTINO</th>
-                                    <th rowspan="2" style="background-color: rgb(254, 255, 217 );">MATRICULA 2022-2023 </th>
+                                    <th rowspan="2" style="background-color: rgb(254, 255, 217 );">MATRICULA 2023-1 </th>
                                     <th rowspan="2" style="background-color: rgb(254, 255, 217 );">TOTAL GRUPOS </th>
                                     <!--INICIA APARTADO FORMACIÓN PARA EL TRABAJO -->
                                     <th COLSPAN="2">SEMESTRE</th>
@@ -127,24 +127,24 @@
 
                                     <!--INICIA APARTADO FORMACIÓN PARA EL TRABAJO -->
                                     
-                                    <th style="background-color: rgb(254, 255, 217 );">TERCERO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">QUINTO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">TERCERO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">QUINTO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">TERCERO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">QUINTO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">TERCERO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">QUINTO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">TERCERO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">QUINTO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">TERCERO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">QUINTO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">TERCERO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">QUINTO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">TERCERO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">QUINTO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">TERCERO</th>
-                                    <th style="background-color: rgb(254, 255, 217 );">QUINTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">CUARTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">SEXTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">CUARTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">SEXTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">CUARTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">SEXTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">CUARTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">SEXTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">CUARTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">SEXTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">CUARTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">SEXTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">CUARTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">SEXTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">CUARTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">SEXTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">CUARTO</th>
+                                    <th style="background-color: rgb(254, 255, 217 );">SEXTO</th>
                                     <!--FIN APARTADO FORMACIÓN PARA EL TRABAJO -->
 
                                 </tr>
