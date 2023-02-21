@@ -174,10 +174,12 @@
                                                     </thead>
 
                                                     <tbody>
-                                                    <?php foreach($gruposv as $key => $list ){ ?>
+                                                    <?php foreach($gruposv as $key => $listVes ){ ?>
                                                         <tr>
-                                                    <?php if ($list['GRSemestre'] == 2 || $list['GRSemestre'] == 1) { ?>
-                                                        <td><?=$list['GRGrupo']?></td>
+                                                    <?php if ($listVes['GRSemestre'] == 2 || $listVes['GRSemestre'] == 1) { ?>
+                                                        <td><?=$listVes['GRGrupo']?><input type="hidden" value="<?=$listVes['GRClave']?>" id="GRClaveVes" name="GRClave"/>
+                                                            <input type="hidden" value="<?=$listVes['GRGrupo']?>" id="GRGrupo" name="GRGrupo"/>
+                                                        </td>
                                                         
                                                     <?php } else { ?>
                                                         <td><??></td>
@@ -186,8 +188,10 @@
                                                     <?php } ?>
                                                     
                                                 
-                                                    <?php if ( $list['GRSemestre'] == 4  || $list['GRSemestre'] == 3) { ?>
-                                                        <td><?=$list['GRGrupo']?></td>
+                                                    <?php if ( $listVes['GRSemestre'] == 4  || $listVes['GRSemestre'] == 3) { ?>
+                                                        <td><?=$listVes['GRGrupo']?><input type="hidden" value="<?=$listVes['GRClave']?>" id="GRClaveVes" name="GRClave"/>
+                                                            <input type="hidden" value="<?=$listVes['GRGrupo']?>" id="GRGrupo" name="GRGrupo"/>
+                                                        </td>
                                                 
                                                     <?php } else {?>
                                                         <td><??></td>
@@ -196,8 +200,10 @@
                                                     <?php } ?>
 
 
-                                                    <?php if ($list['GRSemestre'] == 6  || $list['GRSemestre'] == 5) {?>
-                                                        <td><?=$list['GRGrupo']?></td>
+                                                    <?php if ($listVes['GRSemestre'] == 6  || $listVes['GRSemestre'] == 5) {?>
+                                                        <td><?=$listVes['GRGrupo']?><input type="hidden" value="<?=$listVes['GRClave']?>" id="GRClaveVes" name="GRClave"/>
+                                                            <input type="hidden" value="<?=$listVes['GRGrupo']?>" id="GRGrupo" name="GRGrupo"/>
+                                                        </td>
                                                         
                                                     <?php } else {?>
 
@@ -205,7 +211,15 @@
                                                         
                                                     <?php } ?>
 
-                                                            <td>
+                                                    <td>
+                                                                <div class="col-lg-offset-3 col-lg-9">
+                                                                    <?php if( is_permitido(null,'grupos','eliminar') ){ ?>
+                                                                   <!-- <button class="btn btn-danger btn-xs" type="button" onclick="eliminar('<?=$listMat['GRClave']?>')">
+                                                                    
+                                                                    <i class="fa fa-trash"></i>&nbsp;Eliminar</button> -->
+                                                                    <button type="button" class="btn btn-danger btn-xs" onclick="eliminarves('<?= $listVes['GRClave'] ?>','<?= $listVes['GRGrupo'] ?>')"><i class="fa fa-trash"></i> Eliminar </button>
+                                                                    <?php } ?>
+                                                                </div>
                                                                 
                                                             </td>
                                                         </tr>
@@ -555,4 +569,41 @@
 
         window.location.reload();
     }//);//----->fin
+
+    function eliminarves(GRClave=null,GRGrupo=null){
+        
+       
+        var opcion = confirm("Se va a eliminar el grupo "+GRGrupo+". ¿Quieres continuar?");
+        if (opcion == true) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url("grupos/eliminar"); ?>",
+            data: {GRClave: GRClave},
+            dataType: "html",
+            beforeSend: function(){
+                //carga spinner
+                $(".loading").html("<div class=\"spiner-example\"><div class=\"sk-spinner sk-spinner-three-bounce\"><div class=\"sk-bounce1\"></div><div class=\"sk-bounce2\"></div><div class=\"sk-bounce3\"></div></div></div>");
+            },
+            success: function(data){
+                var data = data.split(";");
+                if(data[0]==' OK'){
+                    $(".msg").empty();
+                    $(".msg").append(data[1]);
+                    $('#Formacepta')[0].reset();
+                    $(".loading").html("");
+                } else {
+                    $("#error").empty();
+                    $("#error").append(data);   
+                    $(".loading").html(""); 
+                }
+                
+            }
+        });
+        }
+
+        window.location.reload();
+    }//);//----->fin
+
+
+
 </script>
