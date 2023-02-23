@@ -26,7 +26,7 @@
 			
 			//echo json_encode($data['grupos']);
 			//exit;
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'generagrupo/Mostrar_view';			
 			$this->load->view('plantilla_general', $data);
 		}

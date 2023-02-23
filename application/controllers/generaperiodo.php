@@ -17,7 +17,7 @@
 			$this->db->order_by('PIdPeriodo','DESC');
 			$data['data'] = $this->generaperiodo_model->find_all();
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'generaperiodo/Mostrar_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -29,7 +29,7 @@
 			//$this->db->join('terreno','CPLClave = TIdPlantel','INNER');
 			//$data = $this->plantel_model->get( $CPLClave);
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'anexo/Ver_view';			
 			$this->load->view('plantilla_general', $data);
 		}*/

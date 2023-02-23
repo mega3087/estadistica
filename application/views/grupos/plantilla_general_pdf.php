@@ -22,6 +22,10 @@
 				</tr>
 			</table>
 		</div>
+		<div id="footer">
+			<br />Página <page />
+		</div>
+
 		<div id="content">
 			<?php $this->load->view($subvista); ?>
 		</div>
@@ -38,9 +42,21 @@
 			left: 0px; 
 			top: -100px; 
 			right: 0px; 
-			height: 60px; 
+			height: 30px; 
 			background-color: none; 
 			text-align: center;
+		}
+		#footer {
+			position: fixed; 
+			left: -2px; 
+			bottom: -50px; 
+			right: -2px; 
+			height: 50px;			
+			font-size: 9px;
+		}
+
+		#footer page:after { 
+			content: counter(page);
 		}
 
 		.text-left{

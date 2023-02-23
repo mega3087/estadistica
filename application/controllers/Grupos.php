@@ -86,7 +86,7 @@ class Grupos extends CI_Controller {
 		$this->db->order_by('GRGrupo', 'ASC');
 		$data['gruposv'] = $this->grupos_model->find_all();
         
-        $data['modulo'] = 'info';
+        $data['modulo'] = $this->router->fetch_class();
         $data['subvista'] = 'grupos/Mostrar_Agregar';			
         $this->load->view('plantilla_general', $data);
     }

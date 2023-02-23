@@ -483,6 +483,15 @@
 		exit();
 	}
 
+	function setDia($d = '') {
+		if (strlen($d) == 2) {
+			$dia = $d;
+		} else {
+			$dia = "0" . $d;
+		}
+	return $dia;
+	}
+
 	function setMes($m = '') {
 		if (strlen($m) == 2) {
 			$mes = $f;

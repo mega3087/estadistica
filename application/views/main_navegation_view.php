@@ -43,7 +43,7 @@
 				</ul>
 			</li>
 			
-			<li class=" <?php if( nvl($modulo)=='anexo' or nvl($modulo)=='plantel') echo "active"; ?>">
+			<li class=" <?php if( nvl($modulo)=='anexo' or nvl($modulo)=='bg' or nvl($modulo)=='bginterno') echo "active"; ?>">
 				<a href="#"><i class="fa fa-list"></i> <span class="nav-label">Formato 911</span> <span class="fa arrow"></span></a>
 				<ul class="nav nav-second-level collapse" style="height: 0px;">
 					<?php if(is_permitido(null,'anexo','index')) { ?>

@@ -19,7 +19,7 @@
 			$this->db->join('evaluacionsem','CPLClave = EIdPlantel','INNER');
 			$data = $this->plantel_model->get( $CPLClave);
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'evaluaciones/Evaluacion_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -33,7 +33,7 @@
 			$where = array( 'EIdPlantel' => $CPLClave);
 			$data['data'] = $this->evaluacion_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'evaluaciones/Evaluacion_view';			
 			$this->load->view('plantilla_general', $data);
 			
@@ -50,7 +50,7 @@
 			$where = array( 'CIdPlantel' => $CPLClave);
 			$data['data'] = $this->certificado_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'evaluaciones/Certificado_view';			
 			$this->load->view('plantilla_general', $data);
 			

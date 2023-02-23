@@ -7,7 +7,7 @@
 		<div id="header">
 			<table width='100%' class="no-border">
 				<tr class="no-border">
-					<td width='20%' align='left' class="no-border">
+					<td width='20%' aling='left' class="no-border">
 						<img src="assets/img/logo_edomex.png" width='100px' />
 					</td>
 					<td class='text-center no-border' style="font-size: 13px;">
@@ -15,8 +15,7 @@
 							echo $titulo;
 						} ?>
 					</td>
-					<td width='20%' align='ri
-					ght' class="no-border">
+					<td width='20%' aling='rigth' class="no-border">
 						<img src="assets/img/logo_cobaemex.png" width='150px' />
 					</td>
 				</tr>

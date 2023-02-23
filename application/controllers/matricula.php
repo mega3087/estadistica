@@ -35,7 +35,7 @@
 			$data['totales'] = $this->totalex_model->find_all();
 
 
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'matricula/Mostrar_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -74,7 +74,7 @@
 			$whereV = array( 'GRCPlantel' => $CPLClave, 'GRPeriodo' => $periodo,   'GRTurno' => '2');
 			$data['gruposv'] = $this->grupos_model->find_all( $whereV );*/	
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'existencia/Mostrar_matricula';			
 			$this->load->view('plantilla_general', $data);
 		}

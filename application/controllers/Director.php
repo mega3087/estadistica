@@ -21,7 +21,7 @@
 			$where = array( 'DIIdPlantel' => $CPLClave);
 			$data['directores'] = $this->director_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'director/Mostrar_view';			
 			$this->load->view('plantilla_general', $data);
 		}

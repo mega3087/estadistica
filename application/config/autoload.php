@@ -184,5 +184,18 @@ $autoload['model'] = array(
 							'totalex_model',
 							'entrega_model',
 							'personal_model',
+							'bgplanestudios_model',
+							'bgexistencia_model',
+							'bgalumnore_model',
+							'bgmatricula911_model',
+							'bgabandono_model',
+							'bgabandonointra1_model',
+							'bgabandonointra3_model',
+							'bgabandonointra5_model',
+							'bgmatriculains_model',
+							'bgmatriculacemsad_model',
+							'bgrepecemsad_model',
+							'bgmodelodual_model',
+							'bgdocentes_model'
 							//'anexo_model',
 						);

@@ -13,19 +13,49 @@
 		}
 		
 		public function index(){
-			$CPLClave = get_session('CPLActual');
-			echo $CPLClave;
-			exit;              
+			$CPLClave = get_session('UPlantel');
 			
 			$data = array();
 			//$this->db->join('terreno','CPLClave = TIdPlantel','INNER');
 			//$data = $this->plantel_model->get( $CPLClave);
+			
+			$select = "CPLClave, CPLNombre, CPLCCT, CPLTipo, CPLTurnos";
+			$this->db->where('CPLTipo = 35 OR CPLTipo = 36');
+			$data['planteles'] = $this->plantel_model->find_all(null, $select);
+						
+			$data['modulo'] = $this->router->fetch_class();
+
+			$data['subvista'] = 'bginterno/Ver_view';			
+			$this->load->view('plantilla_general', $data);
+		}
+
+		public function verLevantamiento_skip () {
+			$idPlantel = $this->input->post('idPlantel');
+			$turno = $this->input->post('PETurnoPlantel');
+
+			$select = "CPLClave, CPLNombre, CPLCCT, CPLTipo, CPLTurnos";
+			$this->db->where('CPLClave', $idPlantel);
+			$data['planteles'] = $this->plantel_model->find(null, $select);
+			
 			$this->db->where('PIdPeriodo','((SELECT MAX(PIdPeriodo) FROM periodo )-1)', false);
 			$data['periodoAnt'] = $this->generaperiodo_model->find_all();
 			$peridoAnt = $data['periodoAnt'][0]['PAnio'].'-'.$data['periodoAnt'][0]['PPeriodo'];
 
 			$this->db->where('PEstatus',1);
 			$data['periodoAct'] = $this->generaperiodo_model->find_all();
+			$peridoAct = $data['periodoAct'][0]['PAnio'].'-'.$data['periodoAct'][0]['PPeriodo'];
+
+			$selectPlan = "CPLClave, CPLNombre, CPLCCT, CPLTipo, CPLTurnos, PEIdPlanEstudios, PEIdPlantel, PETurnoPlantel, PEActualizacionAnio, PEActualizacionMes, PEActualizacionDia";
+			$this->db->join('planteles','CPLClave = PEIdPlantel');
+			$this->db->where('PEIdPlantel', $idPlantel);
+			$this->db->where('PETurnoPlantel', $turno);
+			$data['PlanEstudios'] = $this->bgplanestudios_model->find(null, $selectPlan);
+			
+			$this->db->where('EIdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
+			$data['existAprob'] = $this->bgexistencia_model->find();
+
+			$this->db->where('AIdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
+			$data['reprobReg'] = $this->bgalumnore_model->find();
 
 			$semAnt = 'GRSemestre';
 			$this->db->where('GRPeriodo', $peridoAnt);
@@ -33,20 +63,327 @@
 			$semestres = $this->grupos_model->find_all(null, $semAnt);
 			
 			foreach($semestres as $s => $list){
-				$select = 'GRSemestre, SUM(GRMasculino) Hombres, SUM(GRFemenino) Mujeres, SUM(GRCupo) Total';
+				$select = 'GRSemestre, SUM(GRMasculino) Hombres, SUM(GRFemenino) Mujeres, SUM(GRCupo) Total, SUM(GRTurno) Grupos';
+				$this->db->where('GRCPlantel', $idPlantel);
 				$this->db->where('GRPeriodo', $peridoAnt);
+				$this->db->where('GRTurno', $turno);				
 				$this->db->where('GRSemestre', $list['GRSemestre']);
 				$data['totales'][$s] = $this->grupos_model->find_all(null, $select);
 			}
 
-			$select = "CPLClave, CPLNombre, CPLCCT, CPLTipo, CPLTurnos";
-			$this->db->where('CPLTipo = 35 OR CPLTipo = 36');
-			$data['planteles'] = $this->plantel_model->find_all(null, $select);
-						
-			$data['modulo'] = $this->router->fetch_class();
-			$data['subvista'] = 'bginterno/Ver_view';			
-			$this->load->view('plantilla_general', $data);
+			$this->db->where('AbIdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
+			$data['abandono'] = $this->bgabandono_model->find();
+
+			$this->db->where('AI1IdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
+			$data['abandonoInt1'] = $this->bgabandonointra1_model->find();
+
+			$this->db->where('AI3IdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
+			$data['abandonoInt3'] = $this->bgabandonointra3_model->find();
+
+			$this->db->where('AI5IdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
+			$data['abandonoInt5'] = $this->bgabandonointra5_model->find();
+
+			$semAct = 'GRSemestre, SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, SUM(GRTurno) TGrupos ';
+			$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
+			$this->db->where('GRCPlantel', $idPlantel);
+			$this->db->where('GRTurno', $turno);	
+			$this->db->group_by('GRSemestre');
+			$data['semestres'] = $this->grupos_model->find_all(null, $semAct);
+			
+			
+			foreach($semestres as $sem => $listSem){
+				$select = 'GRSemestre, SUM(GRMasculino) Hombres, SUM(GRFemenino) Mujeres, SUM(GRCupo) Total';
+				$this->db->where('GRCPlantel', $idPlantel);
+				$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
+				$this->db->where('GRTurno', $turno);				
+				$this->db->where('GRSemestre', $listSem['GRSemestre']);
+				$data['totalesAct'][$sem] = $this->grupos_model->find_all(null, $select);
+			}
+
+
+			foreach($semestres as $sems => $listSems){
+				$select = 'GRSemestre, GRGrupo, GRMasculino, GRFemenino, GRCupo, GRCClave, FNombre';
+				$this->db->join('formacion','FIdFormacion = GRCClave','left');
+				$this->db->where('GRCPlantel', $idPlantel);
+				$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
+				$this->db->where('GRTurno', $turno);				
+				$this->db->where('GRSemestre', $listSems['GRSemestre']);
+				$data['semestres'][$sems]['grupoAlumno'] = $this->grupos_model->find_all(null, $select);
+			}
+
+			$this->db->where('DIdBgPlan',$data['PlanEstudios']['PEIdPlanEstudios']);
+			$data['docentes'] = $this->bgdocentes_model->find();
+
+			$semAl = 'SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, SUM(GRTurno) TGrupos ';
+			$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
+			$this->db->where('GRCPlantel', $idPlantel);
+			$this->db->where('GRTurno', $turno);	
+			$this->db->where('GRSemestre > 2');
+			$data['alumCap'] = $this->grupos_model->find(null, $semAl);
+
+			
+			/*$select = 'FIdFormacion, FNombre, SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, SUM(GRTurno) TGrupos ';
+			$this->db->join('nogrupos','FIdFormacion = GRCClave','left');
+			$this->db->where('GRPeriodo', $peridoAnt); //Cambiar por periodo Actual
+			$this->db->where('GRCPlantel', $idPlantel);
+			$this->db->where('GRTurno', $turno);	
+			$this->db->group_by('FIdFormacion');*/
+			$data['formaciones']  = $this->formacion_model->find_all();
+			
+
+			foreach ($data['formaciones']  as $f => $listF) {
+				$selFor = 'SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, SUM(GRTurno) TGrupos, FNombre';
+				$this->db->join('formacion','FIdFormacion = GRCClave','left');
+				$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
+				$this->db->where('GRCPlantel', $idPlantel);
+				$this->db->where('GRTurno', $turno);	
+				$this->db->where('GRCClave',$listF['FIdFormacion']);
+				$data['formaciones'][$f]['AlumForma'] = $this->grupos_model->find(null, $selFor);
+			}
+
+			$this->db->where('CPLClave',$idPlantel);
+			$data['director'] = $this->plantel_model->find();
+
+			$data['turno'] = $turno;
+			echo nvl($data['planteles']['CPLCCT']).'::';
+
+			$this->load->view('bginterno/View_levantamiento', $data);
 		}
+
+		public function savePlanEstudio_skip() {
+			$data = post_to_array('_skip');
+			
+			if ($data['PEIdPlanEstudios'] == '') {
+				$data['idPlanEstudio'] = $this->bgplanestudios_model->insert($data);
+				
+				echo "OK;;";
+				echo $data['idPlanEstudio'].";;";
+				
+			} else {
+				$this->bgplanestudios_model->update($data['PEIdPlanEstudios'], $data);
+				
+				echo "OK;;";
+				echo $data['PEIdPlanEstudios'].";;";
+			}
+		}
+
+		public function saveExistenciaAprob_skip() {
+			$data = post_to_array('_skip');
+			
+			$this->db->where('EIdBgPlanEstudios', $data['EIdBgPlanEstudios']);
+			$exitstencias = $this->bgexistencia_model->find_all();
+			
+			if (count($exitstencias) == 0) {
+				$this->bgexistencia_model->insert($data);				
+				echo "OK;;";
+				
+			} else {
+				$this->db->set($data);
+				$this->db->where('EIdBgPlanEstudios', $data['EIdBgPlanEstudios']);
+				$this->db->update('bgexistencia');
+				
+				echo "OK;;";
+			}
+
+		}
+
+		public function saveReprobReg_skip() {
+			$data = post_to_array('_skip');
+			
+			$this->db->where('AIdBgPlanEstudios', $data['AIdBgPlanEstudios']);
+			$repReg = $this->bgalumnore_model->find_all();
+			
+			if (count($repReg) == 0) {
+				$this->bgalumnore_model->insert($data);				
+				echo "OK;;";
+				
+			} else {
+				$this->db->set($data);
+				$this->db->where('AIdBgPlanEstudios', $data['AIdBgPlanEstudios']);
+				$this->db->update('bgalumnosre');
+				
+				echo "OK;;";
+			}
+
+		}
+
+		public function saveMat911_skip(){
+			$data = post_to_array('_skip');
+			
+			$this->db->where('MIdBgPlanEstudios', $data['MIdBgPlanEstudios']);
+			$mat911 = $this->bgmatricula911_model->find_all();
+			
+			if (count($mat911) == 0) {
+				$this->bgmatricula911_model->insert($data);				
+				echo "OK;;";
+				
+			} else {
+				$this->db->set($data);
+				$this->db->where('MIdBgPlanEstudios', $data['MIdBgPlanEstudios']);
+				$this->db->update('bgmatricula911');
+				
+				echo "OK;;";
+			}
+
+		}
+
+		public function saveAbandono_skip() {
+			$data = post_to_array('_skip');
+			
+			$this->db->where('AbIdBgPlanEstudios', $data['AbIdBgPlanEstudios']);
+			$aband = $this->bgabandono_model->find_all();
+			
+			if (count($aband) == 0) {
+				$this->bgabandono_model->insert($data);				
+				echo "OK;;";
+			}
+		}
+
+		public function saveAbandonoInt1_skip() {
+			$data = post_to_array('_skip');
+			
+			$this->db->where('AI1IdBgPlanEstudios', $data['AI1IdBgPlanEstudios']);
+			$aband1 = $this->bgabandonointra1_model->find_all();
+			
+			if (count($aband1) == 0) {
+				$this->bgabandonointra1_model->insert($data);				
+				echo "OK;;";
+			}  else {
+				$this->db->set($data);
+				$this->db->where('AI1IdBgPlanEstudios', $data['AI1IdBgPlanEstudios']);
+				$this->db->update('bgabandonointra1');
+				
+				echo "OK;;";
+			}
+		}
+
+		public function saveAbandonoInt3_skip() {
+			$data = post_to_array('_skip');
+			
+			$this->db->where('AI3IdBgPlanEstudios', $data['AI3IdBgPlanEstudios']);
+			$aband3 = $this->bgabandonointra3_model->find_all();
+			
+			if (count($aband3) == 0) {
+				$this->bgabandonointra3_model->insert($data);				
+				echo "OK;;";
+			} else {
+				$this->db->set($data);
+				$this->db->where('AI3IdBgPlanEstudios', $data['AI3IdBgPlanEstudios']);
+				$this->db->update('bgabandonointra3');
+				
+				echo "OK;;";
+			}
+		}
+
+		public function saveAbandonoInt5_skip() {
+			$data = post_to_array('_skip');
+			
+			$this->db->where('AI5IdBgPlanEstudios', $data['AI5IdBgPlanEstudios']);
+			$aband5 = $this->bgabandonointra5_model->find_all();
+			
+			if (count($aband5) == 0) {
+				$this->bgabandonointra5_model->insert($data);				
+				echo "OK;;";
+			} else {
+				$this->db->set($data);
+				$this->db->where('AI5IdBgPlanEstudios', $data['AI5IdBgPlanEstudios']);
+				$this->db->update('bgabandonointra5');
+				
+				echo "OK;;";
+			}
+		}
+
+		public function savematriculaIns_skip() {
+			$data = post_to_array('_skip');
+			
+			$this->db->where('MIIdBgPlanEstudios', $data['MIIdBgPlanEstudios']);
+			$matInsc = $this->bgmatriculains_model->find_all();
+			
+			if (count($matInsc) == 0) {
+				$this->bgmatriculains_model->insert($data);				
+				echo "OK;;";
+			} else {
+				$this->db->set($data);
+				$this->db->where('MIIdBgPlanEstudios', $data['MIIdBgPlanEstudios']);
+				$this->db->update('bgmatriculainscritos');
+				
+				echo "OK;;";
+			}
+
+		}
+
+		public function savePresenciales_skip() {
+			$data = post_to_array('_skip');
+			
+			$this->db->where('MCIdBgPlanEstudios', $data['MCIdBgPlanEstudios']);
+			$presen = $this->bgmatriculacemsad_model->find_all();
+			
+			if (count($presen) == 0) {
+				$this->bgmatriculacemsad_model->insert($data);				
+				echo "OK;;";
+			} else {
+				$this->db->set($data);
+				$this->db->where('MCIdBgPlanEstudios', $data['MCIdBgPlanEstudios']);
+				$this->db->update('bgmatriculacemsad');
+				
+				echo "OK;;";
+			}
+		}
+
+		public function saveRepetidores_skip() {
+			$data = post_to_array('_skip');
+			
+			$this->db->where('RCIdBgPlanEstudios', $data['RCIdBgPlanEstudios']);
+			$rep = $this->bgrepecemsad_model->find_all();
+			
+			if (count($rep) == 0) {
+				$this->bgrepecemsad_model->insert($data);				
+				echo "OK;;";
+			} else {
+				$this->db->set($data);
+				$this->db->where('RCIdBgPlanEstudios', $data['RCIdBgPlanEstudios']);
+				$this->db->update('bgrepecemsad');
+				
+				echo "OK;;";
+			}
+		}
+
+		public function saveDual_skip(){
+			$data = post_to_array('_skip');
+			
+			$this->db->where('MDIdBgPlan', $data['MDIdBgPlan']);
+			$dual = $this->bgmodelodual_model->find_all();
+			
+			if (count($dual) == 0) {
+				$this->bgmodelodual_model->insert($data);				
+				echo "OK;;";
+			} else {
+				$this->db->set($data);
+				$this->db->where('MDIdBgPlan', $data['MDIdBgPlan']);
+				$this->db->update('bgmodelodual');
+				
+				echo "OK;;";
+			}
+		}
+
+		public function saveDocentes_skip(){
+			$data = post_to_array('_skip');
+			
+			$this->db->where('DIdBgPlan', $data['DIdBgPlan']);
+			$dual = $this->bgdocentes_model->find_all();
+			
+			if (count($dual) == 0) {
+				$this->bgdocentes_model->insert($data);				
+				echo "OK;;";
+			} else {
+				$this->db->set($data);
+				$this->db->where('DIdBgPlan', $data['DIdBgPlan']);
+				$this->db->update('bgdocentes');
+				
+				echo "OK;;";
+			}
+		}
+		
 		
 		public function oferta(){
 			$CPLClave = get_session('CPLActual');

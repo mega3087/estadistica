@@ -182,7 +182,7 @@
 
 			
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'plantel/Info_view';			
 			$this->load->view('plantilla_general', $data);
 		}

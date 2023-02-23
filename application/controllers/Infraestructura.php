@@ -19,7 +19,7 @@
 			$this->db->join('terreno','CPLClave = TIdPlantel','INNER');
 			$data = $this->plantel_model->get( $CPLClave);
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'infraestructura/Mostrar_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -31,7 +31,7 @@
 			$this->db->join('terreno','CPLClave = TIdPlantel','LEFT');
 			$data = $this->plantel_model->get( $CPLClave);
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'infraestructura/Terreno_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -45,7 +45,7 @@
 			$where = array( 'PIIdPlantel' => $CPLClave);
 			$data['programa'] = $this->proginfra_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'infraestructura/Programa_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -59,7 +59,7 @@
 			$where = array( 'ESIdPlantel' => $CPLClave);
 			$data['espacios'] = $this->espacios_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'infraestructura/Espacios_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -73,7 +73,7 @@
 			$where = array( 'VAIdPlantel' => $CPLClave);
 			$data['varios'] = $this->varios_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'infraestructura/Aulas_view';			
 			$this->load->view('plantilla_general', $data);
 		}
@@ -87,7 +87,7 @@
 			$where = array( 'COIdPlantel' => $CPLClave);
 			$data['computo'] = $this->computo_model->find_all( $where );
 			
-			$data['modulo'] = 'info';
+			$data['modulo'] = $this->router->fetch_class();
 			$data['subvista'] = 'infraestructura/Computo_view';			
 			$this->load->view('plantilla_general', $data);
 		}
