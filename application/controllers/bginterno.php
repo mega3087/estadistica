@@ -89,9 +89,8 @@
 			$this->db->where('GRTurno', $turno);	
 			$this->db->group_by('GRSemestre');
 			$data['semestres'] = $this->grupos_model->find_all(null, $semAct);
-			
-			
-			foreach($semestres as $sem => $listSem){
+
+			foreach($data['semestres'] as $sem => $listSem){
 				$select = 'GRSemestre, SUM(GRMasculino) Hombres, SUM(GRFemenino) Mujeres, SUM(GRCupo) Total';
 				$this->db->where('GRCPlantel', $idPlantel);
 				$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
@@ -100,8 +99,7 @@
 				$data['totalesAct'][$sem] = $this->grupos_model->find_all(null, $select);
 			}
 
-
-			foreach($semestres as $sems => $listSems){
+			foreach($data['semestres'] as $sems => $listSems){
 				$select = 'GRSemestre, GRGrupo, GRMasculino, GRFemenino, GRCupo, GRCClave, FNombre';
 				$this->db->join('formacion','FIdFormacion = GRCClave','left');
 				$this->db->where('GRCPlantel', $idPlantel);

@@ -627,43 +627,43 @@
                         <tbody>
                             <tr>
                                 <td><label> <?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "1o."; } else { echo "2o.";} ?></label></td>
-                                <td><input type="text" id="MSEHombres1" name="MSEHombres1" class="form-control" value="<?= $totales[0][0]['Hombres'] ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeres1" name="MSEMujeres1" class="form-control" value="<?= $totales[0][0]['Mujeres'] ?>" disabled></td>
-                                <td><input type="text" id="MSETotal1" name="MSETotal1" class="form-control" value="<?= $totales[0][0]['Total'] ?>" disabled></td>
+                                <td><input type="text" id="MSEHombres1" name="MSEHombres1" class="form-control" value="<?= $semestres[0]['THombres'] ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeres1" name="MSEMujeres1" class="form-control" value="<?= $semestres[0]['TMujeres'] ?>" disabled></td>
+                                <td><input type="text" id="MSETotal1" name="MSETotal1" class="form-control" value="<?= $semestres[0]['Total'] ?>" disabled></td>
                                 <td><input type="text" id="MSEDiscapacidad1" name="MSEDiscapacidad1" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
                                 <td><input type="text" id="MSEHablantes1" name="MSEHablantes1" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
                                 <td><input type="text" id="MSEExtranjero1" name="MSEExtranjero1" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEGrupos1" name="MSEGrupos1" class="form-control" value="<?= $totales[0][0]['Grupos'] ?>" disabled></td>												
+                                <td><input type="text" id="MSEGrupos1" name="MSEGrupos1" class="form-control" value="<?= $semestres[0]['TGrupos'] ?>" disabled></td>												
                             </tr>
                             <tr>
                                 <td><label><?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "3o."; } else { echo "4o.";} ?></label></td>
-                                <td><input type="text" id="MSEHombres2" name="MSEHombres2" class="form-control" value="<?= $totales[1][0]['Hombres'] ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeres2" name="MSEMujeres2" class="form-control" value="<?= $totales[1][0]['Mujeres'] ?>" disabled></td>
-                                <td><input type="text" id="MSETotal2" name="MSETotal2" class="form-control" value="<?= $totales[1][0]['Total'] ?>" disabled></td>
+                                <td><input type="text" id="MSEHombres2" name="MSEHombres2" class="form-control" value="<?= $semestres[1]['THombres'] ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeres2" name="MSEMujeres2" class="form-control" value="<?= $semestres[1]['TMujeres'] ?>" disabled></td>
+                                <td><input type="text" id="MSETotal2" name="MSETotal2" class="form-control" value="<?= $semestres[1]['Total'] ?>" disabled></td>
                                 <td><input type="text" id="MSEDiscapacidad2" name="MSEDiscapacidad2" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
                                 <td><input type="text" id="MSEHablantes2" name="MSEHablantes2" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
                                 <td><input type="text" id="MSEExtranjero2" name="MSEExtranjero2" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEGrupos2" name="MSEGrupos2" class="form-control" value="<?= $totales[1][0]['Grupos'] ?>" disabled></td>
+                                <td><input type="text" id="MSEGrupos2" name="MSEGrupos2" class="form-control" value="<?= $semestres[1]['TGrupos'] ?>" disabled></td>
                             </tr>
                             <tr>
                                 <td><label><?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "5o."; } else { echo "6o.";} ?></label></td>
-                                <td><input type="text" id="MSEHombres3" name="MSEHombres3" class="form-control" value="<?= $totales[2][0]['Hombres'] ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeres3" name="MSEMujeres3" class="form-control" value="<?= $totales[2][0]['Mujeres'] ?>" disabled></td>
-                                <td><input type="text" id="MSETotal3" name="MSETotal3" class="form-control" value="<?= $totales[2][0]['Total'] ?>" disabled></td>
+                                <td><input type="text" id="MSEHombres3" name="MSEHombres3" class="form-control" value="<?= $semestres[2]['THombres'] ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeres3" name="MSEMujeres3" class="form-control" value="<?= $semestres[2]['TMujeres'] ?>" disabled></td>
+                                <td><input type="text" id="MSETotal3" name="MSETotal3" class="form-control" value="<?= $semestres[2]['Total'] ?>" disabled></td>
                                 <td><input type="text" id="MSEDiscapacidad3" name="MSEDiscapacidad3" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
                                 <td><input type="text" id="MSEHablantes3" name="MSEHablantes3" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
                                 <td><input type="text" id="MSEExtranjero3" name="MSEExtranjero3" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEGrupos3" name="MSEGrupos3" class="form-control" value="<?= $totales[2][0]['Grupos'] ?>" disabled></td>												
+                                <td><input type="text" id="MSEGrupos3" name="MSEGrupos3" class="form-control" value="<?= $semestres[2]['TGrupos'] ?>" disabled></td>												
                             </tr>
                             <tr>
                             <td><label>Total</label></td>
-                                <td><input type="text" id="MSEHombresTotal" name="MSEHombresTotal" class="form-control" value="<?php $totalHombres = nvl($totales[0][0]['Hombres']) + nvl($totales[1][0]['Hombres']) + nvl($totales[2][0]['Hombres']); echo $totalHombres; ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeresTotal" name="MSEMujeresTotal" class="form-control" value="<?php $totalMujeres = nvl($totales[0][0]['Mujeres']) + nvl($totales[1][0]['Mujeres']) + nvl($totales[2][0]['Mujeres']); echo $totalMujeres; ?>" disabled></td>
-                                <td><input type="text" id="MSETotalTotal" name="MSETotalTotal" class="form-control" value="<?php $total = nvl($totales[0][0]['Total']) + nvl($totales[1][0]['Total']) + nvl($totales[2][0]['Total']); echo $total; ?>" disabled></td>
+                                <td><input type="text" id="MSEHombresTotal" name="MSEHombresTotal" class="form-control" value="<?php $totalHombres = nvl($semestres[0]['THombres']) + nvl($semestres[1]['THombres']) + nvl($semestres[2]['THombres']); echo $totalHombres; ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeresTotal" name="MSEMujeresTotal" class="form-control" value="<?php $totalMujeres = nvl($semestres[0]['TMujeres']) + nvl($semestres[1]['TMujeres']) + nvl($semestres[2]['TMujeres']); echo $totalMujeres; ?>" disabled></td>
+                                <td><input type="text" id="MSETotalTotal" name="MSETotalTotal" class="form-control" value="<?php $total = nvl($semestres[0]['Total']) + nvl($semestres[1]['Total']) + nvl($semestres[2]['Total']); echo $total; ?>" disabled></td>
                                 <td><input type="text" id="MSEDiscapacidadTotal" name="MSEDiscapacidadTotal" class="form-control" value="0" disabled></td>
                                 <td><input type="text" id="MSEHablantesTotal" name="MSEHablantesTotal" class="form-control" value="0" disabled></td>
                                 <td><input type="text" id="MSEExtranjeroTotal" name="MSEExtranjeroTotal" class="form-control" value="0" disabled></td>
-                                <td><input type="text" id="MSEGruposTotal" name="MSEGruposTotal" class="form-control" value="<?php $totalGrupos = nvl($totales[0][0]['Grupos']) + nvl($totales[1][0]['Grupos']) + nvl($totales[2][0]['Grupos']); echo $totalGrupos; ?>" disabled></td>
+                                <td><input type="text" id="MSEGruposTotal" name="MSEGruposTotal" class="form-control" value="<?php $totalGrupos = nvl($semestres[0]['TGrupos']) + nvl($semestres[1]['TGrupos']) + nvl($semestres[2]['TGrupos']); echo $totalGrupos; ?>" disabled></td>
                             </tr>
                         </tbody>
                     </table>
@@ -834,10 +834,10 @@
                             <?php } ?>
                             <tr>
                                 <td><label>Total de Grupos</label></td>											
-                                <td><input type="text" id="AGrupoT<?= $g.$listSem['GRSemestre'] ?>" name="AGrupoT<?= $g.$listSem['GRSemestre'] ?>" class="form-control"  value="<?= $listSem['TGrupos'] ?>" disabled></td>
-                                <td><input type="text" id="AHGrupoT<?= $g.$listSem['GRSemestre'] ?>" name="AHGrupoT<?= $g.$listSem['GRSemestre'] ?>" class="form-control"  value="<?= $listSem['THombres'] ?>" disabled></td>
-                                <td><input type="text" id="AMGrupoT<?= $g.$listSem['GRSemestre'] ?>" name="AMGrupoT<?= $g.$listSem['GRSemestre'] ?>" class="form-control"  value="<?= $listSem['TMujeres'] ?>" disabled></td>
-                                <td><input type="text" id="AAlumnosT<?= $g.$listSem['GRSemestre'] ?>" name="AAlumnosT<?= $g.$listSem['GRSemestre'] ?>" class="form-control"  value="<?= $listSem['Total'] ?>" disabled></td>
+                                <td><input type="text" id="AGrupoT<?= $listSem['GRSemestre'] ?>" name="AGrupoT<?= $listSem['GRSemestre'] ?>" class="form-control"  value="<?= $listSem['TGrupos'] ?>" disabled></td>
+                                <td><input type="text" id="AHGrupoT<?= $listSem['GRSemestre'] ?>" name="AHGrupoT<?= $listSem['GRSemestre'] ?>" class="form-control"  value="<?= $listSem['THombres'] ?>" disabled></td>
+                                <td><input type="text" id="AMGrupoT<?= $listSem['GRSemestre'] ?>" name="AMGrupoT<?= $listSem['GRSemestre'] ?>" class="form-control"  value="<?= $listSem['TMujeres'] ?>" disabled></td>
+                                <td><input type="text" id="AAlumnosT<?= $listSem['GRSemestre'] ?>" name="AAlumnosT<?= $listSem['GRSemestre'] ?>" class="form-control"  value="<?= $listSem['Total'] ?>" disabled></td>
                                 <?php if ($listSem['GRSemestre'] > 2) { ?>
                                 <td></td>	
                                 <?php } ?>
@@ -1200,9 +1200,9 @@
                             <tr>
                                 <td></td>
                                 <td>Total</td>												
-                                <td><input type="text" id="MHFT<?=$listF['FIdFormacion']?><?=$f?>" name="MHFT<?=$listF['FIdFormacion']?><?=$f?>" class="form-control" value="0" disabled></td>
-                                <td><input type="text" id="MMFT<?=$listF['FIdFormacion']?><?=$f?>" name="MMFT<?=$listF['FIdFormacion']?><?=$f?>" class="form-control" value="0" disabled></td>
-                                <td><input type="text" id="MTF<?=$listF['FIdFormacion']?><?=$f?>" name="MTF<?=$listF['FIdFormacion']?><?=$f?>" class="form-control" value="0" disabled></td>						
+                                <td><input type="text" id="MHFT<?=$listF['FIdFormacion']?>" name="MHFT<?=$listF['FIdFormacion']?>" class="form-control" value="<?php if ($alumCap['THombres'] == "") { echo 0; } else { echo $alumCap['THombres'];} ?>" disabled></td>
+                                <td><input type="text" id="MMFT<?=$listF['FIdFormacion']?>" name="MMFT<?=$listF['FIdFormacion']?>" class="form-control" value="<?php if ($alumCap['TMujeres'] == "") { echo 0; } else { echo $alumCap['TMujeres'];} ?>" disabled></td>
+                                <td><input type="text" id="MTF<?=$listF['FIdFormacion']?>" name="MTF<?=$listF['FIdFormacion']?>" class="form-control" value="<?php if ($alumCap['Total'] == "") { echo 0; } else { echo $alumCap['Total'];} ?>" disabled></td>						
                             </tr>
                             
                         </tbody>
