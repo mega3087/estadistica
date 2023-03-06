@@ -11,6 +11,7 @@
     <fieldset>
         <input type="hidden" name="idPlanEstudio" id="idPlanEstudio" value="<?= nvl($PlanEstudios['PEIdPlanEstudios'])?>">
         <input type="hidden" name="CPLTipo" id="CPLTipo" value="<?= nvl($planteles['CPLTipo'])?>">
+        <input type="hidden" name="CPLClave" id="CPLClave" value="<?= nvl($planteles['CPLClave'])?>">
         <p style="font-size: 14px;">1. Marque con una X el servicio educativo al que corresponde la matrícula.</p>
             <div class="row">
                 <div class="col-md-5">
@@ -1295,19 +1296,19 @@
                         <tbody>
                             <?php foreach ($formaciones as $f => $listF) {?>
                             <tr>
-                                <td><input type="text" id="MClaveF<?= nvl($listF['FIdFormacion'])?><?=$f?>" name="MClaveF<?= nvl($listF['FIdFormacion'])?><?=$f?>" class="form-control" ></td>
-                                <td><input type="text" id="MNombreF<?= nvl($listF['FIdFormacion'])?><?=$f?>" name="MNombreF<?= nvl($listF['FIdFormacion'])?><?=$f?>" class="form-control" value="<?= $listF['FNombre'] ?>" disabled size="95"></td>
-                                <td><input type="text" id="MHF<?= nvl($listF['FIdFormacion'])?><?=$f?>" name="MHF<?= nvl($listF['FIdFormacion'])?><?=$f?>" class="form-control" value="<?php if( $listF['AlumForma']['THombres'] == '') { echo 0; } else { echo $listF['AlumForma']['THombres'];} ?>" disabled></td>
-                                <td><input type="text" id="MMF<?= nvl($listF['FIdFormacion'])?><?=$f?>" name="MMF<?= nvl($listF['FIdFormacion'])?><?=$f?>" class="form-control" value="<?php if( $listF['AlumForma']['TMujeres'] == '') { echo 0; } else { echo $listF['AlumForma']['TMujeres'];} ?>" disabled></td>
-                                <td><input type="text" id="MTF<?= nvl($listF['FIdFormacion'])?><?=$f?>" name="MTF<?= nvl($listF['FIdFormacion'])?><?=$f?>" class="form-control" value="<?php if( $listF['AlumForma']['Total'] == '') { echo 0; } else { echo $listF['AlumForma']['Total'];} ?>" disabled></td>											
+                                <td><input type="text" id="MClaveF[]" name="MClaveF[]" class="form-control" ></td>
+                                <td><input type="text" id="MNombreF[]" name="MNombreF[]" class="form-control" value="<?= $listF['FNombre'] ?>" disabled size="95"></td>
+                                <td><input type="text" id="MHF[]" name="MHF[]" class="form-control" value="<?php if( $listF['AlumForma']['THombres'] == '') { echo 0; } else { echo $listF['AlumForma']['THombres'];} ?>" disabled></td>
+                                <td><input type="text" id="MMF[]" name="MMF[]" class="form-control" value="<?php if( $listF['AlumForma']['TMujeres'] == '') { echo 0; } else { echo $listF['AlumForma']['TMujeres'];} ?>" disabled></td>
+                                <td><input type="text" id="MTF[]" name="MTF[]" class="form-control" value="<?php if( $listF['AlumForma']['Total'] == '') { echo 0; } else { echo $listF['AlumForma']['Total'];} ?>" disabled></td>											
                             </tr>
                             <?php } ?>
                             <tr>
                                 <td></td>
                                 <td>Total</td>												
-                                <td><input type="text" id="MHFT<?= nvl($listF['FIdFormacion'])?>" name="MHFT<?= nvl($listF['FIdFormacion'])?>" class="form-control" value="<?php if ($alumCap['THombres'] == "") { echo 0; } else { echo $alumCap['THombres'];} ?>" disabled></td>
-                                <td><input type="text" id="MMFT<?= nvl($listF['FIdFormacion'])?>" name="MMFT<?= nvl($listF['FIdFormacion'])?>" class="form-control" value="<?php if ($alumCap['TMujeres'] == "") { echo 0; } else { echo $alumCap['TMujeres'];} ?>" disabled></td>
-                                <td><input type="text" id="MTF<?= nvl($listF['FIdFormacion'])?>" name="MTF<?= nvl($listF['FIdFormacion'])?>" class="form-control" value="<?php if ($alumCap['Total'] == "") { echo 0; } else { echo $alumCap['Total'];} ?>" disabled></td>						
+                                <td><input type="text" id="MHFT[]" name="MHFT[]" class="form-control" value="<?php if ($alumCap['THombres'] == "") { echo 0; } else { echo $alumCap['THombres'];} ?>" disabled></td>
+                                <td><input type="text" id="MMFT[]" name="MMFT[]" class="form-control" value="<?php if ($alumCap['TMujeres'] == "") { echo 0; } else { echo $alumCap['TMujeres'];} ?>" disabled></td>
+                                <td><input type="text" id="MTF[]" name="MTF[]" class="form-control" value="<?php if ($alumCap['Total'] == "") { echo 0; } else { echo $alumCap['Total'];} ?>" disabled></td>						
                             </tr>
                             
                         </tbody>
@@ -1526,6 +1527,7 @@
 
 				// Submit form input
 				//form.submit();
+                saveFormaciones(form);
 
                 //recogemos la dirección del Proceso PHP
                 mensaje = "¿Estás seguro de finalizar?";
@@ -1535,7 +1537,6 @@
                     //aqui introducimos lo que haremos tras cerrar la alerta.
                     $('#wrapper').prop('class','');
                     if (e){
-                        saveFormaciones();
                         window.location.href = "<?= base_url("bginterno"); ?>";
                     }
                 });
@@ -2841,22 +2842,15 @@
             }
         }); 
     }
-
-    function saveFormaciones(finish) {
-        let formData = new FormData(); 
-        
-        formData.append("PEIdPlanEstudios", document.getElementById("idPlanEstudio").value);
-        formData.append("PEUsuarioRealizo", document.getElementById("PEUsuarioRealizo").value);
-        formData.append("PEObservaciones", document.getElementById("FObservaciones").value);
+    
+    function saveFormaciones(form, finish) {
         
         $.ajax({
             type: "POST",
             url: "<?php echo base_url("bginterno/saveFormaciones_skip"); ?>",
-            data: formData,
+            data: form.serialize(),
             dataType: "html",
-            cache: false,
-            contentType: false,
-            processData: false,
+            
             success: function(data){
                 var data = data.split(";;");
                 if (data[0]=="OK") {

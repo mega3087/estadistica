@@ -196,6 +196,7 @@ $autoload['model'] = array(
 							'bgmatriculacemsad_model',
 							'bgrepecemsad_model',
 							'bgmodelodual_model',
-							'bgdocentes_model'
+							'bgdocentes_model',
+							'bgformacion_model'
 							//'anexo_model',
 						);

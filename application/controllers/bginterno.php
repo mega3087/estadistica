@@ -456,9 +456,64 @@
 		public function saveFormaciones_skip () {
 			$data = post_to_array('_skip');
 
-			$data['PEFechaRealizo'] = date('Y-m-d');
-			$this->db->set($data);
-			$this->db->where('PEIdPlanEstudios', $data['PEIdPlanEstudios']);
+			$this->db->where('PEstatus',1);
+			$data['periodoAct'] = $this->generaperiodo_model->find_all();
+			$peridoAct = $data['periodoAct'][0]['PAnio'].'-'.$data['periodoAct'][0]['PPeriodo'];
+
+			
+			$this->db->where('PEIdPlanEstudios', $data['idPlanEstudio']);
+			$PlanEstudios = $this->bgplanestudios_model->find();
+
+			$selectForm = "CPLClave, idFFormacion, FNombre";
+			$this->db->join('formacionplantel','idFPlantel = CPLClave','left');
+			$this->db->join('formacion','idFFormacion = FIdFormacion','left');
+			$this->db->where('CPLClave', $data['CPLClave']);			
+			$formaciones  = $this->plantel_model->find_all(null, $selectForm);
+
+			foreach ($formaciones  as $f => $listF) {
+				$selFor = 'SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, SUM(GRTurno) TGrupos, FNombre';
+				$this->db->join('formacion','FIdFormacion = GRCClave','left');
+				$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
+				$this->db->where('GRCPlantel', $data['CPLClave']);
+				$this->db->where('GRTurno', $PlanEstudios['PETurnoPlantel']);	
+				$this->db->where('GRCClave',$listF['idFFormacion']);
+				$AlumForma[] = $this->grupos_model->find(null, $selFor);
+
+				$datos = array(
+					'FIdBgPlan' => $data['idPlanEstudio'], 
+					'FClave' => $data['MClaveF'][$f], 
+					'FNombreFormacion' => $listF['FNombre'], 
+					'FHombres' => $AlumForma[$f]['THombres'], 
+					'FMujeres' => $AlumForma[$f]['TMujeres'], 
+					'FTotal' => $AlumForma[$f]['Total']
+				);
+
+				$this->db->where('FIdBgPlan', $data['idPlanEstudio']);
+				$this->db->like('FNombreFormacion', $listF['FNombre']);
+				$forma = $this->bgformacion_model->find_all();
+				if (count($forma) == 0) {
+					$this->bgformacion_model->insert($datos);				
+					echo "OK;;";
+				} else {
+					$this->db->set($datos);
+					$this->db->where('FIdBgPlan', $data['idPlanEstudio']);
+					$this->db->like('FNombreFormacion', $listF['FNombre']);
+					$this->db->update('bgformacion');
+					
+					echo "OK;;";
+				}
+
+			}
+
+			
+			$arreglo = array(
+				'PEUsuarioRealizo' => $data['PEUsuarioRealizo'], 
+				'PEFechaRealizo' => date('Y-m-d'), 
+				'PEObservaciones' => $data['FObservaciones']
+			);
+
+			$this->db->set($arreglo);
+			$this->db->where('PEIdPlanEstudios', $data['idPlanEstudio']);
 			$this->db->update('bgplanestudios');
 			
 			echo "OK;;";
