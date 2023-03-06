@@ -1,6 +1,8 @@
 <link href="<?php echo base_url('assets/inspinia/css/plugins/steps/jquery.steps.css');?>" rel="stylesheet">
 <link href="<?php echo base_url('assets/inspinia/css/plugins/iCheck/custom.css');?>" rel="stylesheet">
 <link href="<?php echo base_url('assets/inspinia/css/plugins/chosen/chosen.css'); ?>" rel="stylesheet">
+<link href="<?php echo base_url('assets/inspinia/css/animate.css'); ?>" rel="stylesheet">
+<link href="<?php echo base_url('assets/inspinia/css/plugins/dropzone/basic.css'); ?>" rel="stylesheet">
 
 
 <form id="form" class="wizard-big">
@@ -26,31 +28,22 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <select name="PEActualizacionAnio" id="PEActualizacionAnio" class="form-control" required>
-                            <option value="">-Año-</option>
-                            <?php for($i = date('Y') + 1; $i >=(date('Y') - 14); $i--){ ?>
-                                <option value="<?= $i ?>" <?php if(nvl($PlanEstudios['PEActualizacionAnio']) == $i){ echo "selected"; } ?>><?= $i ?></option>
-                            <?php } ?>
+                        <select name="PEActualizacionAnio" id="PEActualizacionAnio" class="form-control" disabled>
+                                <option value="2018">2018</option>                            
                         </select>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <select name="PEActualizacionMes" id="PEActualizacionMes" class="form-control" required>
-                            <option value="">-Mes-</option>
-                            <?php for ($m = 1; $m <= 12; $m++) { ?>
-                                <option value="<?= $m ?>" <?php if(nvl($PlanEstudios['PEActualizacionMes']) == $m){ echo "selected"; } ?>><?= ver_mes($m) ?></option>
-                            <?php } ?>											
+                        <select name="PEActualizacionMes" id="PEActualizacionMes" class="form-control" disabled>
+                                <option value="7"><?= ver_mes('7') ?></option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <select name="PEActualizacionDia" id="PEActualizacionDia" class="form-control" required>
-                            <option value="">-Día-</option>
-                            <?php for ($d = 1; $d <= 31; $d++) { ?>
-                                <option value="<?= setDia($d) ?>" <?php if(nvl($PlanEstudios['PEActualizacionDia']) == $d){ echo "selected"; } ?>><?= setDia($d) ?></option>	
-                            <?php } ?>
+                        <select name="PEActualizacionDia" id="PEActualizacionDia" class="form-control" disabled>
+                                <option value="3"><?= setDia('3') ?></option>	
                         </select>									
                     </div>
                 </div>
@@ -134,11 +127,11 @@
                 </div>
                 <br><br>
                 <div class="col-md-3" id="contentOtros" style="display:none;">
-                <div class="form-group">
-                    <label><em>*</em> Especifique:</label>
-                    <input id="PEEspecifique" name="PEEspecifique" type="text" class="form-control">											
-                </div>
-            </div>	
+                    <div class="form-group">
+                        <label><em>*</em> Especifique:</label>
+                        <input id="PEEspecifique" name="PEEspecifique" type="text" class="form-control">											
+                    </div>
+                </div>	
             </div>
             
             <p style="font-size: 14px;">4. Escriba el número de créditos por cubrir.</p>
@@ -297,39 +290,39 @@
                         <tbody>
                             <tr>
                                 <td><label><?php if ($periodoAnt[0]['PPeriodo'] == 2) {echo "1o."; } else { echo "2o.";} ?> </label></td>
-                                <td><input type="text" id="RepHombres1" name="RepHombres1" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHombresRep1'] == '') { echo 0; } else { echo $reprobReg['AHombresRep1'];}?>" onkeyup="sumarReprobados();" ></td>
-                                <td><input type="text" id="RepMujeres1" name="RepMujeres1" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AMujeresRep1'] == '') { echo 0; } else { echo $reprobReg['AMujeresRep1'];}?>" onkeyup="sumarReprobados();"></td>
-                                <td><input type="text" id="RepTotal1" name="RepTotal1" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ATotalRep1'] == '') { echo 0; } else { echo $reprobReg['ATotalRep1'];}?>" onkeyup="sumarReprobados();" disabled></td>
-                                <td><input type="text" id="RepDiscapacidad1" name="RepDiscapacidad1" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ADiscapacidadRep1'] == '') { echo 0; } else { echo $reprobReg['ADiscapacidadRep1'];}?>" onkeyup="sumarReprobados();"></td>
-                                <td><input type="text" id="RepHablantes1" name="RepHablantes1" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHablantesRep1'] == '') { echo 0; } else { echo $reprobReg['AHablantesRep1'];}?>" onkeyup="sumarReprobados();"></td>
-                                <td><input type="text" id="RepExtranjero1" name="RepExtranjero1" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AExtranjerosRep1'] == '') { echo 0; } else { echo $reprobReg['AExtranjerosRep1'];}?>" onkeyup="sumarReprobados();"></td>
+                                <td><input type="text" id="RepHombres1" name="RepHombres1" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHombresRep1'] == '') { echo 0; } else { echo $reprobReg['AHombresRep1'];}?>" disabled></td>
+                                <td><input type="text" id="RepMujeres1" name="RepMujeres1" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AMujeresRep1'] == '') { echo 0; } else { echo $reprobReg['AMujeresRep1'];}?>" disabled></td>
+                                <td><input type="text" id="RepTotal1" name="RepTotal1" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ATotalRep1'] == '') { echo 0; } else { echo $reprobReg['ATotalRep1'];}?>" disabled></td>
+                                <td><input type="text" id="RepDiscapacidad1" name="RepDiscapacidad1" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ADiscapacidadRep1'] == '') { echo 0; } else { echo $reprobReg['ADiscapacidadRep1'];}?>" disabled></td>
+                                <td><input type="text" id="RepHablantes1" name="RepHablantes1" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHablantesRep1'] == '') { echo 0; } else { echo $reprobReg['AHablantesRep1'];}?>" disabled></td>
+                                <td><input type="text" id="RepExtranjero1" name="RepExtranjero1" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AExtranjerosRep1'] == '') { echo 0; } else { echo $reprobReg['AExtranjerosRep1'];}?>" disabled></td>
                             </tr>
                             <tr>
                                 <td><label><?php if ($periodoAnt[0]['PPeriodo'] == 2) {echo "3o."; } else { echo "4o.";} ?></label></td>
-                                <td><input type="text" id="RepHombres2" name="RepHombres2" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHombresRep3'] == '') { echo 0; } else { echo $reprobReg['AHombresRep3'];}?>" onkeyup="sumarReprobados();"></td>
-                                <td><input type="text" id="RepMujeres2" name="RepMujeres2" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AMujeresRep3'] == '') { echo 0; } else { echo $reprobReg['AMujeresRep3'];}?>" onkeyup="sumarReprobados();"></td>
-                                <td><input type="text" id="RepTotal2" name="RepTotal2" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ATotalRep3'] == '') { echo 0; } else { echo $reprobReg['ATotalRep3'];}?>" onkeyup="sumarReprobados();" disabled></td>
-                                <td><input type="text" id="RepDiscapacidad2" name="RepDiscapacidad2" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ADiscapacidadRep3'] == '') { echo 0; } else { echo $reprobReg['ADiscapacidadRep3'];}?>" onkeyup="sumarReprobados();"></td>
-                                <td><input type="text" id="RepHablantes2" name="RepHablantes2" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHablantesRep3'] == '') { echo 0; } else { echo $reprobReg['AHablantesRep3'];}?>" onkeyup="sumarReprobados();"></td>
-                                <td><input type="text" id="RepExtranjero2" name="RepExtranjero2" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AExtranjerosRep3'] == '') { echo 0; } else { echo $reprobReg['AExtranjerosRep3'];}?>" onkeyup="sumarReprobados();"></td>
+                                <td><input type="text" id="RepHombres2" name="RepHombres2" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHombresRep3'] == '') { echo 0; } else { echo $reprobReg['AHombresRep3'];}?>" disabled></td>
+                                <td><input type="text" id="RepMujeres2" name="RepMujeres2" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AMujeresRep3'] == '') { echo 0; } else { echo $reprobReg['AMujeresRep3'];}?>" disabled></td>
+                                <td><input type="text" id="RepTotal2" name="RepTotal2" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ATotalRep3'] == '') { echo 0; } else { echo $reprobReg['ATotalRep3'];}?>" disabled ></td>
+                                <td><input type="text" id="RepDiscapacidad2" name="RepDiscapacidad2" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ADiscapacidadRep3'] == '') { echo 0; } else { echo $reprobReg['ADiscapacidadRep3'];}?>" disabled></td>
+                                <td><input type="text" id="RepHablantes2" name="RepHablantes2" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHablantesRep3'] == '') { echo 0; } else { echo $reprobReg['AHablantesRep3'];}?>" disabled></td>
+                                <td><input type="text" id="RepExtranjero2" name="RepExtranjero2" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AExtranjerosRep3'] == '') { echo 0; } else { echo $reprobReg['AExtranjerosRep3'];}?>" disabled></td>
                             </tr>
                             <tr>
                                 <td><label><?php if ($periodoAnt[0]['PPeriodo'] == 2) { echo "5o."; } else { echo "6o.";} ?></label></td>
-                                <td><input type="text" id="RepHombres3" name="RepHombres3" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHombresRep5'] == '') { echo 0; } else { echo $reprobReg['AHombresRep5'];}?>" onkeyup="sumarReprobados();"></td>
-                                <td><input type="text" id="RepMujeres3" name="RepMujeres3" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AMujeresRep5'] == '') { echo 0; } else { echo $reprobReg['AMujeresRep5'];}?>" onkeyup="sumarReprobados();"></td>
-                                <td><input type="text" id="RepTotal3" name="RepTotal3" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ATotalRep5'] == '') { echo 0; } else { echo $reprobReg['ATotalRep5'];}?>" onkeyup="sumarReprobados();" disabled></td>
-                                <td><input type="text" id="RepDiscapacidad3" name="RepDiscapacidad3" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ADiscapacidadRep5'] == '') { echo 0; } else { echo $reprobReg['ADiscapacidadRep5'];}?>" onkeyup="sumarReprobados();"></td>
-                                <td><input type="text" id="RepHablantes3" name="RepHablantes3" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHablantesRep5'] == '') { echo 0; } else { echo $reprobReg['AHablantesRep5'];}?>" onkeyup="sumarReprobados();"></td>
-                                <td><input type="text" id="RepExtranjero3" name="RepExtranjero3" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AExtranjerosRep5'] == '') { echo 0; } else { echo $reprobReg['AExtranjerosRep5'];}?>" onkeyup="sumarReprobados();"></td>
+                                <td><input type="text" id="RepHombres3" name="RepHombres3" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHombresRep5'] == '') { echo 0; } else { echo $reprobReg['AHombresRep5'];}?>" disabled></td>
+                                <td><input type="text" id="RepMujeres3" name="RepMujeres3" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AMujeresRep5'] == '') { echo 0; } else { echo $reprobReg['AMujeresRep5'];}?>" disabled></td>
+                                <td><input type="text" id="RepTotal3" name="RepTotal3" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ATotalRep5'] == '') { echo 0; } else { echo $reprobReg['ATotalRep5'];}?>" disabled ></td>
+                                <td><input type="text" id="RepDiscapacidad3" name="RepDiscapacidad3" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ADiscapacidadRep5'] == '') { echo 0; } else { echo $reprobReg['ADiscapacidadRep5'];}?>" disabled></td>
+                                <td><input type="text" id="RepHablantes3" name="RepHablantes3" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHablantesRep5'] == '') { echo 0; } else { echo $reprobReg['AHablantesRep5'];}?>" disabled></td>
+                                <td><input type="text" id="RepExtranjero3" name="RepExtranjero3" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AExtranjerosRep5'] == '') { echo 0; } else { echo $reprobReg['AExtranjerosRep5'];}?>" disabled></td>
                             </tr>
                             <tr>
                             <td><label>Total</label></td>
-                                <td><input type="text" id="RepHombresTotal" name="RepHombresTotal" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHombresRepT'] == '') { echo 0; } else { echo $reprobReg['AHombresRepT'];}?>" onkeyup="sumarReprobados();" disabled></td>
-                                <td><input type="text" id="RepMujeresTotal" name="RepMujeresTotal" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AMujeresRepT'] == '') { echo 0; } else { echo $reprobReg['AMujeresRepT'];}?>" onkeyup="sumarReprobados();" disabled></td>
-                                <td><input type="text" id="RepTotalTotal" name="RepTotalTotal" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ATotalRep'] == '') { echo 0; } else { echo $reprobReg['ATotalRep'];}?>" onkeyup="sumarReprobados();" disabled></td>
-                                <td><input type="text" id="RepDiscapacidadTotal" name="RepDiscapacidadTotal" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ADiscapacidadRepT'] == '') { echo 0; } else { echo $reprobReg['ADiscapacidadRepT'];}?>" onkeyup="sumarReprobados();" disabled></td>
-                                <td><input type="text" id="RepHablantesTotal" name="RepHablantesTotal" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHablantesRepT'] == '') { echo 0; } else { echo $reprobReg['AHablantesRepT'];}?>" onkeyup="sumarReprobados();" disabled></td>
-                                <td><input type="text" id="RepExtranjeroTotal" name="RepExtranjeroTotal" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AExtranjerosRepT'] == '') { echo 0; } else { echo $reprobReg['AExtranjerosRepT'];}?>" onkeyup="sumarReprobados();" disabled></td>
+                                <td><input type="text" id="RepHombresTotal" name="RepHombresTotal" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHombresRepT'] == '') { echo 0; } else { echo $reprobReg['AHombresRepT'];}?>" disabled></td>
+                                <td><input type="text" id="RepMujeresTotal" name="RepMujeresTotal" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AMujeresRepT'] == '') { echo 0; } else { echo $reprobReg['AMujeresRepT'];}?>" disabled></td>
+                                <td><input type="text" id="RepTotalTotal" name="RepTotalTotal" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ATotalRep'] == '') { echo 0; } else { echo $reprobReg['ATotalRep'];}?>" disabled></td>
+                                <td><input type="text" id="RepDiscapacidadTotal" name="RepDiscapacidadTotal" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['ADiscapacidadRepT'] == '') { echo 0; } else { echo $reprobReg['ADiscapacidadRepT'];}?>" disabled></td>
+                                <td><input type="text" id="RepHablantesTotal" name="RepHablantesTotal" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AHablantesRepT'] == '') { echo 0; } else { echo $reprobReg['AHablantesRepT'];}?>" disabled></td>
+                                <td><input type="text" id="RepExtranjeroTotal" name="RepExtranjeroTotal" class="form-control numeros" min="0" step="1" value="<?php if ($reprobReg['AExtranjerosRepT'] == '') { echo 0; } else { echo $reprobReg['AExtranjerosRepT'];}?>" disabled></td>
                             </tr>
                         </tbody>
                     </table>
@@ -486,7 +479,7 @@
                                 <th></th>
                                 <th colspan="3"><?php if ($periodoAnt[0]['PPeriodo'] == 2) {echo "1er."; } else { echo "2do.";} ?> Semestre</th>
                                 <th colspan="3"><?php if ($periodoAnt[0]['PPeriodo'] == 2) {echo "3er."; } else { echo "4to.";} ?> Semestre</th>
-                                <th colspan="3"><?php if ($periodoAnt[0]['PPeriodo'] == 2) {echo "5to."; } else { echo "6to.";} ?> Semestre</th>
+                                <th colspan="3"><?php if ($periodoAnt[0]['PPeriodo'] == 2) {echo "5o."; } else { echo "6to.";} ?> Semestre</th>
                             </tr>
                             <tr>
                                 <th></th>											
@@ -599,6 +592,47 @@
                                 <td><input type="text" id="OAmbos3" name="OAmbos3" class="form-control numeros" value="<?php if ($abandonoInt5['AI5OtrosT'] == '') { echo 0; } else { echo $abandonoInt5['AI5OtrosT'];}?>" onkeyup="sumarAbandonoEscIntra();" disabled></td>
                             </tr>
 
+                            <tr>
+                                <td></td>
+                                <td colspan='3'>
+                                    <div id="contentOHombres1" style="display:<?php if($abandonoInt1['AI1DescripH'] != '') { echo 'show'; } else { echo 'none'; } ?> ;">
+                                        <input id="descOtrosHombres1" name="descOtrosHombres1" type="text" class="form-control" placeholder="Describe el motivo de Otro Hombres 1er Semestre" value="<?php if ($abandonoInt1['AI1DescripH'] != '') { echo $abandonoInt1['AI1DescripH'];}?>" required>
+                                    </div><br>
+                                    <div id="contentOMujeres1" style="display:<?php if($abandonoInt1['AI1DescripM'] != '') { echo 'show'; } else { echo 'none'; } ?> ;">
+                                        <input id="descOtrosMujeres1" name="descOtrosMujeres1" type="text" class="form-control" placeholder="Describe el motivo de Otro Mujeres 1er Semestre" value="<?php if ($abandonoInt1['AI1DescripM'] != '') { echo $abandonoInt1['AI1DescripM'];}?>" required>
+                                    </div>                                    
+                                </td>
+                                <td colspan='3'>
+                                    <div id="contentOHombres2" style="display:<?php if($abandonoInt3['AI3DescripH'] != '') { echo 'show'; } else { echo 'none'; } ?> ;">
+                                        <input id="descOtrosHombres2" name="descOtrosHombres2" type="text" class="form-control" placeholder="Describe el motivo de Otro Hombres 3er Semestre" value="<?php if ($abandonoInt3['AI3DescripH'] != '') { echo $abandonoInt3['AI3DescripH'];}?>" required>
+                                    </div><br>
+                                    <div id="contentOMujeres2" style="display:<?php if($abandonoInt3['AI3DescripM'] != '') { echo 'show'; } else { echo 'none'; } ?> ;">
+                                        <input id="descOtrosMujeres2" name="descOtrosMujeres2" type="text" class="form-control" placeholder="Describe el motivo de Otro Mujeres 3er Semestre" value="<?php if ($abandonoInt3['AI3DescripM'] != '') { echo $abandonoInt3['AI3DescripM'];}?>" required>
+                                    </div>
+                                </td>
+                                <td colspan='3'>
+                                    <div id="contentOHombres3" style="display:<?php if($abandonoInt5['AI5DescripH'] != '') { echo 'show'; } else { echo 'none'; } ?> ;">
+                                        <input id="descOtrosHombres3" name="descOtrosHombres3" type="text" class="form-control" placeholder="Describe el motivo de Otro Hombres 5o Semestre" value="<?php if ($abandonoInt5['AI5DescripH'] != '') { echo $abandonoInt5['AI5DescripH'];}?>" required>
+                                    </div><br>
+                                    <div id="contentOMujeres3" style="display:<?php if($abandonoInt5['AI5DescripM'] != '') { echo 'show'; } else { echo 'none'; } ?> ;">
+                                        <input id="descOtrosMujeres3" name="descOtrosMujeres3" type="text" class="form-control" placeholder="Describe el motivo de Otro Mujeres 5o Semestre" value="<?php if ($abandonoInt5['AI5DescripM'] != '') { echo $abandonoInt5['AI5DescripM'];}?>" required>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><label>*TOTALES</label></td>
+                                <td><input type="text" id="AEIHombresTTotal1" name="AEIHombresTTotal1" class="form-control numeros" value="<?php if ($abandonoInt1['AI1TotalH'] == '') { echo 0; } else { echo $abandonoInt1['AI1TotalH'];}?>" disabled></td>
+                                <td><input type="text" id="AEIMujeresTTotal1" name="AEIMujeresTTotal1" class="form-control numeros" value="<?php if ($abandonoInt1['AI1TotalM'] == '') { echo 0; } else { echo $abandonoInt1['AI1TotalM'];}?>" disabled></td>
+                                <td><input type="text" id="AEITotalTotal1" name="AEITotalTotal1" class="form-control numeros" value="<?php if ($abandonoInt1['AI1Total'] == '') { echo 0; } else { echo $abandonoInt1['AI1Total'];}?>"  disabled></td>
+                                <td><input type="text" id="AEIHombresTTotal2" name="AEIHombresTTotal2" class="form-control numeros" value="<?php if ($abandonoInt3['AI3TotalH'] == '') { echo 0; } else { echo $abandonoInt3['AI3TotalH'];}?>" disabled></td>
+                                <td><input type="text" id="AEIMujeresTTotal2" name="AEIMujeresTTotal2" class="form-control numeros" value="<?php if ($abandonoInt3['AI3TotalM'] == '') { echo 0; } else { echo $abandonoInt3['AI3TotalM'];}?>" disabled></td>
+                                <td><input type="text" id="AEITotalTotal2" name="AEITotalTotal2" class="form-control numeros" value="<?php if ($abandonoInt3['AI3Total'] == '') { echo 0; } else { echo $abandonoInt3['AI3Total'];}?>"  disabled></td>
+                                <td><input type="text" id="AEIHombresTTotal3" name="AEIHombresTTotal3" class="form-control numeros" value="<?php if ($abandonoInt5['AI5TotalH'] == '') { echo 0; } else { echo $abandonoInt5['AI5TotalH'];}?>" disabled></td>
+                                <td><input type="text" id="AEIMujeresTTotal3" name="AEIMujeresTTotal3" class="form-control numeros" value="<?php if ($abandonoInt5['AI5TotalM'] == '') { echo 0; } else { echo $abandonoInt5['AI5TotalM'];}?>" disabled></td>
+                                <td><input type="text" id="AEITotalTotal3" name="AEITotalTotal3" class="form-control numeros" value="<?php if ($abandonoInt5['AI5Total'] == '') { echo 0; } else { echo $abandonoInt5['AI5Total'];}?>"  disabled></td>
+                            </tr>
+
                         </tbody>
                     </table>
                 </div>
@@ -625,52 +659,95 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php if (count($matriculaGrupo) != 0) { ?>
                             <tr>
                                 <td><label> <?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "1o."; } else { echo "2o.";} ?></label></td>
-                                <td><input type="text" id="MSEHombres1" name="MSEHombres1" class="form-control" value="<?= $semestres[0]['THombres'] ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeres1" name="MSEMujeres1" class="form-control" value="<?= $semestres[0]['TMujeres'] ?>" disabled></td>
-                                <td><input type="text" id="MSETotal1" name="MSETotal1" class="form-control" value="<?= $semestres[0]['Total'] ?>" disabled></td>
+                                <td><input type="text" id="MSEHombres1" name="MSEHombres1" class="form-control" value="<?= nvl($matriculaGrupo[0]['THombres']) ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeres1" name="MSEMujeres1" class="form-control" value="<?= nvl($matriculaGrupo[0]['TMujeres']) ?>" disabled></td>
+                                <td><input type="text" id="MSETotal1" name="MSETotal1" class="form-control" value="<?= nvl($matriculaGrupo[0]['Total']) ?>" disabled></td>
                                 <td><input type="text" id="MSEDiscapacidad1" name="MSEDiscapacidad1" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
                                 <td><input type="text" id="MSEHablantes1" name="MSEHablantes1" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
                                 <td><input type="text" id="MSEExtranjero1" name="MSEExtranjero1" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEGrupos1" name="MSEGrupos1" class="form-control" value="<?= $semestres[0]['TGrupos'] ?>" disabled></td>												
+                                <td><input type="text" id="MSEGrupos1" name="MSEGrupos1" class="form-control" value="<?= nvl($matriculaGrupo[0]['TGrupos'])?>" disabled></td>												
                             </tr>
                             <tr>
                                 <td><label><?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "3o."; } else { echo "4o.";} ?></label></td>
-                                <td><input type="text" id="MSEHombres2" name="MSEHombres2" class="form-control" value="<?= $semestres[1]['THombres'] ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeres2" name="MSEMujeres2" class="form-control" value="<?= $semestres[1]['TMujeres'] ?>" disabled></td>
-                                <td><input type="text" id="MSETotal2" name="MSETotal2" class="form-control" value="<?= $semestres[1]['Total'] ?>" disabled></td>
+                                <td><input type="text" id="MSEHombres2" name="MSEHombres2" class="form-control" value="<?= nvl($matriculaGrupo[1]['THombres']) ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeres2" name="MSEMujeres2" class="form-control" value="<?= nvl($matriculaGrupo[1]['TMujeres']) ?>" disabled></td>
+                                <td><input type="text" id="MSETotal2" name="MSETotal2" class="form-control" value="<?= nvl($matriculaGrupo[1]['Total']) ?>" disabled></td>
                                 <td><input type="text" id="MSEDiscapacidad2" name="MSEDiscapacidad2" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
                                 <td><input type="text" id="MSEHablantes2" name="MSEHablantes2" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
                                 <td><input type="text" id="MSEExtranjero2" name="MSEExtranjero2" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEGrupos2" name="MSEGrupos2" class="form-control" value="<?= $semestres[1]['TGrupos'] ?>" disabled></td>
+                                <td><input type="text" id="MSEGrupos2" name="MSEGrupos2" class="form-control" value="<?= nvl($matriculaGrupo[1]['TGrupos'])?>" disabled></td>
                             </tr>
                             <tr>
                                 <td><label><?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "5o."; } else { echo "6o.";} ?></label></td>
-                                <td><input type="text" id="MSEHombres3" name="MSEHombres3" class="form-control" value="<?= $semestres[2]['THombres'] ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeres3" name="MSEMujeres3" class="form-control" value="<?= $semestres[2]['TMujeres'] ?>" disabled></td>
-                                <td><input type="text" id="MSETotal3" name="MSETotal3" class="form-control" value="<?= $semestres[2]['Total'] ?>" disabled></td>
+                                <td><input type="text" id="MSEHombres3" name="MSEHombres3" class="form-control" value="<?= nvl($matriculaGrupo[2]['THombres']) ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeres3" name="MSEMujeres3" class="form-control" value="<?= nvl($matriculaGrupo[2]['TMujeres']) ?>" disabled></td>
+                                <td><input type="text" id="MSETotal3" name="MSETotal3" class="form-control" value="<?= nvl($matriculaGrupo[2]['Total']) ?>" disabled></td>
                                 <td><input type="text" id="MSEDiscapacidad3" name="MSEDiscapacidad3" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
                                 <td><input type="text" id="MSEHablantes3" name="MSEHablantes3" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
                                 <td><input type="text" id="MSEExtranjero3" name="MSEExtranjero3" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEGrupos3" name="MSEGrupos3" class="form-control" value="<?= $semestres[2]['TGrupos'] ?>" disabled></td>												
+                                <td><input type="text" id="MSEGrupos3" name="MSEGrupos3" class="form-control" value="<?= nvl($matriculaGrupo[2]['TGrupos'])?>" disabled></td>												
                             </tr>
                             <tr>
                             <td><label>Total</label></td>
-                                <td><input type="text" id="MSEHombresTotal" name="MSEHombresTotal" class="form-control" value="<?php $totalHombres = nvl($semestres[0]['THombres']) + nvl($semestres[1]['THombres']) + nvl($semestres[2]['THombres']); echo $totalHombres; ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeresTotal" name="MSEMujeresTotal" class="form-control" value="<?php $totalMujeres = nvl($semestres[0]['TMujeres']) + nvl($semestres[1]['TMujeres']) + nvl($semestres[2]['TMujeres']); echo $totalMujeres; ?>" disabled></td>
-                                <td><input type="text" id="MSETotalTotal" name="MSETotalTotal" class="form-control" value="<?php $total = nvl($semestres[0]['Total']) + nvl($semestres[1]['Total']) + nvl($semestres[2]['Total']); echo $total; ?>" disabled></td>
+                                <td><input type="text" id="MSEHombresTotal" name="MSEHombresTotal" class="form-control" value="<?php $totalHombres = nvl($matriculaGrupo[0]['THombres']) + nvl($matriculaGrupo[1]['THombres']) + nvl($matriculaGrupo[2]['THombres']); echo $totalHombres; ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeresTotal" name="MSEMujeresTotal" class="form-control" value="<?php $totalMujeres = nvl($matriculaGrupo[0]['TMujeres']) + nvl($matriculaGrupo[1]['TMujeres']) + nvl($matriculaGrupo[2]['TMujeres']); echo $totalMujeres; ?>" disabled></td>
+                                <td><input type="text" id="MSETotalTotal" name="MSETotalTotal" class="form-control" value="<?php $total = nvl($matriculaGrupo[0]['Total']) + nvl($matriculaGrupo[1]['Total']) + nvl($matriculaGrupo[2]['Total']); echo $total; ?>" disabled></td>
                                 <td><input type="text" id="MSEDiscapacidadTotal" name="MSEDiscapacidadTotal" class="form-control" value="0" disabled></td>
                                 <td><input type="text" id="MSEHablantesTotal" name="MSEHablantesTotal" class="form-control" value="0" disabled></td>
                                 <td><input type="text" id="MSEExtranjeroTotal" name="MSEExtranjeroTotal" class="form-control" value="0" disabled></td>
-                                <td><input type="text" id="MSEGruposTotal" name="MSEGruposTotal" class="form-control" value="<?php $totalGrupos = nvl($semestres[0]['TGrupos']) + nvl($semestres[1]['TGrupos']) + nvl($semestres[2]['TGrupos']); echo $totalGrupos; ?>" disabled></td>
+                                <td><input type="text" id="MSEGruposTotal" name="MSEGruposTotal" class="form-control" value="<?php $totalGrupos = nvl($matriculaGrupo[0]['TGrupos']) + nvl($matriculaGrupo[1]['TGrupos']) + nvl($matriculaGrupo[2]['TGrupos']); echo $totalGrupos; ?>" disabled></td>
                             </tr>
+                            <?php } else { ?>
+                                <tr>
+                                <td><label> <?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "1o."; } else { echo "2o.";} ?></label></td>
+                                <td><input type="text" id="MSEHombres1" name="MSEHombres1" class="form-control" value="<?= nvl($matricula['MHIns2o']) ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeres1" name="MSEMujeres1" class="form-control" value="<?= nvl($matricula['MMIns2o']) ?>" disabled></td>
+                                <td><input type="text" id="MSETotal1" name="MSETotal1" class="form-control" value="<?= nvl($matricula['MTIns2o']) ?>" disabled></td>
+                                <td><input type="text" id="MSEDiscapacidad1" name="MSEDiscapacidad1" class="form-control numeros" value="<?= nvl($matricula['MDIns2o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEHablantes1" name="MSEHablantes1" class="form-control numeros" value="<?= nvl($matricula['MHaIns2o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEExtranjero1" name="MSEExtranjero1" class="form-control numeros" value="<?= nvl($matricula['MEIns2o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEGrupos1" name="MSEGrupos1" class="form-control" value="<?= nvl($matricula['MInsGrupos2o'])?>" disabled></td>												
+                            </tr>
+                            <tr>
+                                <td><label><?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "3o."; } else { echo "4o.";} ?></label></td>
+                                <td><input type="text" id="MSEHombres2" name="MSEHombres2" class="form-control" value="<?= nvl($matricula['MHIns4o']) ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeres2" name="MSEMujeres2" class="form-control" value="<?= nvl($matricula['MMIns4o']) ?>" disabled></td>
+                                <td><input type="text" id="MSETotal2" name="MSETotal2" class="form-control" value="<?= nvl($matricula['MTIns4o']) ?>" disabled></td>
+                                <td><input type="text" id="MSEDiscapacidad2" name="MSEDiscapacidad2" class="form-control numeros" value="<?= nvl($matricula['MDIns4o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEHablantes2" name="MSEHablantes2" class="form-control numeros" value="<?= nvl($matricula['MHaIns4o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEExtranjero2" name="MSEExtranjero2" class="form-control numeros" value="<?= nvl($matricula['MEIns4o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEGrupos2" name="MSEGrupos2" class="form-control" value="<?= nvl($matricula['MInsGrupos4o'])?>" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><label><?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "5o."; } else { echo "6o.";} ?></label></td>
+                                <td><input type="text" id="MSEHombres3" name="MSEHombres3" class="form-control" value="<?= nvl($matricula['MHIns6o']) ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeres3" name="MSEMujeres3" class="form-control" value="<?= nvl($matricula['MHIns6o']) ?>" disabled></td>
+                                <td><input type="text" id="MSETotal3" name="MSETotal3" class="form-control" value="<?= nvl($matricula['MTIns6o']) ?>" disabled></td>
+                                <td><input type="text" id="MSEDiscapacidad3" name="MSEDiscapacidad3" class="form-control numeros" value="<?= nvl($matricula['MDIns6o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEHablantes3" name="MSEHablantes3" class="form-control numeros" value="<?= nvl($matricula['MHaIns6o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEExtranjero3" name="MSEExtranjero3" class="form-control numeros" value="<?= nvl($matricula['MEIns6o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEGrupos3" name="MSEGrupos3" class="form-control" value="<?= nvl($matricula['MInsGrupos6o'])?>" disabled></td>												
+                            </tr>
+                            <tr>
+                            <td><label>Total</label></td>
+                                <td><input type="text" id="MSEHombresTotal" name="MSEHombresTotal" class="form-control" value="<?= nvl($matricula['MHInsTotal']) ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeresTotal" name="MSEMujeresTotal" class="form-control" value="<?= nvl($matricula['MMInsTotal']) ?>" disabled></td>
+                                <td><input type="text" id="MSETotalTotal" name="MSETotalTotal" class="form-control" value="<?= nvl($matricula['MTInsTotal']) ?>" disabled></td>
+                                <td><input type="text" id="MSEDiscapacidadTotal" name="MSEDiscapacidadTotal" class="form-control" value="<?= nvl($matricula['MDInsTotal']) ?>" disabled></td>
+                                <td><input type="text" id="MSEHablantesTotal" name="MSEHablantesTotal" class="form-control" value="<?= nvl($matricula['MHaInsTotal']) ?>" disabled></td>
+                                <td><input type="text" id="MSEExtranjeroTotal" name="MSEExtranjeroTotal" class="form-control" value="<?= nvl($matricula['MEInsTotal']) ?>" disabled></td>
+                                <td><input type="text" id="MSEGruposTotal" name="MSEGruposTotal" class="form-control" value="<?= $matricula['MInsGruposTotal']; ?>" disabled></td>
+                            </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <h2>Deberá coincidir con lo reportado al Depto. de Control Escolar (Corte 04 de marzo <?= $periodoAct[0]['PAnio'] ?>).</h2>		
+            <h2>Deberá coincidir con lo reportado al Depto. de Control Escolar (Corte 17 de marzo <?= $periodoAct[0]['PAnio'] ?>).</h2>		
             <br>
             <?php if ($planteles['CPLTipo'] == 36) { ?>
         <p style="font-size: 14px;">2. De la matrícula <?= $periodoAct[0]['PAnio'] ?>, desglose por semestre y por genéro cuántos alumnos cursan sus clases de manera presencial y cuántos a distancia</p>
@@ -787,7 +864,7 @@
     <fieldset>
     <?php foreach($semestres as $s => $listSem) { ?>
 
-        <h2><?=$listSem['GRSemestre']?>o Semestre</h2>
+        <h2><?=nvl($listSem['GRSemestre'])?>o Semestre</h2>
         <div class="form-group">
             <label class="col-md-1">Turno:</label>
                 <div class="col-md-3">
@@ -797,7 +874,7 @@
 
         <br><br><br><br>	
         <h2>VI ANEXO DE LA DISTRIBUCIÓN GRUPOS-ALUMNOS (Matrícula <?= $periodoAct[0]['PAnio'] ?> - <?= $periodoAct[0]['PPeriodo'] ?>)</h2>
-        <p style="font-size: 14px;">Describir la cantidad de grupos del semestre citado distribuidos por hombres-mujeres <?php if ($listSem['GRSemestre'] > 2) { echo "asi como la formación para el trabajo por grupo"; } ?>.</p>
+        <p style="font-size: 14px;">Describir la cantidad de grupos del semestre citado distribuidos por hombres-mujeres <?php if (nvl($listSem['GRSemestre']) > 2) { echo "asi como la formación para el trabajo por grupo"; } ?>.</p>
             <div class="row">
                 <div class="col-lg-12">
                     <table class="table table-bordered">
@@ -808,23 +885,24 @@
                                 <th>Hombres</th>
                                 <th>Mujeres</th>
                                 <th>Total</th>
-                                <?php if ($listSem['GRSemestre'] > 2) { ?>
+                                <?php if (nvl($listSem['GRSemestre']) > 2) { ?>
                                 <th>Formación para el Trabajo</th>
                                 <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($listSem['grupoAlumno'] as $g => $listG) { ?>
+                            <?php if (!empty($listSem['grupoAlumno'])) { ?>
+                                <?php foreach ($listSem['grupoAlumno'] as $g => $listG) { ?>
                             <tr>
                                 <td></td>											
-                                <td><input type="text" id="AGrupo<?= $g.$listSem['GRSemestre'] ?>" name="AGrupo<?= $g.$listSem['GRSemestre'] ?>" class="form-control" value="<?= $listG['GRGrupo']?>"  disabled></td>
-                                <td><input type="text" id="AHGrupo<?= $g.$listSem['GRSemestre'] ?>" name="AHGrupo<?= $g.$listSem['GRSemestre'] ?>" class="form-control" value="<?= $listG['GRMasculino']?>"  disabled></td>
-                                <td><input type="text" id="AMGrupo<?= $g.$listSem['GRSemestre'] ?>" name="AMGrupo<?= $g.$listSem['GRSemestre'] ?>" class="form-control" value="<?= $listG['GRFemenino']?>"  disabled></td>
-                                <td><input type="text" id="AGrupoT<?= $g.$listSem['GRSemestre'] ?>" name="AGrupoT<?= $g.$listSem['GRSemestre'] ?>" class="form-control" value="<?= $listG['GRCupo']?>"  disabled></td>
-                                <?php if ($listSem['GRSemestre'] > 2) { ?>
+                                <td><input type="text" id="AGrupo<?= $g.nvl($listSem['GRSemestre']) ?>" name="AGrupo<?= $g.nvl($listSem['GRSemestre']) ?>" class="form-control" value="<?= $listG['GRGrupo']?>"  disabled></td>
+                                <td><input type="text" id="AHGrupo<?= $g.nvl($listSem['GRSemestre']) ?>" name="AHGrupo<?= $g.nvl($listSem['GRSemestre']) ?>" class="form-control" value="<?= $listG['GRMasculino']?>"  disabled></td>
+                                <td><input type="text" id="AMGrupo<?= $g.nvl($listSem['GRSemestre']) ?>" name="AMGrupo<?= $g.nvl($listSem['GRSemestre']) ?>" class="form-control" value="<?= $listG['GRFemenino']?>"  disabled></td>
+                                <td><input type="text" id="AGrupoT<?= $g.nvl($listSem['GRSemestre']) ?>" name="AGrupoT<?= $g.nvl($listSem['GRSemestre']) ?>" class="form-control" value="<?= $listG['GRCupo']?>"  disabled></td>
+                                <?php if (nvl($listSem['GRSemestre']) > 2) { ?>
                                 <td>
                                     <div class="col-sm-15">
-                                        <select class="form-control" id="AFormacion<?= $g.$listSem['GRSemestre'] ?>" name="AFormacion<?= $g.$listSem['GRSemestre'] ?>">
+                                        <select class="form-control" id="AFormacion<?= $g.nvl($listSem['GRSemestre']) ?>" name="AFormacion<?= $g.nvl($listSem['GRSemestre']) ?>">
                                             <option value="<?= $listG['GRCClave'] ?> "><?=$listG['FNombre']?></option>															
                                         </select>                         
                                     </div>													
@@ -834,15 +912,15 @@
                             <?php } ?>
                             <tr>
                                 <td><label>Total de Grupos</label></td>											
-                                <td><input type="text" id="AGrupoT<?= $listSem['GRSemestre'] ?>" name="AGrupoT<?= $listSem['GRSemestre'] ?>" class="form-control"  value="<?= $listSem['TGrupos'] ?>" disabled></td>
-                                <td><input type="text" id="AHGrupoT<?= $listSem['GRSemestre'] ?>" name="AHGrupoT<?= $listSem['GRSemestre'] ?>" class="form-control"  value="<?= $listSem['THombres'] ?>" disabled></td>
-                                <td><input type="text" id="AMGrupoT<?= $listSem['GRSemestre'] ?>" name="AMGrupoT<?= $listSem['GRSemestre'] ?>" class="form-control"  value="<?= $listSem['TMujeres'] ?>" disabled></td>
-                                <td><input type="text" id="AAlumnosT<?= $listSem['GRSemestre'] ?>" name="AAlumnosT<?= $listSem['GRSemestre'] ?>" class="form-control"  value="<?= $listSem['Total'] ?>" disabled></td>
-                                <?php if ($listSem['GRSemestre'] > 2) { ?>
+                                <td><input type="text" id="AGrupoT<?= nvl($listSem['GRSemestre']) ?>" name="AGrupoT<?= nvl($listSem['GRSemestre']) ?>" class="form-control"  value="<?= $listSem['TGrupos'] ?>" disabled></td>
+                                <td><input type="text" id="AHGrupoT<?= nvl($listSem['GRSemestre']) ?>" name="AHGrupoT<?= nvl($listSem['GRSemestre']) ?>" class="form-control"  value="<?= $listSem['THombres'] ?>" disabled></td>
+                                <td><input type="text" id="AMGrupoT<?= nvl($listSem['GRSemestre']) ?>" name="AMGrupoT<?= nvl($listSem['GRSemestre']) ?>" class="form-control"  value="<?= $listSem['TMujeres'] ?>" disabled></td>
+                                <td><input type="text" id="AAlumnosT<?= nvl($listSem['GRSemestre']) ?>" name="AAlumnosT<?= nvl($listSem['GRSemestre']) ?>" class="form-control"  value="<?= $listSem['Total'] ?>" disabled></td>
+                                <?php if (nvl($listSem['GRSemestre']) > 2) { ?>
                                 <td></td>	
                                 <?php } ?>
-
                             </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -972,13 +1050,13 @@
         <h2>¿El Centro Educativo cuenta con alumnos que participan en el Modelo Dual?.</h2>
             <div class="row">
                 <div class="col-md-5">
-                    <label>Si </label><input type="radio" name="PEServicioEducativoDual" id="PEServicioEducativoDual1" class="" onclick="selectModelo()" value="1" />
+                    <label>Si </label><input type="radio" name="PEServicioEducativoDual" id="PEServicioEducativoDual1" class="" onclick="selectModelo()" value="1" <?php if ($dual['MDSerEduc'] == 1) echo "checked";  ?>/>
                 </div>
             </div>	
             <br>
             <div class="row">
                 <div class="col-md-5">
-                    <label>No </label><input type="radio" name="PEServicioEducativoDual" id="PEServicioEducativoDual2" class="" onclick="selectModelo()" value="2" checked/>
+                    <label>No </label><input type="radio" name="PEServicioEducativoDual" id="PEServicioEducativoDual2" class="" onclick="selectModelo()" value="2" <?php if ($dual['MDSerEduc'] == 2) echo "checked"; ?>/>
                 </div>
             </div>
             <br><br>
@@ -998,21 +1076,21 @@
                         <tbody>
                             <tr>
                                 <td><label>Cuarto.</label></td>
-                                <td><input type="text" id="MDHombres1" name="MDHombres1" class="form-control numeros" value="0" onkeyup="sumarDual()" disabled="disabled"></td>
-                                <td><input type="text" id="MDMujeres1" name="MDMujeres1" class="form-control numeros" value="0" onkeyup="sumarDual()" disabled="disabled"></td>
-                                <td><input type="text" id="MDTotal1" name="MDTotal1" class="form-control numeros" value="0" onkeyup="sumarDual()" disabled="disabled"></td>
+                                <td><input type="text" id="MDHombres1" name="MDHombres1" class="form-control numeros" value="<?php if ($dual['MDHMod4o'] == '') { echo 0; } else { echo $dual['MDHMod4o'];}?>" onkeyup="sumarDual()" disabled="disabled"></td>
+                                <td><input type="text" id="MDMujeres1" name="MDMujeres1" class="form-control numeros" value="<?php if ($dual['MDMMod4o'] == '') { echo 0; } else { echo $dual['MDMMod4o'];}?>" onkeyup="sumarDual()" disabled="disabled"></td>
+                                <td><input type="text" id="MDTotal1" name="MDTotal1" class="form-control numeros" value="<?php if ($dual['MDHModTotal'] == '') { echo 0; } else { echo $dual['MDHModTotal'];}?>" onkeyup="sumarDual()" disabled="disabled"></td>
                             </tr>
                             <tr>
                                 <td><label>Sexto.</label></td>
-                                <td><input type="text" id="MDHombres2" name="MDHombres2" class="form-control numeros" value="0" onkeyup="sumarDual()" disabled="disabled"></td>
-                                <td><input type="text" id="MDMujeres2" name="MDMujeres2" class="form-control numeros" value="0" onkeyup="sumarDual()" disabled="disabled"></td>
-                                <td><input type="text" id="MDTotal2" name="MDTotal2" class="form-control numeros" value="0" onkeyup="sumarDual()" disabled="disabled"></td>
+                                <td><input type="text" id="MDHombres2" name="MDHombres2" class="form-control numeros" value="<?php if ($dual['MDHMod6o'] == '') { echo 0; } else { echo $dual['MDHMod6o'];}?>" onkeyup="sumarDual()" disabled="disabled"></td>
+                                <td><input type="text" id="MDMujeres2" name="MDMujeres2" class="form-control numeros" value="<?php if ($dual['MDMMod6o'] == '') { echo 0; } else { echo $dual['MDMMod6o'];}?>" onkeyup="sumarDual()" disabled="disabled"></td>
+                                <td><input type="text" id="MDTotal2" name="MDTotal2" class="form-control numeros" value="<?php if ($dual['MDMModTotal'] == '') { echo 0; } else { echo $dual['MDMModTotal'];}?>" onkeyup="sumarDual()" disabled="disabled"></td>
                             </tr>
                             <tr>
                             <td><label>Total</label></td>
-                                <td><input type="text" id="MDHombresTotal" name="MDHombresTotal" class="form-control numeros" value="0" onkeyup="sumarDual()" disabled="disabled"></td>
-                                <td><input type="text" id="MDMujeresTotal" name="MDMujeresTotal" class="form-control numeros" value="0" onkeyup="sumarDual()" disabled="disabled"></td>
-                                <td><input type="text" id="MDTotalTotal" name="MDTotalTotal" class="form-control numeros" value="0" onkeyup="sumarDual()" disabled="disabled"></td>
+                                <td><input type="text" id="MDHombresTotal" name="MDHombresTotal" class="form-control numeros" value="<?php echo $dual['MDHMod4o'] + $dual['MDHMod6o']; ?>" onkeyup="sumarDual()" disabled="disabled"></td>
+                                <td><input type="text" id="MDMujeresTotal" name="MDMujeresTotal" class="form-control numeros" value="<?php echo $dual['MDMMod4o'] + $dual['MDMMod6o']; ?>" onkeyup="sumarDual()" disabled="disabled"></td>
+                                <td><input type="text" id="MDTotalTotal" name="MDTotalTotal" class="form-control numeros" value="<?php echo $dual['MDHModTotal'] +  $dual['MDMModTotal'];?>" onkeyup="sumarDual()" disabled="disabled"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1022,6 +1100,33 @@
             <div class="row">
                 <div class="col-md-8 ">
                     <h3 class="text-danger">*IMPORTANTE: Para un desglose más detallado, favor de llenar el archivo anexo en formato Excel enviado por el Departamento de Estadística y Evaluación.</h3>
+                </div>
+            </div>
+            <?php if ($dual['MDArchivo_file'] != '') { ?>
+            <div class="row">
+                <div class="col-md-8 ">
+                    <a href='<?=base_url(nvl($dual['MDArchivo_file']))?>' target='_blanck'><button type='button' class='btn btn-sm btn-primary' ><i class='fa fa-file-archive-o'></i> Archivo</button></a>
+                    <input type="hidden" name="archivo" id="archivo" value="<?php if ($dual['MDArchivo_file'] != '') { echo $dual['MDArchivo_file']; } else { echo 0; } ?>">
+                </div>
+            </div>
+            <?php } ?>
+            <div class="row">
+                <div class="container">
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-8"><br><br>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" readonly>
+                                    <div class="input-group-btn">
+                                        <span class="fileUpload btn btn-primary">
+                                            <span class="upl" id="upload">Subir Archivo</span>
+                                            <input type="file" class="upload up" id="MDArchivo_file" name="MDArchivo_file" onchange="readURL(this);" accept=".xml, .xlsx, .xls" />
+                                        </span><!-- btn-orange -->
+                                    </div><!-- btn -->
+                            </div><!-- group -->
+                        </div><!-- form-group -->
+                    </div>
+                </div>
                 </div>
             </div>
     </fieldset>	
@@ -1168,7 +1273,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Formación para el Trabajo</label>
-                        <input id="PEActualizacionAnioMFT" name="PEActualizacionAnioMFT" type="text" class="form-control numeros" value="0" disabled>	
+                        <input id="PEActualizacionAnioMFT" name="PEActualizacionAnioMFT" type="text" class="form-control numeros" value="<?= count($formaciones)?>" disabled>	
                     </div>
                 </div>
             </div>							
@@ -1190,19 +1295,19 @@
                         <tbody>
                             <?php foreach ($formaciones as $f => $listF) {?>
                             <tr>
-                                <td><input type="text" id="MClaveF<?=$listF['FIdFormacion']?><?=$f?>" name="MClaveF<?=$listF['FIdFormacion']?><?=$f?>" class="form-control" ></td>
-                                <td><input type="text" id="MNombreF<?=$listF['FIdFormacion']?><?=$f?>" name="MNombreF<?=$listF['FIdFormacion']?><?=$f?>" class="form-control" value="<?= $listF['FNombre'] ?>" disabled size="95"></td>
-                                <td><input type="text" id="MHF<?=$listF['FIdFormacion']?><?=$f?>" name="MHF<?=$listF['FIdFormacion']?><?=$f?>" class="form-control" value="<?php if( $listF['AlumForma']['THombres'] == '') { echo 0; } else { echo $listF['AlumForma']['THombres'];} ?>" disabled></td>
-                                <td><input type="text" id="MMF<?=$listF['FIdFormacion']?><?=$f?>" name="MMF<?=$listF['FIdFormacion']?><?=$f?>" class="form-control" value="<?php if( $listF['AlumForma']['TMujeres'] == '') { echo 0; } else { echo $listF['AlumForma']['TMujeres'];} ?>" disabled></td>
-                                <td><input type="text" id="MTF<?=$listF['FIdFormacion']?><?=$f?>" name="MTF<?=$listF['FIdFormacion']?><?=$f?>" class="form-control" value="<?php if( $listF['AlumForma']['Total'] == '') { echo 0; } else { echo $listF['AlumForma']['Total'];} ?>" disabled></td>											
+                                <td><input type="text" id="MClaveF<?= nvl($listF['FIdFormacion'])?><?=$f?>" name="MClaveF<?= nvl($listF['FIdFormacion'])?><?=$f?>" class="form-control" ></td>
+                                <td><input type="text" id="MNombreF<?= nvl($listF['FIdFormacion'])?><?=$f?>" name="MNombreF<?= nvl($listF['FIdFormacion'])?><?=$f?>" class="form-control" value="<?= $listF['FNombre'] ?>" disabled size="95"></td>
+                                <td><input type="text" id="MHF<?= nvl($listF['FIdFormacion'])?><?=$f?>" name="MHF<?= nvl($listF['FIdFormacion'])?><?=$f?>" class="form-control" value="<?php if( $listF['AlumForma']['THombres'] == '') { echo 0; } else { echo $listF['AlumForma']['THombres'];} ?>" disabled></td>
+                                <td><input type="text" id="MMF<?= nvl($listF['FIdFormacion'])?><?=$f?>" name="MMF<?= nvl($listF['FIdFormacion'])?><?=$f?>" class="form-control" value="<?php if( $listF['AlumForma']['TMujeres'] == '') { echo 0; } else { echo $listF['AlumForma']['TMujeres'];} ?>" disabled></td>
+                                <td><input type="text" id="MTF<?= nvl($listF['FIdFormacion'])?><?=$f?>" name="MTF<?= nvl($listF['FIdFormacion'])?><?=$f?>" class="form-control" value="<?php if( $listF['AlumForma']['Total'] == '') { echo 0; } else { echo $listF['AlumForma']['Total'];} ?>" disabled></td>											
                             </tr>
                             <?php } ?>
                             <tr>
                                 <td></td>
                                 <td>Total</td>												
-                                <td><input type="text" id="MHFT<?=$listF['FIdFormacion']?>" name="MHFT<?=$listF['FIdFormacion']?>" class="form-control" value="<?php if ($alumCap['THombres'] == "") { echo 0; } else { echo $alumCap['THombres'];} ?>" disabled></td>
-                                <td><input type="text" id="MMFT<?=$listF['FIdFormacion']?>" name="MMFT<?=$listF['FIdFormacion']?>" class="form-control" value="<?php if ($alumCap['TMujeres'] == "") { echo 0; } else { echo $alumCap['TMujeres'];} ?>" disabled></td>
-                                <td><input type="text" id="MTF<?=$listF['FIdFormacion']?>" name="MTF<?=$listF['FIdFormacion']?>" class="form-control" value="<?php if ($alumCap['Total'] == "") { echo 0; } else { echo $alumCap['Total'];} ?>" disabled></td>						
+                                <td><input type="text" id="MHFT<?= nvl($listF['FIdFormacion'])?>" name="MHFT<?= nvl($listF['FIdFormacion'])?>" class="form-control" value="<?php if ($alumCap['THombres'] == "") { echo 0; } else { echo $alumCap['THombres'];} ?>" disabled></td>
+                                <td><input type="text" id="MMFT<?= nvl($listF['FIdFormacion'])?>" name="MMFT<?= nvl($listF['FIdFormacion'])?>" class="form-control" value="<?php if ($alumCap['TMujeres'] == "") { echo 0; } else { echo $alumCap['TMujeres'];} ?>" disabled></td>
+                                <td><input type="text" id="MTF<?= nvl($listF['FIdFormacion'])?>" name="MTF<?= nvl($listF['FIdFormacion'])?>" class="form-control" value="<?php if ($alumCap['Total'] == "") { echo 0; } else { echo $alumCap['Total'];} ?>" disabled></td>						
                             </tr>
                             
                         </tbody>
@@ -1218,7 +1323,7 @@
         <h2>Observaciones:</h2>
             <div class="col-md-3">
                 <div class="form-group">
-                    <textarea id="FObservaciones" name="FObservaciones" cols="60" rows="5" ></textarea>											
+                    <textarea id="FObservaciones" name="FObservaciones" cols="60" rows="5" ><?= nvl($PlanEstudios['PEObservaciones'])?></textarea>											
                 </div>
             </div>							
             <br><br>
@@ -1251,7 +1356,7 @@
                             <tr>
                                 <td></td>
                                 <td></td>
-                                <td><b><?= get_session('UNombre');?></b></td>
+                                <td><b><input type="hidden" name="PEUsuarioRealizo" id="PEUsuarioRealizo" value="<?php if($PlanEstudios['PEUsuarioRealizo'] != 0) { echo $PlanEstudios['PEUsuarioRealizo']; } else { echo get_session('UNCI_usuario'); } ?>"><?php if($PlanEstudios['PEUsuarioRealizo'] != 0) { echo $PlanEstudios['UNombre'].' '.$PlanEstudios['UApellido_pat'].' '.$PlanEstudios['UApellido_mat'] ; } else { echo get_session('UNombre'); } ?></b></td>
                             </tr>
                             <tr>
                                 <td></td>											
@@ -1268,19 +1373,20 @@
                                 <td></td>
                                 <td>
                                     <div class="row">
+                                        <?php $fecha = explode('-', $PlanEstudios['PEFechaRealizo']); ?>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                Año: <b><?= date("Y") ?></b>
+                                                Año: <b><?php if ($fecha[0] == '0000') { echo date("Y"); } else { echo $fecha[0]; } ?></b>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                Mes: <b><?= ver_mes(date("m")) ?></b>
+                                                Mes: <b><?php if ($fecha[1] == '00') { echo ver_mes(date("m")); } else { echo ver_mes($fecha[1]); } ?></b>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                Día: <b><?= date("d") ?></b>
+                                                Día: <b><?php if ($fecha[2] == '00') { echo date("d"); } else { echo $fecha[2]; } ?></b>
                                             </div>
                                         </div>
                                     </div>																								
@@ -1362,9 +1468,15 @@
 
                     if(newIndex == '4'){
 						saveAbandono();
-                        saveAbandonoInt1();
-                        saveAbandonoInt3();
-                        saveAbandonoInt5();
+                        if( form.valid() ){
+                            saveAbandonoInt1();
+                        }
+                        if( form.valid() ){
+                            saveAbandonoInt3();
+                        }
+                        if( form.valid() ){
+                            saveAbandonoInt5();
+                        }
 					}
                     
 					if(newIndex == '5'){
@@ -1397,38 +1509,51 @@
 				// Start validation; Prevent going forward if false
 				return form.valid();
 			},
-			onStepChanged: function (event, currentIndex, priorIndex)
-			{
-				// Suppress (skip) "Warning" step if the user is old enough.
-				if (currentIndex === 2 && Number($("#age").val()) >= 18)
-				{
-					$(this).steps("next");
-				}
-
-				// Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
-				if (currentIndex === 2 && priorIndex === 3)
-				{
-					$(this).steps("previous");
-				}
-			},
 			onFinishing: function (event, currentIndex)
 			{
 				var form = $(this);
 
 				// Disable validation on fields that are disabled.
 				// At this point it's recommended to do an overall check (mean ignoring only disabled fields)
-				form.validate().settings.ignore = ":disabled";
+				form.validate().settings.ignore = ":disabled,:hidden";
 
 				// Start validation; Prevent form submission if false
 				return form.valid();
 			},
-			onFinished: function (event, currentIndex)
+			onFinished: function (event)
 			{
 				var form = $(this);
 
 				// Submit form input
-				form.submit();
-			}
+				//form.submit();
+
+                //recogemos la dirección del Proceso PHP
+                mensaje = "¿Estás seguro de finalizar?";
+                //colocamos fondo de pantalla
+                $('#wrapper').prop('class','bgtransparent');				
+                alertify.confirm(mensaje, function (e) {
+                    //aqui introducimos lo que haremos tras cerrar la alerta.
+                    $('#wrapper').prop('class','');
+                    if (e){
+                        saveFormaciones();
+                        window.location.href = "<?= base_url("bginterno"); ?>";
+                    }
+                });
+			},
+		onCanceled: function (event)
+		{
+			//recogemos la dirección del Proceso PHP
+			mensaje = "¿Estás seguro de cancelar, los datos se guardaran hasta donde los dejaste?";
+			//colocamos fondo de pantalla
+			$('#wrapper').prop('class','bgtransparent');				
+			alertify.confirm(mensaje, function (e) {
+				//aqui introducimos lo que haremos tras cerrar la alerta.
+				$('#wrapper').prop('class','');
+				if (e){
+					window.location.href = "<?= base_url("bginterno"); ?>";
+				}
+			});     					
+		}
 		}).validate({
 			errorPlacement: function (error, element)
 			{
@@ -1608,18 +1733,292 @@
 
         var OHombres1 = document.getElementById("OHombres1").value; if (OHombres1 == '') { OHombres1 = 0; } 
 		var OMujeres1 = document.getElementById("OMujeres1").value; if (OMujeres1 == '') { OMujeres1 = 0; } 
+        if (OHombres1 != 0) {
+			$('#contentOHombres1').show();
+		} else {
+			$('#contentOHombres1').hide();
+		}
+        if (OMujeres1 != 0) {
+			$('#contentOMujeres1').show();
+		} else {
+			$('#contentOMujeres1').hide();
+		}
 		var OAmbos1 = parseInt(OHombres1) + parseInt(OMujeres1);		
 		document.getElementById('OAmbos1').value = OAmbos1;
 
 		var OHombres2 = document.getElementById("OHombres2").value;  if (OHombres2 == '') { OHombres2 = 0; } 
 		var OMujeres2 = document.getElementById("OMujeres2").value;	 if (OMujeres2 == '') { OMujeres2 = 0; } 
+        if (OHombres2 != 0) {
+			$('#contentOHombres2').show();
+		} else {
+			$('#contentOHombres2').hide();
+		}
+        if (OMujeres2 != 0) {
+			$('#contentOMujeres2').show();
+		} else {
+			$('#contentOMujeres2').hide();
+		}
 		var OAmbos2 = parseInt(OHombres2) + parseInt(OMujeres2);
 		document.getElementById('OAmbos2').value = OAmbos2;
 
 		var OHombres3 = document.getElementById("OHombres3").value;	 if (OHombres3 == '') { OHombres3 = 0; } 
 		var OMujeres3 = document.getElementById("OMujeres3").value;  if (OMujeres3 == '') { OMujeres3 = 0; } 
+        if (OHombres3 != 0) {
+			$('#contentOHombres3').show();
+		} else {
+			$('#contentOHombres3').hide();
+		}
+        if (OMujeres3 != 0) {
+			$('#contentOMujeres3').show();
+		} else {
+			$('#contentOMujeres3').hide();
+		}
 		var OAmbos3 = parseInt(OHombres3) + parseInt(OMujeres3);
 		document.getElementById('OAmbos3').value = OAmbos3;
+
+        var AEIHombresTTotal1 = 0;
+        AEIHombresTTotal1 = parseInt(BATHombres1) + parseInt(BAHombres1) + parseInt(BADHombres1) + parseInt(CPHombres1) + parseInt(FEHombres1) + parseInt(EMHombres1) + parseInt(CRHombres1) + parseInt(OHombres1);
+        document.getElementById('AEIHombresTTotal1').value = AEIHombresTTotal1;
+        
+        if (parseInt(AEIHombresTTotal1) > parseInt(document.getElementById('AEIHombres1').value) ) {
+            alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("AEIHombres1").value);
+            document.getElementById("BATHombres1").value = 0;
+            document.getElementById("BAHombres1").value = 0;
+            document.getElementById("BADHombres1").value = 0;
+            document.getElementById("CPHombres1").value = 0;
+            document.getElementById("FEHombres1").value = 0;
+            document.getElementById("EMHombres1").value = 0;
+            document.getElementById("CRHombres1").value = 0;
+            document.getElementById("OHombres1").value = 0;
+            document.getElementById("AEIHombresTTotal1").value = 0;
+
+            
+            document.getElementById("AEITotalTotal1").value = 0;
+        } else {
+            document.getElementById("BATHombres1").value = BATHombres1;
+            document.getElementById("BAHombres1").value = BAHombres1;
+            document.getElementById("BADHombres1").value = BADHombres1;
+            document.getElementById("CPHombres1").value = CPHombres1;
+            document.getElementById("FEHombres1").value = FEHombres1;
+            document.getElementById("EMHombres1").value = EMHombres1;
+            document.getElementById("CRHombres1").value = CRHombres1;
+            document.getElementById("OHombres1").value = OHombres1;
+            
+            document.getElementById("BATAmbos1").value = BATAmbos1;
+            document.getElementById("BAAmbos1").value = BAAmbos1;
+            document.getElementById("BADAmbos1").value = BADAmbos1;
+            document.getElementById("CPAmbos1").value = CPAmbos1;
+            document.getElementById("FEAmbos1").value = FEAmbos1;
+            document.getElementById("EMAmbos1").value = EMAmbos1;
+            document.getElementById("CRAmbos1").value = CRAmbos1;
+            document.getElementById("OAmbos1").value = OAmbos1;
+
+            document.getElementById('AEIHombresTTotal1').value = AEIHombresTTotal1;
+
+            var AEITotalTotal1 = 0;
+            AEITotalTotal1 = parseInt(BATAmbos1) + parseInt(BAAmbos1) + parseInt(BADAmbos1) + parseInt(CPAmbos1) + parseInt(FEAmbos1) + parseInt(EMAmbos1) + parseInt(CRAmbos1) + parseInt(OAmbos1);
+            document.getElementById('AEITotalTotal1').value = AEITotalTotal1;
+        }
+
+        var AEIMujeresTTotal1 = 0;
+        AEIMujeresTTotal1 = parseInt(BATMujeres1) + parseInt(BAMujeres1) + parseInt(BADMujeres1) + parseInt(CPMujeres1) + parseInt(FEMujeres1) + parseInt(EMMujeres1) + parseInt(CRMujeres1) + parseInt(OMujeres1);
+        document.getElementById('AEIMujeresTTotal1').value = AEIMujeresTTotal1;
+
+        if (parseInt(AEIMujeresTTotal1) > parseInt(document.getElementById('AEIMujeres1').value) ) {
+            alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("AEIMujeres1").value);
+            document.getElementById("BATMujeres1").value = 0;
+            document.getElementById("BAMujeres1").value = 0;
+            document.getElementById("BADMujeres1").value = 0;
+            document.getElementById("CPMujeres1").value = 0;
+            document.getElementById("FEMujeres1").value = 0;
+            document.getElementById("EMMujeres1").value = 0;
+            document.getElementById("CRMujeres1").value = 0;
+            document.getElementById("OMujeres1").value = 0;
+            document.getElementById("AEIMujeresTTotal1").value = 0;
+
+            document.getElementById("AEITotalTotal1").value = 0;
+        } else {
+            document.getElementById("BATMujeres1").value = BATMujeres1;
+            document.getElementById("BAMujeres1").value = BAMujeres1;
+            document.getElementById("BADMujeres1").value = BADMujeres1;
+            document.getElementById("CPMujeres1").value = CPMujeres1;
+            document.getElementById("FEMujeres1").value = FEMujeres1;
+            document.getElementById("EMMujeres1").value = EMMujeres1;
+            document.getElementById("CRMujeres1").value = CRMujeres1;
+            document.getElementById("OMujeres1").value = OMujeres1;
+            
+            document.getElementById("BATAmbos1").value = BATAmbos1;
+            document.getElementById("BAAmbos1").value = BAAmbos1;
+            document.getElementById("BADAmbos1").value = BADAmbos1;
+            document.getElementById("CPAmbos1").value = CPAmbos1;
+            document.getElementById("FEAmbos1").value = FEAmbos1;
+            document.getElementById("EMAmbos1").value = EMAmbos1;
+            document.getElementById("CRAmbos1").value = CRAmbos1;
+            document.getElementById("OAmbos1").value = OAmbos1;
+
+            document.getElementById('AEIMujeresTTotal1').value = AEIMujeresTTotal1;
+
+            var AEITotalTotal1 = 0;
+            AEITotalTotal1 = parseInt(BATAmbos1) + parseInt(BAAmbos1) + parseInt(BADAmbos1) + parseInt(CPAmbos1) + parseInt(FEAmbos1) + parseInt(EMAmbos1) + parseInt(CRAmbos1) + parseInt(OAmbos1);
+            document.getElementById('AEITotalTotal1').value = AEITotalTotal1;
+
+        }
+
+        var AEIHombresTTotal2 = 0;
+        AEIHombresTTotal2 = parseInt(BATHombres2) + parseInt(BAHombres2) + parseInt(BADHombres2) + parseInt(CPHombres2) + parseInt(FEHombres2) + parseInt(EMHombres2) + parseInt(CRHombres2) + parseInt(OHombres2);
+        document.getElementById('AEIHombresTTotal2').value = AEIHombresTTotal2;
+
+        if (parseInt(AEIHombresTTotal2) > parseInt(document.getElementById('AEIHombres2').value) ) {
+            alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("AEIHombres2").value);
+            document.getElementById("BATHombres2").value = 0;
+            document.getElementById("BAHombres2").value = 0;
+            document.getElementById("BADHombres2").value = 0;
+            document.getElementById("CPHombres2").value = 0;
+            document.getElementById("FEHombres2").value = 0;
+            document.getElementById("EMHombres2").value = 0;
+            document.getElementById("CRHombres2").value = 0;
+            document.getElementById("OHombres2").value = 0;
+            document.getElementById("AEIHombresTTotal2").value = 0;
+        } else {
+            document.getElementById("BATHombres2").value = BATHombres2;
+            document.getElementById("BAHombres2").value = BAHombres2;
+            document.getElementById("BADHombres2").value = BADHombres2;
+            document.getElementById("CPHombres2").value = CPHombres2;
+            document.getElementById("FEHombres2").value = FEHombres2;
+            document.getElementById("EMHombres2").value = EMHombres2;
+            document.getElementById("CRHombres2").value = CRHombres2;
+            document.getElementById("OHombres2").value = OHombres2;
+            
+            document.getElementById("BATAmbos2").value = BATAmbos2;
+            document.getElementById("BAAmbos2").value = BAAmbos2;
+            document.getElementById("BADAmbos2").value = BADAmbos2;
+            document.getElementById("CPAmbos2").value = CPAmbos2;
+            document.getElementById("FEAmbos2").value = FEAmbos2;
+            document.getElementById("EMAmbos2").value = EMAmbos2;
+            document.getElementById("CRAmbos2").value = CRAmbos2;
+            document.getElementById("OAmbos2").value = OAmbos2;
+
+            document.getElementById('AEIHombresTTotal2').value = AEIHombresTTotal2;
+
+            var AEITotalTotal2 = 0;
+            AEITotalTotal2 = parseInt(BATAmbos2) + parseInt(BAAmbos2) + parseInt(BADAmbos2) + parseInt(CPAmbos2) + parseInt(FEAmbos2) + parseInt(EMAmbos2) + parseInt(CRAmbos2) + parseInt(OAmbos2);
+            document.getElementById('AEITotalTotal2').value = AEITotalTotal2;
+        }
+
+        var AEIMujeresTTotal2 = 0;
+        AEIMujeresTTotal2 = parseInt(BATMujeres2) + parseInt(BAMujeres2) + parseInt(BADMujeres2) + parseInt(CPMujeres2) + parseInt(FEMujeres2) + parseInt(EMMujeres2) + parseInt(CRMujeres2) + parseInt(OMujeres2);
+        document.getElementById('AEIMujeresTTotal2').value = AEIMujeresTTotal2;
+        if (parseInt(AEIMujeresTTotal2) > parseInt(document.getElementById('AEIMujeres2').value) ) {
+            alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("AEIMujeres2").value);
+            document.getElementById("BATMujeres2").value = 0;
+            document.getElementById("BAMujeres2").value = 0;
+            document.getElementById("BADMujeres2").value = 0;
+            document.getElementById("CPMujeres2").value = 0;
+            document.getElementById("FEMujeres2").value = 0;
+            document.getElementById("EMMujeres2").value = 0;
+            document.getElementById("CRMujeres2").value = 0;
+            document.getElementById("OMujeres2").value = 0;
+            document.getElementById("AEIMujeresTTotal2").value = 0;
+        } else {
+            document.getElementById("BATMujeres2").value = BATMujeres2;
+            document.getElementById("BAMujeres2").value = BAMujeres2;
+            document.getElementById("BADMujeres2").value = BADMujeres2;
+            document.getElementById("CPMujeres2").value = CPMujeres2;
+            document.getElementById("FEMujeres2").value = FEMujeres2;
+            document.getElementById("EMMujeres2").value = EMMujeres2;
+            document.getElementById("CRMujeres2").value = CRMujeres2;
+            document.getElementById("OMujeres2").value = OMujeres2;
+            
+            document.getElementById("BATAmbos2").value = BATAmbos2;
+            document.getElementById("BAAmbos2").value = BAAmbos2;
+            document.getElementById("BADAmbos2").value = BADAmbos2;
+            document.getElementById("CPAmbos2").value = CPAmbos2;
+            document.getElementById("FEAmbos2").value = FEAmbos2;
+            document.getElementById("EMAmbos2").value = EMAmbos2;
+            document.getElementById("CRAmbos2").value = CRAmbos2;
+            document.getElementById("OAmbos2").value = OAmbos2;
+
+            document.getElementById('AEIMujeresTTotal2').value = AEIMujeresTTotal2;
+        }
+        
+        var AEIHombresTTotal3 = 0;
+        AEIHombresTTotal3 = parseInt(BATHombres3) + parseInt(BAHombres3) + parseInt(BADHombres3) + parseInt(CPHombres3) + parseInt(FEHombres3) + parseInt(EMHombres3) + parseInt(CRHombres3) + parseInt(OHombres3);
+        document.getElementById('AEIHombresTTotal3').value = AEIHombresTTotal3;
+        if (parseInt(AEIHombresTTotal3) > parseInt(document.getElementById('AEIHombres3').value) ) {
+            alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("AEIHombres3").value);
+            document.getElementById("BATHombres3").value = 0;
+            document.getElementById("BAHombres3").value = 0;
+            document.getElementById("BADHombres3").value = 0;
+            document.getElementById("CPHombres3").value = 0;
+            document.getElementById("FEHombres3").value = 0;
+            document.getElementById("EMHombres3").value = 0;
+            document.getElementById("CRHombres3").value = 0;
+            document.getElementById("OHombres3").value = 0;
+            document.getElementById("AEIHombresTTotal3").value = 0;
+        } else {
+            document.getElementById("BATHombres3").value = BATHombres3;
+            document.getElementById("BAHombres3").value = BAHombres3;
+            document.getElementById("BADHombres3").value = BADHombres3;
+            document.getElementById("CPHombres3").value = CPHombres3;
+            document.getElementById("FEHombres3").value = FEHombres3;
+            document.getElementById("EMHombres3").value = EMHombres3;
+            document.getElementById("CRHombres3").value = CRHombres3;
+            document.getElementById("OHombres3").value = OHombres3;
+            
+            document.getElementById("BATAmbos3").value = BATAmbos3;
+            document.getElementById("BAAmbos3").value = BAAmbos3;
+            document.getElementById("BADAmbos3").value = BADAmbos3;
+            document.getElementById("CPAmbos3").value = CPAmbos3;
+            document.getElementById("FEAmbos3").value = FEAmbos3;
+            document.getElementById("EMAmbos3").value = EMAmbos3;
+            document.getElementById("CRAmbos3").value = CRAmbos3;
+            document.getElementById("OAmbos3").value = OAmbos3;
+
+            document.getElementById('AEIHombresTTotal3').value = AEIHombresTTotal3;
+            
+            var AEITotalTotal3 = 0;
+            AEITotalTotal3 = parseInt(BATAmbos3) + parseInt(BAAmbos3) + parseInt(BADAmbos3) + parseInt(CPAmbos3) + parseInt(FEAmbos3) + parseInt(EMAmbos3) + parseInt(CRAmbos3) + parseInt(OAmbos3);
+            document.getElementById('AEITotalTotal3').value = AEITotalTotal3;
+        }
+
+        var AEIMujeresTTotal3 = 0;
+        AEIMujeresTTotal3 = parseInt(BATMujeres3) + parseInt(BAMujeres3) + parseInt(BADMujeres3) + parseInt(CPMujeres3) + parseInt(FEMujeres3) + parseInt(EMMujeres3) + parseInt(CRMujeres3) + parseInt(OMujeres3);
+        document.getElementById('AEIMujeresTTotal3').value = AEIMujeresTTotal3;
+        if (parseInt(AEIMujeresTTotal3) > parseInt(document.getElementById('AEIMujeres3').value) ) {
+            alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("AEIMujeres3").value);
+            document.getElementById("BATMujeres3").value = 0;
+            document.getElementById("BAMujeres3").value = 0;
+            document.getElementById("BADMujeres3").value = 0;
+            document.getElementById("CPMujeres3").value = 0;
+            document.getElementById("FEMujeres3").value = 0;
+            document.getElementById("EMMujeres3").value = 0;
+            document.getElementById("CRMujeres3").value = 0;
+            document.getElementById("OMujeres3").value = 0;
+            document.getElementById("AEIMujeresTTotal3").value = 0;
+        } else {
+            document.getElementById("BATMujeres3").value = BATMujeres3;
+            document.getElementById("BAMujeres3").value = BAMujeres3;
+            document.getElementById("BADMujeres3").value = BADMujeres3;
+            document.getElementById("CPMujeres3").value = CPMujeres3;
+            document.getElementById("FEMujeres3").value = FEMujeres3;
+            document.getElementById("EMMujeres3").value = EMMujeres3;
+            document.getElementById("CRMujeres3").value = CRMujeres3;
+            document.getElementById("OMujeres3").value = OMujeres3;
+            
+            document.getElementById("BATAmbos3").value = BATAmbos3;
+            document.getElementById("BAAmbos3").value = BAAmbos3;
+            document.getElementById("BADAmbos3").value = BADAmbos3;
+            document.getElementById("CPAmbos3").value = CPAmbos3;
+            document.getElementById("FEAmbos3").value = FEAmbos3;
+            document.getElementById("EMAmbos3").value = EMAmbos3;
+            document.getElementById("CRAmbos3").value = CRAmbos3;
+            document.getElementById("OAmbos3").value = OAmbos3;
+
+            document.getElementById('AEIMujeresTTotal3').value = AEIMujeresTTotal3;
+            var AEITotalTotal3 = 0;
+            AEITotalTotal3 = parseInt(BATAmbos3) + parseInt(BAAmbos3) + parseInt(BADAmbos3) + parseInt(CPAmbos3) + parseInt(FEAmbos3) + parseInt(EMAmbos3) + parseInt(CRAmbos3) + parseInt(OAmbos3);
+            document.getElementById('AEITotalTotal3').value = AEITotalTotal3;
+        }
 
 	}
 
@@ -1876,7 +2275,9 @@
         formData.append("AI1EmbarazoH", document.getElementById("EMHombres1").value);
         formData.append("AI1CamResidenciaH", document.getElementById("CRHombres1").value);
         formData.append("AI1OtrosH", document.getElementById("OHombres1").value);
-
+        formData.append("AI1DescripH", document.getElementById("descOtrosHombres1").value);
+        formData.append("AI1TotalH", document.getElementById("AEIHombresTTotal1").value);
+        
         formData.append("AI1BajaAdminM", document.getElementById("BATMujeres1").value);
         formData.append("AI1BajaAcaM", document.getElementById("BAMujeres1").value);
         formData.append("AI1BajaDefM", document.getElementById("BADMujeres1").value);
@@ -1885,6 +2286,8 @@
         formData.append("AI1EmbarazoM", document.getElementById("EMMujeres1").value);
         formData.append("AI1CamResidenciaM", document.getElementById("CRMujeres1").value);
         formData.append("AI1OtrosM", document.getElementById("OMujeres1").value);
+        formData.append("AI1DescripM", document.getElementById("descOtrosMujeres1").value);
+        formData.append("AI1TotalM", document.getElementById("AEIMujeresTTotal1").value);
 
         formData.append("AI1BajaAdminT", document.getElementById("BATAmbos1").value);
         formData.append("AI1BajaAcaT", document.getElementById("BAAmbos1").value);
@@ -1894,6 +2297,7 @@
         formData.append("AI1EmbarazoT", document.getElementById("EMAmbos1").value);
         formData.append("AI1CamResidenciaT", document.getElementById("CRAmbos1").value);
         formData.append("AI1OtrosT", document.getElementById("OAmbos1").value);
+        formData.append("AI1Total", document.getElementById("AEITotalTotal1").value);
                         
         $.ajax({
             type: "POST",
@@ -1921,6 +2325,8 @@
         formData.append("AI3EmbarazoH", document.getElementById("EMHombres2").value);
         formData.append("AI3CamResidenciaH", document.getElementById("CRHombres2").value);
         formData.append("AI3OtrosH", document.getElementById("OHombres2").value);
+        formData.append("AI3DescripH", document.getElementById("descOtrosHombres2").value);
+        formData.append("AI3TotalH", document.getElementById("AEIHombresTTotal2").value);
 
         formData.append("AI3BajaAdminM", document.getElementById("BATMujeres2").value);
         formData.append("AI3BajaAcaM", document.getElementById("BAMujeres2").value);
@@ -1930,6 +2336,8 @@
         formData.append("AI3EmbarazoM", document.getElementById("EMMujeres2").value);
         formData.append("AI3CamResidenciaM", document.getElementById("CRMujeres2").value);
         formData.append("AI3OtrosM", document.getElementById("OMujeres2").value);
+        formData.append("AI3DescripM", document.getElementById("descOtrosMujeres2").value);
+        formData.append("AI3TotalM", document.getElementById("AEIMujeresTTotal2").value);
 
         formData.append("AI3BajaAdminT", document.getElementById("BATAmbos2").value);
         formData.append("AI3BajaAcaT", document.getElementById("BAAmbos2").value);
@@ -1939,6 +2347,7 @@
         formData.append("AI3EmbarazoT", document.getElementById("EMAmbos2").value);
         formData.append("AI3CamResidenciaT", document.getElementById("CRAmbos2").value);
         formData.append("AI3OtrosT", document.getElementById("OAmbos2").value);
+        formData.append("AI3Total", document.getElementById("AEITotalTotal2").value);
         
         $.ajax({
             type: "POST",
@@ -1966,6 +2375,8 @@
         formData.append("AI5EmbarazoH", document.getElementById("EMHombres3").value);
         formData.append("AI5CamResidenciaH", document.getElementById("CRHombres3").value);
         formData.append("AI5OtrosH", document.getElementById("OHombres3").value);
+        formData.append("AI5DescripH", document.getElementById("descOtrosHombres3").value);
+        formData.append("AI5TotalH", document.getElementById("AEIHombresTTotal3").value);
 
         formData.append("AI5BajaAdminM", document.getElementById("BATMujeres3").value);
         formData.append("AI5BajaAcaM", document.getElementById("BAMujeres3").value);
@@ -1975,6 +2386,8 @@
         formData.append("AI5EmbarazoM", document.getElementById("EMMujeres3").value);
         formData.append("AI5CamResidenciaM", document.getElementById("CRMujeres3").value);
         formData.append("AI5OtrosM", document.getElementById("OMujeres3").value);
+        formData.append("AI5DescripM", document.getElementById("descOtrosMujeres3").value);
+        formData.append("AI5TotalM", document.getElementById("AEIMujeresTTotal3").value);
 
         formData.append("AI5BajaAdminT", document.getElementById("BATAmbos3").value);
         formData.append("AI5BajaAcaT", document.getElementById("BAAmbos3").value);
@@ -1984,6 +2397,7 @@
         formData.append("AI5EmbarazoT", document.getElementById("EMAmbos3").value);
         formData.append("AI5CamResidenciaT", document.getElementById("CRAmbos3").value);
         formData.append("AI5OtrosT", document.getElementById("OAmbos3").value);
+        formData.append("AI5Total", document.getElementById("AEITotalTotal3").value);
         
         $.ajax({
             type: "POST",
@@ -2294,6 +2708,11 @@
         formData.append("MDTMod4o", document.getElementById("MDTotal1").value);
         formData.append("MDTMod6o", document.getElementById("MDTotal2").value);
         formData.append("MDTModTotal", document.getElementById("MDTotalTotal").value);
+
+        formData.append("MDArchivo_file", MDArchivo_file.files[0]);
+        <?php if ($dual['MDArchivo_file'] != '') {?>
+            formData.append("archivo", document.getElementById("archivo").value);
+        <?php } ?> 
         
         $.ajax({
             type: "POST",
@@ -2339,12 +2758,46 @@
 		
         var PDHombresTotal = parseInt(PDHombres1) + parseInt(PDHombres2) + parseInt(PDHombres3) + parseInt(PDHombres4);
 		document.getElementById('PDHombresTotal').value = PDHombresTotal;
+        if (parseInt(PDHombresTotal) >= parseInt(document.getElementById("DocHombres").value) +1 ) {
+            alertify.alert('El número máximo de Docentes debe ser: '+ document.getElementById("DocHombres").value);
+            document.getElementById("PDHombres1").value = 0;
+            document.getElementById("PDHombres2").value = 0;
+            document.getElementById("PDHombres3").value = 0;
+            document.getElementById("PDHombres4").value = 0;
+
+            document.getElementById('PDTotal1').value = 0;
+            document.getElementById('PDTotal2').value = 0;
+            document.getElementById('PDTotal3').value = 0;
+            document.getElementById('PDTotal4').value = 0;
+
+            document.getElementById('PDHombresTotal').value = 0;            
+
+        }
 
         var PDMujeresTotal = parseInt(PDMujeres1) + parseInt(PDMujeres2) + parseInt(PDMujeres3) + parseInt(PDMujeres4);
 		document.getElementById('PDMujeresTotal').value = PDMujeresTotal;
+        if (parseInt(PDMujeresTotal) >= parseInt(document.getElementById("DocMujeres").value) +1 ) {
+            alertify.alert('El número máximo de Docentes debe ser: '+ document.getElementById("DocMujeres").value);
+            document.getElementById("PDMujeres1").value = 0;
+            document.getElementById("PDMujeres2").value = 0;
+            document.getElementById("PDMujeres3").value = 0;
+            document.getElementById("PDMujeres4").value = 0;
 
-        var PDTotal = parseInt(PDHombresTotal) + parseInt(PDMujeresTotal);
+            document.getElementById('PDTotal1').value = 0;
+            document.getElementById('PDTotal2').value = 0;
+            document.getElementById('PDTotal3').value = 0;
+            document.getElementById('PDTotal4').value = 0;
+
+            document.getElementById('PDMujeresTotal').value = 0;
+
+        }
+
+        var PDTotal = parseInt(document.getElementById('PDHombresTotal').value) + parseInt(document.getElementById('PDMujeresTotal').value);
         document.getElementById('PDTotal').value = PDTotal;
+        if (parseInt(PDTotal) >= parseInt(document.getElementById("DocTotal").value) +1 ) {
+            alertify.alert('El número máximo de Docentes debe ser: '+ document.getElementById("DocTotal").value);
+        }
+
     }
 
     function saveDocentes() {
@@ -2389,6 +2842,31 @@
         }); 
     }
 
+    function saveFormaciones(finish) {
+        let formData = new FormData(); 
+        
+        formData.append("PEIdPlanEstudios", document.getElementById("idPlanEstudio").value);
+        formData.append("PEUsuarioRealizo", document.getElementById("PEUsuarioRealizo").value);
+        formData.append("PEObservaciones", document.getElementById("FObservaciones").value);
+        
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url("bginterno/saveFormaciones_skip"); ?>",
+            data: formData,
+            dataType: "html",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data){
+                var data = data.split(";;");
+                if (data[0]=="OK") {
+                    if(finish && data[0]=="OK"){
+                        location.href ='<?php echo base_url("bginterno"); ?>';
+                    }
+                } 
+			}
+        }); 
+    }
 
 </script>
 
@@ -2400,6 +2878,22 @@
 			jQuery(this).val(jQuery(this).val().replace(/[^0-9]/g, ''));
 		});
 	});
+
+    $(document).on('change','.up', function(){
+        var names = [];
+        var length = $(this).get(0).files.length;
+          for (var i = 0; i < $(this).get(0).files.length; ++i) {
+              names.push($(this).get(0).files[i].name);
+          }
+          // $("input[name=file]").val(names);
+        if(length>2){
+          var fileName = names.join(', ');
+          $(this).closest('.form-group').find('.form-control').attr("value",length+" Archivos Seleccionados");
+        }
+        else{
+          $(this).closest('.form-group').find('.form-control').attr("value",names);
+        }
+     });
 </script>
 
 <style type="text/css">
@@ -2417,5 +2911,44 @@
 }
 .wizard > .content > .body label.error {
     margin-left: 75px !important;
+}
+
+.it .btn-orange
+{
+  background-color: #39D2B4;
+  border-color: #777!important;
+  color: #777;
+  text-align: left;
+  width:100%;
+}
+.it input.form-control
+{
+  
+  border:none;
+  margin-bottom:0px;
+  border-radius: 0px;
+  border-bottom: 1px solid #ddd;
+  box-shadow: none;
+}
+.it .form-control:focus
+{
+  border-color: #39D2B4;
+  box-shadow: none;
+  outline: none;
+}
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
 }
 </style>

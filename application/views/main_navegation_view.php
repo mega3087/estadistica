@@ -21,11 +21,8 @@
 			
 			<?php $idplantel = get_session('UPlantel'); 
 			$planteles = get_session('planteles');
-			
-
 			?>
-
-			
+						
 			<li class="<?php if( nvl($modulo)=='info' or nvl($modulo)=='programa' or nvl($modulo)=='correctivo' ) echo "active"; ?>">
 				<a href="#"><i class="fa fa-graduation-cap"></i> <span class="nav-label">Centros Educativos</span> <span class="fa arrow"></span></a>
 				<ul class="nav nav-second-level collapse" style="height: 0px;">
@@ -44,7 +41,7 @@
 			</li>
 			
 			<li class=" <?php if( nvl($modulo)=='anexo' or nvl($modulo)=='bg' or nvl($modulo)=='bginterno') echo "active"; ?>">
-				<a href="#"><i class="fa fa-list"></i> <span class="nav-label">Formato 911</span> <span class="fa arrow"></span></a>
+				<a href="#"><i class="fa fa-list"></i> <span class="nav-label">Levantamiento Estadístico Interno</span> <span class="fa arrow"></span></a>
 				<ul class="nav nav-second-level collapse" style="height: 0px;">
 					<?php if(is_permitido(null,'anexo','index')) { ?>
 					<li <?php if( nvl($modulo) == 'anexo' ) echo 'class="active"'; ?>><a href='<?php echo base_url("anexo");?>' >Anexo, Tecnologías de la Información</a></li>
@@ -53,29 +50,15 @@
 					<li <?php if( nvl($modulo) == 'bg' ) echo 'class="active"'; ?>><a href='<?php echo base_url("bg");?>' >Bachillerato General</a></li>
 					<?php } ?>
 					<?php if(is_permitido(null,'bginterno','index')) { ?>
-					<li <?php if( nvl($modulo) == 'bginterno' ) echo 'class="active"'; ?>><a href='<?php echo base_url("bginterno");?>' >Bachillerato General Interno</a></li>
+					<li <?php if( nvl($modulo) == 'bginterno' ) echo 'class="active"'; ?>><a href='<?php echo base_url("bginterno");?>' >Intersemestral</a></li>
 					<?php } ?>										
 				</ul>	
 			</li>
 			
 			
-			<li class=" <?php if( nvl($modulo)=='kilometros' or nvl($modulo)=='combustible' or nvl($modulo)=='personal' or nvl($modulo)=='mantenimiento' ) echo "active"; ?>">
+			<li class=" <?php if( nvl($modulo)=='rplantel' or nvl($modulo)=='remsad' or nvl($modulo)=='rglobal' or nvl($modulo)=='generaperiodo' or nvl($modulo)=='grupos' or nvl($modulo)=='matricula' or nvl($modulo)=='matriculacemsad' ) echo "active"; ?>">
 				<a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Reportes</span> <span class="fa arrow"></span></a>
 				<ul class="nav nav-second-level collapse" style="height: 0px;">
-					<?php if(is_permitido(null,'reportes','kilometros')) { ?>
-					<li <?php if( nvl($modulo) == 'kilometros' ) echo 'class="active"'; ?>><a href='<?php echo base_url("reportes/kilometros");?>' >Kilometros Recorridos</a></li>
-					<?php } ?>
-					<?php if(is_permitido(null,'reportes','combustible')) { ?>
-					<li <?php if( nvl($modulo) == 'combustible' ) echo 'class="active"'; ?>><a href='<?php echo base_url("reportes/combustible");?>' >Combustible</a></li>
-					<?php } ?>
-					<?php if(is_permitido(null,'reportes','personal')) { ?>
-					<li <?php if( nvl($modulo) == 'personal' ) echo 'class="active"'; ?>><a href='<?php echo base_url("reportes/personal");?>' >Personal</a></li>
-					<?php } ?>
-					<?php if(is_permitido(null,'reportes','mantenimiento')) { ?>
-					<li <?php if( nvl($modulo) == 'mantenimiento' ) echo 'class="active"'; ?>><a href='<?php echo base_url("reportes/mantenimiento");?>' >Mantenimiento</a></li>
-					<?php } ?>
-
-					<!--.................................................-->
 					<?php if(is_permitido(null,'rplantel','index')) { ?>
 					<li <?php if( nvl($modulo) == 'rplantel' ) echo 'class="active"'; ?>><a href='<?php echo base_url("rplantel");?>' >Plantel</a></li>
 					<?php } ?>

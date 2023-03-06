@@ -45,8 +45,9 @@
 			$data['periodoAct'] = $this->generaperiodo_model->find_all();
 			$peridoAct = $data['periodoAct'][0]['PAnio'].'-'.$data['periodoAct'][0]['PPeriodo'];
 
-			$selectPlan = "CPLClave, CPLNombre, CPLCCT, CPLTipo, CPLTurnos, PEIdPlanEstudios, PEIdPlantel, PETurnoPlantel, PEActualizacionAnio, PEActualizacionMes, PEActualizacionDia";
+			$selectPlan = "CPLClave, CPLNombre, CPLCCT, CPLTipo, CPLTurnos, PEIdPlanEstudios, PEIdPlantel, PETurnoPlantel, PEActualizacionAnio, PEActualizacionMes, PEActualizacionDia, PEUsuarioRealizo, UNombre, UApellido_pat, UApellido_mat, PEFechaRealizo, PEObservaciones";
 			$this->db->join('planteles','CPLClave = PEIdPlantel');
+			$this->db->join('veusuario','UNCI_usuario = PEUsuarioRealizo');
 			$this->db->where('PEIdPlantel', $idPlantel);
 			$this->db->where('PETurnoPlantel', $turno);
 			$data['PlanEstudios'] = $this->bgplanestudios_model->find(null, $selectPlan);
@@ -83,6 +84,23 @@
 			$this->db->where('AI5IdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
 			$data['abandonoInt5'] = $this->bgabandonointra5_model->find();
 
+			$this->db->where('MIIdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
+			$matricula = $this->bgmatriculains_model->find();
+			
+			if (count($matricula) > 1) {
+				$data['matriculaGrupo'] = array();
+
+				$this->db->where('MIIdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
+				$data['matricula'] = $this->bgmatriculains_model->find();
+			} else {
+				$semAct = 'GRSemestre, SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, SUM(GRTurno) TGrupos ';
+				$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
+				$this->db->where('GRCPlantel', $idPlantel);
+				$this->db->where('GRTurno', $turno);	
+				$this->db->group_by('GRSemestre');
+				$data['matriculaGrupo'] = $this->grupos_model->find_all(null, $semAct);
+			}
+			
 			$semAct = 'GRSemestre, SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, SUM(GRTurno) TGrupos ';
 			$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
 			$this->db->where('GRCPlantel', $idPlantel);
@@ -109,6 +127,9 @@
 				$data['semestres'][$sems]['grupoAlumno'] = $this->grupos_model->find_all(null, $select);
 			}
 
+			$this->db->where('MDIdBgPlan',$data['PlanEstudios']['PEIdPlanEstudios']);
+			$data['dual'] = $this->bgmodelodual_model->find();
+
 			$this->db->where('DIdBgPlan',$data['PlanEstudios']['PEIdPlanEstudios']);
 			$data['docentes'] = $this->bgdocentes_model->find();
 
@@ -120,14 +141,12 @@
 			$data['alumCap'] = $this->grupos_model->find(null, $semAl);
 
 			
-			/*$select = 'FIdFormacion, FNombre, SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, SUM(GRTurno) TGrupos ';
-			$this->db->join('nogrupos','FIdFormacion = GRCClave','left');
-			$this->db->where('GRPeriodo', $peridoAnt); //Cambiar por periodo Actual
-			$this->db->where('GRCPlantel', $idPlantel);
-			$this->db->where('GRTurno', $turno);	
-			$this->db->group_by('FIdFormacion');*/
-			$data['formaciones']  = $this->formacion_model->find_all();
+			$selectForm = "CPLClave, idFFormacion, FNombre";
+			$this->db->join('formacionplantel','idFPlantel = CPLClave','left');
+			$this->db->join('formacion','idFFormacion = FIdFormacion','left');
+			$this->db->where('CPLClave', $idPlantel);
 			
+			$data['formaciones']  = $this->plantel_model->find_all(null, $selectForm);
 
 			foreach ($data['formaciones']  as $f => $listF) {
 				$selFor = 'SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, SUM(GRTurno) TGrupos, FNombre';
@@ -135,7 +154,7 @@
 				$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
 				$this->db->where('GRCPlantel', $idPlantel);
 				$this->db->where('GRTurno', $turno);	
-				$this->db->where('GRCClave',$listF['FIdFormacion']);
+				$this->db->where('GRCClave',$listF['idFFormacion']);
 				$data['formaciones'][$f]['AlumForma'] = $this->grupos_model->find(null, $selFor);
 			}
 
@@ -349,6 +368,24 @@
 		public function saveDual_skip(){
 			$data = post_to_array('_skip');
 			
+			if(isset($_FILES["MDArchivo_file"]) && nvl($data['MDArchivo_file']) != 'undefined' ) {
+				$nom = date("His").$_FILES["MDArchivo_file"]["name"];
+				$directorio = "./Documentos/ModeloDual/";
+				
+				//Subir Archivos
+				$fileModeloDual = $nom;
+				$targetFileModeloDual = $directorio . $fileModeloDual;
+
+				if (!file_exists($directorio)) {
+					mkdir($directorio, 0777, true);
+				}
+				//Con datos
+				move_uploaded_file($_FILES["MDArchivo_file"]["tmp_name"], $targetFileModeloDual);
+				$data['MDArchivo_file'] = $targetFileModeloDual;
+			} else {
+				$data['MDArchivo_file'] = '';
+			}
+			
 			$this->db->where('MDIdBgPlan', $data['MDIdBgPlan']);
 			$dual = $this->bgmodelodual_model->find_all();
 			
@@ -356,7 +393,41 @@
 				$this->bgmodelodual_model->insert($data);				
 				echo "OK;;";
 			} else {
-				$this->db->set($data);
+
+				if(isset($_FILES["MDArchivo_file"])) {
+					
+					$nom = date("His").$_FILES["MDArchivo_file"]["name"];
+					$directorio = "./Documentos/ModeloDual/";
+					
+					//Subir Archivos
+					$fileModeloDual = $nom;
+					$targetFileModeloDual = $directorio . $fileModeloDual;
+	
+					if (!file_exists($directorio)) {
+						mkdir($directorio, 0777, true);
+					}
+					//Con datos
+					move_uploaded_file($_FILES["MDArchivo_file"]["tmp_name"], $targetFileModeloDual);
+					$archivo = $targetFileModeloDual;
+				} else {
+					
+					$archivo = $data['archivo'];
+				}
+				$datos = array (
+					'MDSerEduc' => $data['MDSerEduc'],
+					'MDHMod4o' => $data['MDHMod4o'],
+					'MDHMod6o' => $data['MDHMod6o'],
+					'MDHModTotal' => $data['MDHModTotal'],
+					'MDMMod4o' => $data['MDMMod4o'],
+					'MDMMod6o' => $data['MDMMod6o'],
+					'MDMModTotal' => $data['MDMModTotal'],
+					'MDTMod4o' => $data['MDTMod4o'],
+					'MDTMod6o' => $data['MDTMod6o'],
+					'MDTModTotal' => $data['MDTModTotal'],
+					'MDArchivo_file' => $archivo
+
+				);
+				$this->db->set($datos);
 				$this->db->where('MDIdBgPlan', $data['MDIdBgPlan']);
 				$this->db->update('bgmodelodual');
 				
@@ -380,6 +451,17 @@
 				
 				echo "OK;;";
 			}
+		}
+
+		public function saveFormaciones_skip () {
+			$data = post_to_array('_skip');
+
+			$data['PEFechaRealizo'] = date('Y-m-d');
+			$this->db->set($data);
+			$this->db->where('PEIdPlanEstudios', $data['PEIdPlanEstudios']);
+			$this->db->update('bgplanestudios');
+			
+			echo "OK;;";
 		}
 		
 		
