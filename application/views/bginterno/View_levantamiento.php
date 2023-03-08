@@ -1374,20 +1374,19 @@
                                 <td></td>
                                 <td>
                                     <div class="row">
-                                        <?php $fecha = explode('-', $PlanEstudios['PEFechaRealizo']); ?>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                Año: <b><?php if ($fecha[0] == '0000') { echo date("Y"); } else { echo $fecha[0]; } ?></b>
+                                                Año: <b><?php if ($PlanEstudios['PEFechaRealizo'] == '') { echo date("Y"); } else { echo $fecha[0]; } ?></b>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                Mes: <b><?php if ($fecha[1] == '00') { echo ver_mes(date("m")); } else { echo ver_mes($fecha[1]); } ?></b>
+                                                Mes: <b><?php if ($PlanEstudios['PEFechaRealizo'] == '') { echo ver_mes(date("m")); } else { echo ver_mes($fecha[1]); } ?></b>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                Día: <b><?php if ($fecha[2] == '00') { echo date("d"); } else { echo $fecha[2]; } ?></b>
+                                                Día: <b><?php if ($PlanEstudios['PEFechaRealizo'] == '') { echo date("d"); } else { echo $fecha[2]; } ?></b>
                                             </div>
                                         </div>
                                     </div>																								
@@ -1584,6 +1583,616 @@
 		} else {
 			$('#contentOtros').hide();
 		}
+	}
+
+
+    function sumarExistentes() {
+		var EHombres1 = 0;		var EHombres2 = 0;		var EHombres3 = 0;		var EHombresTotal = 0;
+		var EMujeres1 = 0;		var EMujeres2 = 0;		var EMujeres3 = 0;		var EMujeresTotal = 0;
+		var ETotal1 = 0;		var ETotal2 = 0;		var ETotal3 = 0;		var ETotalTotal = 0;
+		var EDiscapacidad1 = 0;		var EDiscapacidad2 = 0;		var EDiscapacidad3 = 0;		var EDiscapacidadTotal = 0;
+		var EHablantes1 = 0;		var EHablantes2 = 0;		var EHablantes3 = 0;		var EHablantesTotal = 0;
+		var EExtranjero1 = 0;		var EExtranjero2 = 0;		var EExtranjero3 = 0;		var EExtranjeroTotal = 0;
+
+		var EHombres1 = document.getElementById("EHombres1").value; if (EHombres1 == '') { EHombres1 = 0; } 
+		var EMujeres1 = document.getElementById("EMujeres1").value; if (EMujeres1 == '') { EMujeres1 = 0; } 
+        
+        if (parseInt(EHombres1) > parseInt(document.getElementById("MIEHombres1").value)) {
+            alertify.alert('El número máximo de Alumnos Hombres debe ser: '+document.getElementById("MIEHombres1").value);
+            document.getElementById("EHombres1").value = 0;
+            EHombres1 = 0;
+        } else if(parseInt(EMujeres1) > parseInt(document.getElementById("MIEMujeres1").value)) {
+            alertify.alert('El número máximo de Alumnos Mujeres debe ser: '+ document.getElementById("MIEMujeres1").value);
+            document.getElementById("EMujeres1").value = 0;
+            EMujeres1 = 0;
+        } else {
+            var ETotal1 = parseInt(EHombres1) + parseInt(EMujeres1);
+        }  
+		document.getElementById('ETotal1').value = ETotal1;
+
+		var EHombres2 = document.getElementById("EHombres2").value;  if (EHombres2 == '') { EHombres2 = 0; } 
+		var EMujeres2 = document.getElementById("EMujeres2").value;	 if (EMujeres2 == '') { EMujeres2 = 0; } 
+        if (parseInt(EHombres2) > parseInt(document.getElementById("MIEHombres2").value)) {
+            alertify.alert('El número máximo de Alumnos Hombres debe ser: '+ document.getElementById("MIEHombres2").value);
+            document.getElementById("EHombres2").value = 0;
+            EHombres2 = 0;
+        } else if(parseInt(EMujeres2) > parseInt(document.getElementById("MIEMujeres2").value)) {
+            alertify.alert('El número máximo de Alumnos Mujeres debe ser: '+ document.getElementById("MIEMujeres2").value);
+            document.getElementById("EMujeres2").value = 0;
+            EMujeres2 = 0;
+        } else {
+            var ETotal2 = parseInt(EHombres2) + parseInt(EMujeres2);
+        }
+		document.getElementById('ETotal2').value = ETotal2;
+
+		var EHombres3 = document.getElementById("EHombres3").value;	 if (EHombres3 == '') { EHombres3 = 0; } 
+		var EMujeres3 = document.getElementById("EMujeres3").value;  if (EMujeres3 == '') { EMujeres3 = 0; } 
+        if (parseInt(EHombres3) > parseInt(document.getElementById("MIEHombres3").value)) {
+            alertify.alert('El número máximo de Alumnos Hombres debe ser: '+ document.getElementById("MIEHombres3").value);
+            document.getElementById("EHombres3").value = 0;
+            EHombres3 = 0;
+        } else if(parseInt(EMujeres3) > parseInt(document.getElementById("MIEMujeres3").value)) {
+            alertify.alert('El número máximo de Alumnos Mujeres debe ser: '+ document.getElementById("MIEMujeres3").value);
+            document.getElementById("EMujeres3").value = 0;
+            EMujeres3 = 0;
+        } else {
+            var ETotal3 = parseInt(EHombres3) + parseInt(EMujeres3);
+        }
+		document.getElementById('ETotal3').value = ETotal3;
+
+		var EHombresTotal = parseInt(EHombres1) + parseInt(EHombres2) + parseInt(EHombres3);
+		document.getElementById('EHombresTotal').value = EHombresTotal;
+		
+		var EMujeresTotal = parseInt(EMujeres1) + parseInt(EMujeres2) + parseInt(EMujeres3);
+		document.getElementById('EMujeresTotal').value = EMujeresTotal;
+		
+		var ETotalTotal = parseInt(ETotal1) + parseInt(ETotal2) + parseInt(ETotal3);
+		document.getElementById('ETotalTotal').value = ETotalTotal;
+
+		var EDiscapacidad1 = document.getElementById("EDiscapacidad1").value; if (EDiscapacidad1 == '') { EDiscapacidad1 = 0; } 
+		var EDiscapacidad2 = document.getElementById("EDiscapacidad2").value; if (EDiscapacidad2 == '') { EDiscapacidad2 = 0; } 
+		var EDiscapacidad3 = document.getElementById("EDiscapacidad3").value; if (EDiscapacidad3 == '') { EDiscapacidad3 = 0; } 
+		var EDiscapacidadTotal = parseInt(EDiscapacidad1) + parseInt(EDiscapacidad2) + parseInt(EDiscapacidad3);
+		document.getElementById('EDiscapacidadTotal').value = EDiscapacidadTotal;
+
+		var EHablantes1 = document.getElementById("EHablantes1").value; if (EHablantes1 == '') { EHablantes1 = 0; } 
+		var EHablantes2 = document.getElementById("EHablantes2").value; if (EHablantes2 == '') { EHablantes2 = 0; } 
+		var EHablantes3 = document.getElementById("EHablantes3").value; if (EHablantes3 == '') { EHablantes3 = 0; } 
+		var EHablantesTotal = parseInt(EHablantes1) + parseInt(EHablantes2) + parseInt(EHablantes3);
+		document.getElementById('EHablantesTotal').value = EHablantesTotal;
+
+		var EExtranjero1 = document.getElementById("EExtranjero1").value; if (EExtranjero1 == '') { EExtranjero1 = 0; } 
+		var EExtranjero2 = document.getElementById("EExtranjero2").value; if (EExtranjero2 == '') { EExtranjero2 = 0; } 
+		var EExtranjero3 = document.getElementById("EExtranjero3").value; if (EExtranjero3 == '') { EExtranjero3 = 0; } 
+		var EExtranjeroTotal = parseInt(EExtranjero1) + parseInt(EExtranjero2) + parseInt(EExtranjero3);
+		document.getElementById('EExtranjeroTotal').value = EExtranjeroTotal;
+
+		//validar que el numero de Alumnos Reprobados no exceda al Existente y Aprobados 1
+		var repH1 = (document.getElementById("EHombres1").value) - (document.getElementById("AHombres1").value);
+		document.getElementById('RepHombres1').value = repH1;
+		var RepHombres1 = document.getElementById("RepHombres1").value; 
+
+		//validar que el numero de Alumnos Reprobados no exceda al Existente y Aprobados 2
+		var repH2 = (document.getElementById("EHombres2").value) - (document.getElementById("AHombres2").value);
+		document.getElementById('RepHombres2').value = repH2;
+		var RepHombres2 = document.getElementById("RepHombres2").value; 
+
+		//validar que el numero de Alumnos Reprobados no exceda al Existente y Aprobados 3
+		var repH3 = (document.getElementById("EHombres3").value) - (document.getElementById("AHombres3").value);
+		document.getElementById('RepHombres3').value = repH3;
+		var RepHombres3 = document.getElementById("RepHombres3").value; 
+
+		var repM1 = (document.getElementById("EMujeres1").value) - (document.getElementById("AMujeres1").value);
+		document.getElementById('RepMujeres1').value = repM1;
+		var RepMujeres1 = document.getElementById("RepMujeres1").value; 		
+		
+		var repM2 = (document.getElementById("EMujeres2").value) - (document.getElementById("AMujeres2").value);
+		document.getElementById('RepMujeres2').value = repM2;
+		var RepMujeres2 = document.getElementById("RepMujeres2").value; 
+		
+		var repM3 = (document.getElementById("EMujeres3").value) - (document.getElementById("AMujeres3").value);
+		document.getElementById('RepMujeres3').value = repM3;
+		var RepMujeres3 = document.getElementById("RepMujeres3").value; 
+
+		var RepHombresTotal = parseInt(document.getElementById('RepHombres1').value) + parseInt(document.getElementById('RepHombres2').value) + parseInt(document.getElementById('RepHombres3').value);
+		document.getElementById('RepHombresTotal').value = RepHombresTotal;
+		
+		var RepMujeresTotal = parseInt(document.getElementById('RepMujeres1').value) + parseInt(document.getElementById('RepMujeres2').value) + parseInt(document.getElementById('RepMujeres3').value);
+		document.getElementById('RepMujeresTotal').value = RepMujeresTotal;
+
+		var RepTotal1 = parseInt(document.getElementById('RepHombres1').value) + parseInt(document.getElementById("RepMujeres1").value);	
+		document.getElementById('RepTotal1').value = RepTotal1;
+		var RepTotal2 = parseInt(RepHombres2) + parseInt(RepMujeres2);	
+		document.getElementById('RepTotal2').value = RepTotal2;
+		var RepTotal3 = parseInt(RepHombres3) + parseInt(RepMujeres3);
+		document.getElementById('RepTotal3').value = RepTotal3;
+		var RepTotalTotal = parseInt(RepTotal1) + parseInt(RepTotal2) + parseInt(RepTotal3);
+		document.getElementById('RepTotalTotal').value = RepTotalTotal;
+
+		//validar que el numero de Alumnos Reprobados Discapacidad no exceda a los Existentes Discapacidad
+		var repDis1 = (document.getElementById("EDiscapacidad1").value) - (document.getElementById("ADiscapacidad1").value);
+		document.getElementById('RepDiscapacidad1').value = repDis1;
+		var RepDiscapacidad1 = document.getElementById("RepDiscapacidad1").value; 
+		
+		var repDis2 = (document.getElementById("EDiscapacidad2").value) - (document.getElementById("ADiscapacidad2").value);
+		document.getElementById('RepDiscapacidad2').value = repDis2;
+		var RepDiscapacidad2 = document.getElementById("RepDiscapacidad2").value;
+		
+		var repDis3 = (document.getElementById("EDiscapacidad3").value) - (document.getElementById("ADiscapacidad3").value);
+		document.getElementById('RepDiscapacidad3').value = repDis3;
+		var RepDiscapacidad3 = document.getElementById("RepDiscapacidad3").value; 
+
+		var RepDiscapacidadTotal = parseInt(RepDiscapacidad1) + parseInt(RepDiscapacidad2) + parseInt(RepDiscapacidad3);
+		document.getElementById('RepDiscapacidadTotal').value = RepDiscapacidadTotal;
+		//fin validar que el numero de Alumnos Reprobados Discapacidad no exceda a los Existentes Discapacidad
+
+		//validar que el numero de Alumnos Reprobados Extranjeros no exceda a los Existentes Extranjeros
+		var repExt1 = (document.getElementById("EExtranjero1").value) - (document.getElementById("AExtranjero1").value);
+		document.getElementById('RepExtranjero1').value = repExt1;
+		var RepExtranjero1 = document.getElementById("RepExtranjero1").value; 
+		
+		var repExt2 = (document.getElementById("EExtranjero2").value) - (document.getElementById("AExtranjero2").value);
+		document.getElementById('RepExtranjero2').value = repExt2;
+		var RepExtranjero2 = document.getElementById("RepExtranjero2").value; 
+		
+		var repExt3 = (document.getElementById("EExtranjero3").value) - (document.getElementById("AExtranjero3").value);
+		document.getElementById('RepExtranjero3').value = repExt3;
+		var RepExtranjero3 = document.getElementById("RepExtranjero3").value; 
+
+		var RepExtranjeroTotal = parseInt(RepExtranjero1) + parseInt(RepExtranjero2) + parseInt(RepExtranjero3);
+		document.getElementById('RepExtranjeroTotal').value = RepExtranjeroTotal;
+		//fin validar que el numero de Alumnos Reprobados Extranjeros no exceda a los Existentes Extranjeros
+
+		//validar que el numero de Alumnos Reprobados Hablantes Indigenas no exceda a los Existentes Hablantes Indigenas
+		var repHab1 = (document.getElementById("EHablantes1").value) - (document.getElementById("AHablantes1").value);
+		document.getElementById('RepHablantes1').value = repHab1;
+		var RepHablantes1 = document.getElementById("RepHablantes1").value; 
+		
+		var repHab2 = (document.getElementById("EHablantes2").value) - (document.getElementById("AHablantes2").value);
+		document.getElementById('RepHablantes2').value = repHab2;
+		var RepHablantes2 = document.getElementById("RepHablantes2").value; 
+
+		var repHab3 = (document.getElementById("EHablantes3").value) - (document.getElementById("AHablantes3").value);
+		document.getElementById('RepHablantes3').value = repHab3;
+		var RepHablantes3 = document.getElementById("RepHablantes3").value; 
+		
+		var RepHablantesTotal = parseInt(RepHablantes1) + parseInt(RepHablantes2) + parseInt(RepHablantes3);
+		document.getElementById('RepHablantesTotal').value = RepHablantesTotal;
+		//fin validar que el numero de Alumnos Reprobados Hablantes Indigenas no exceda a los Existentes Hablantes Indigenas
+
+		//validar que el numero de Alumnos Reprobados Discapacidad no exceda a los Existentes Discapacidad
+		var repDis1 = (document.getElementById("EDiscapacidad1").value) - (document.getElementById("ADiscapacidad1").value);
+		document.getElementById('RepDiscapacidad1').value = repDis1;
+		var RepDiscapacidad1 = document.getElementById("RepDiscapacidad1").value; 
+		
+		var repDis2 = (document.getElementById("EDiscapacidad2").value) - (document.getElementById("ADiscapacidad2").value);
+		document.getElementById('RepDiscapacidad2').value = repDis2;
+		var RepDiscapacidad2 = document.getElementById("RepDiscapacidad2").value; 
+		
+		var repDis3 = (document.getElementById("EDiscapacidad3").value) - (document.getElementById("ADiscapacidad3").value);
+		document.getElementById('RepDiscapacidad3').value = repDis3;
+		var RepDiscapacidad3 = document.getElementById("RepDiscapacidad3").value; 
+		
+		var RepDiscapacidadTotal = parseInt(RepDiscapacidad1) + parseInt(RepDiscapacidad2) + parseInt(RepDiscapacidad3);
+		document.getElementById('RepDiscapacidadTotal').value = RepDiscapacidadTotal;
+		//fin validar que el numero de Alumnos Reprobados Discapacidad no exceda a los Existentes Discapacidad
+
+		//validar que el numero de Alumnos Reprobados Extranjeros no exceda a los Existentes Extranjeros
+		var repExt1 = (document.getElementById("EExtranjero1").value) - (document.getElementById("AExtranjero1").value);
+		document.getElementById('RepExtranjero1').value = repExt1;
+		var RepExtranjero1 = document.getElementById("RepExtranjero1").value; 
+		
+		var repExt2 = (document.getElementById("EExtranjero2").value) - (document.getElementById("AExtranjero2").value);
+		document.getElementById('RepExtranjero2').value = repExt2;
+		var RepExtranjero2 = document.getElementById("RepExtranjero2").value; 
+
+		var repExt3 = (document.getElementById("EExtranjero3").value) - (document.getElementById("AExtranjero3").value);
+		document.getElementById('RepExtranjero3').value = repExt3;
+		var RepExtranjero3 = document.getElementById("RepExtranjero3").value; 
+		
+		var RepExtranjeroTotal = parseInt(RepExtranjero1) + parseInt(RepExtranjero2) + parseInt(RepExtranjero3);		
+		document.getElementById('RepExtranjeroTotal').value = RepExtranjeroTotal;
+		//fin validar que el numero de Alumnos Reprobados Extranjeros no exceda a los Existentes Extranjeros
+
+		//validar que el numero de Alumnos Reprobados Hablantes Indigenas no exceda a los Existentes Hablantes Indigenas
+		var repHab1 = (document.getElementById("EHablantes1").value) - (document.getElementById("AHablantes1").value);
+		document.getElementById('RepHablantes1').value = repHab1;
+		var RepHablantes1 = document.getElementById("RepHablantes1").value;
+
+		var repHab2 = (document.getElementById("EHablantes2").value) - (document.getElementById("AHablantes2").value);
+		document.getElementById('RepHablantes2').value = repHab2;
+		var RepHablantes2 = document.getElementById("RepHablantes2").value; 
+
+		var repHab3 = (document.getElementById("EHablantes3").value) - (document.getElementById("AHablantes3").value);
+		document.getElementById('RepHablantes3').value = repHab3;
+		var RepHablantes3 = document.getElementById("RepHablantes3").value; 
+		
+		var RepHablantesTotal = parseInt(RepHablantes1) + parseInt(RepHablantes2) + parseInt(RepHablantes3);		
+		document.getElementById('RepHablantesTotal').value = RepHablantesTotal;
+		//fin validar que el numero de Alumnos Reprobados Hablantes Indigenas no exceda a los Existentes Hablantes Indigenas
+	}
+
+
+	function sumarAprobados() {
+		var AHombres1 = 0;		var AHombres2 = 0;		var AHombres3 = 0;		var AHombresTotal = 0;
+		var AMujeres1 = 0;		var AMujeres2 = 0;		var AMujeres3 = 0;		var AMujeresTotal = 0;
+		var ATotal1 = 0;		var ATotal2 = 0;		var ATotal3 = 0;		var ATotalTotal = 0;
+		var ADiscapacidad1 = 0;		var ADiscapacidad2 = 0;		var ADiscapacidad3 = 0;		var ADiscapacidadTotal = 0;
+		var AHablantes1 = 0;		var AHablantes2 = 0;		var AHablantes3 = 0;		var AHablantesTotal = 0;
+		var AExtranjero1 = 0;		var AExtranjero2 = 0;		var AExtranjero3 = 0;		var AExtranjeroTotal = 0;
+
+		//validar que el numero de Alumnos Aprobados no exceda a los Existentes 1
+
+		var AHombres1 = document.getElementById("AHombres1").value; 
+		if (AHombres1 == '') { AHombres1 = 0; } 
+		if (parseInt(AHombres1) > parseInt(document.getElementById("EHombres1").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EHombres1").value);
+			var AHombres1 = document.getElementById("AHombres1").value = 0;
+		} else {
+			var ATotal1 = parseInt(AHombres1) + parseInt(AMujeres1);
+		}
+
+		//validar que el numero de Alumnos Reprobados no exceda al Existente y Aprobados 1
+		var repH1 = (document.getElementById("EHombres1").value) - (document.getElementById("AHombres1").value);
+		document.getElementById('RepHombres1').value = repH1;
+
+		var AMujeres1 = document.getElementById("AMujeres1").value; if (AMujeres1 == '') { AMujeres1 = 0; }
+		if (parseInt(AMujeres1) > parseInt(document.getElementById("EMujeres1").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EMujeres1").value);
+			var AMujeres1 = document.getElementById("AMujeres1").value = 0;
+		} else {	
+			var ATotal1 = parseInt(AHombres1) + parseInt(AMujeres1);
+		}
+		document.getElementById('ATotal1').value = ATotal1;
+		//fin validar que el numero de Alumnos Aprobados no exceda a los Existentes 1
+		
+		//validar que el numero de Alumnos Aprobados no exceda a los Existentes 3
+		var AHombres2 = document.getElementById("AHombres2").value; if (AHombres2 == '') { AHombres2 = 0; }
+		if (parseInt(AHombres2) > parseInt(document.getElementById("EHombres2").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EHombres2").value);
+			var AHombres2 = document.getElementById("AHombres2").value = 0;
+		} else {
+			var ATotal2 = parseInt(AHombres2) + parseInt(AMujeres2);
+		}
+
+		var AMujeres2 = document.getElementById("AMujeres2").value; if (AMujeres2 == '') { AMujeres2 = 0; }
+		if (parseInt(AMujeres2) > parseInt(document.getElementById("EMujeres2").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EMujeres2").value);
+			var AMujeres2 = document.getElementById("AMujeres2").value = 0;
+		} else {	
+			var ATotal2 = parseInt(AHombres2) + parseInt(AMujeres2);
+		}
+		document.getElementById('ATotal2').value = ATotal2;
+		//fin validar que el numero de Alumnos Aprobados no exceda a los Existentes 2
+
+		//validar que el numero de Alumnos Aprobados no exceda a los Existentes 3
+		var AHombres3 = document.getElementById("AHombres3").value; if (AHombres3 == '') { AHombres3 = 0; }
+		if (parseInt(AHombres3) > parseInt(document.getElementById("EHombres3").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EHombres3").value);
+			var AHombres3 = document.getElementById("AHombres3").value = 0;
+		} else {
+			var ATotal3 = parseInt(AHombres3) + parseInt(AMujeres3);
+		}
+
+		var AMujeres3 = document.getElementById("AMujeres3").value; if (AMujeres3 == '') { AMujeres3 = 0; }
+		if (parseInt(AMujeres3) > parseInt(document.getElementById("EMujeres3").value )) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EMujeres3").value);
+			var AMujeres3 = document.getElementById("AMujeres3").value = 0;
+		} else {	
+			var ATotal3 = parseInt(AHombres3) + parseInt(AMujeres3);
+		}
+		document.getElementById('ATotal3').value = ATotal3;
+		//fin validar que el numero de Alumnos Aprobados no exceda a los Existentes 3
+				
+		var AHombresTotal = parseInt(AHombres1) + parseInt(AHombres2) + parseInt(AHombres3); if (AHombresTotal == '') { AHombresTotal = 0; }
+		document.getElementById('AHombresTotal').value = AHombresTotal;
+		
+		var AMujeresTotal = parseInt(AMujeres1) + parseInt(AMujeres2) + parseInt(AMujeres3); if (AMujeresTotal == '') { AMujeresTotal = 0; }
+		document.getElementById('AMujeresTotal').value = AMujeresTotal;
+		
+		var ATotalTotal = parseInt(ATotal1) + parseInt(ATotal2) + parseInt(ATotal3); if (ATotalTotal == '') { ATotalTotal = 0; }
+		document.getElementById('ATotalTotal').value = ATotalTotal;
+
+		//validar que el numero de Alumnos Aprobados Discapacitados no exceda a los Existentes Discapacitados 
+		var ADiscapacidad1 = document.getElementById("ADiscapacidad1").value;  if (ADiscapacidad1 == '') { ADiscapacidad1 = 0; }
+		if (parseInt(ADiscapacidad1) > parseInt(document.getElementById("EDiscapacidad1").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EDiscapacidad1").value);
+			var ADiscapacidad1 = document.getElementById("ADiscapacidad1").value = 0;
+		} else {
+			var ADiscapacidadTotal = parseInt(ADiscapacidad1) + parseInt(ADiscapacidad2) + parseInt(ADiscapacidad3);
+		}
+
+		var ADiscapacidad2 = document.getElementById("ADiscapacidad2").value;  if (ADiscapacidad2 == '') { ADiscapacidad2 = 0; }
+		if (parseInt(ADiscapacidad2) > parseInt(document.getElementById("EDiscapacidad2").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EDiscapacidad2").value);
+			var ADiscapacidad2 = document.getElementById("ADiscapacidad2").value = 0;
+		} else {	
+			var ADiscapacidadTotal = parseInt(ADiscapacidad1) + parseInt(ADiscapacidad2) + parseInt(ADiscapacidad3);
+		}
+
+		var ADiscapacidad3 = document.getElementById("ADiscapacidad3").value;  if (ADiscapacidad3 == '') { ADiscapacidad3 = 0; }
+		if (parseInt(ADiscapacidad3) > parseInt(document.getElementById("EDiscapacidad3").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EDiscapacidad3").value);
+			var ADiscapacidad3 = document.getElementById("ADiscapacidad3").value = 0;
+		} else {	
+			var ADiscapacidadTotal = parseInt(ADiscapacidad1) + parseInt(ADiscapacidad2) + parseInt(ADiscapacidad3);
+		}
+		document.getElementById('ADiscapacidadTotal').value = ADiscapacidadTotal;
+		//fin validar que el numero de Alumnos Aprobados Discapacitados no exceda a los Existentes Discapacitados 
+
+		//validar que el numero de Alumnos Aprobados Extranjeros no exceda a los Existentes Extranjeros 
+		var AExtranjero1 = document.getElementById("AExtranjero1").value;  if (AExtranjero1 == '') { AExtranjero1 = 0; }
+		if (parseInt(AExtranjero1) > parseInt(document.getElementById("EExtranjero1").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EExtranjero1").value);
+			var AExtranjero1 = document.getElementById("AExtranjero1").value = 0;
+		} else {
+			var AExtranjeroTotal = parseInt(AExtranjero1) + parseInt(AExtranjero2) + parseInt(AExtranjero3);
+		}
+
+		var AExtranjero2 = document.getElementById("AExtranjero2").value;  if (AExtranjero2 == '') { AExtranjero2 = 0; }
+		if (parseInt(AExtranjero2) > parseInt(document.getElementById("EExtranjero2").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EExtranjero2").value);
+			var AExtranjero2 = document.getElementById("AExtranjero2").value = 0;
+		} else {	
+			var AExtranjeroTotal = parseInt(AExtranjero1) + parseInt(AExtranjero2) + parseInt(AExtranjero3);
+		}
+
+		var AExtranjero3 = document.getElementById("AExtranjero3").value;  if (AExtranjero3 == '') { AExtranjero3 = 0; }
+		if (parseInt(AExtranjero3) > parseInt(document.getElementById("EExtranjero3").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EExtranjero3").value);
+			var AExtranjero3 = document.getElementById("AExtranjero3").value = 0;
+		} else {	
+			var AExtranjeroTotal = parseInt(AExtranjero1) + parseInt(AExtranjero2) + parseInt(AExtranjero3);
+		}
+		document.getElementById('AExtranjeroTotal').value = AExtranjeroTotal;
+		//fin validar que el numero de Alumnos Aprobados Extranjeros no exceda a los Existentes Extranjeros 
+
+		//validar que el numero de Alumnos Aprobados Hablantes Indigena no exceda a los Existentes Hablantes Indigena 
+		var AHablantes1 = document.getElementById("AHablantes1").value;  if (AHablantes1 == '') { AHablantes1 = 0; }
+		if (parseInt(AHablantes1) > parseInt(document.getElementById("EHablantes1").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EHablantes1").value);
+			var AHablantes1 = document.getElementById("AHablantes1").value = 0;
+		} else {
+			var AHablantesTotal = parseInt(AHablantes1) + parseInt(AHablantes2) + parseInt(AHablantes3);
+		}
+
+		var AHablantes2 = document.getElementById("AHablantes2").value;  if (AHablantes2 == '') { AHablantes2 = 0; }
+		if (parseInt(AHablantes2) > parseInt(document.getElementById("EHablantes2").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EHablantes2").value);
+			var AHablantes2 = document.getElementById("AHablantes2").value = 0;
+		} else {	
+			var AHablantesTotal = parseInt(AHablantes1) + parseInt(AHablantes2) + parseInt(AHablantes3);
+		}
+
+		var AHablantes3 = document.getElementById("AHablantes3").value;  if (AHablantes3 == '') { AHablantes3 = 0; }
+		if (parseInt(AHablantes3) > parseInt(document.getElementById("EHablantes3").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("EHablantes3").value);
+			var AHablantes3 = document.getElementById("AHablantes3").value = 0;
+		} else {	
+			var AHablantesTotal = parseInt(AHablantes1) + parseInt(AHablantes2) + parseInt(AHablantes3);
+		}
+		document.getElementById('AHablantesTotal').value = AHablantesTotal;
+		//fin validar que el numero de Alumnos Aprobados Hablantes Indigena no exceda a los Existentes Hablantes Indigena 
+
+
+		//validar que el numero de Alumnos Reprobados no exceda al Existente y Aprobados 1
+		var repH1 = (document.getElementById("EHombres1").value) - (document.getElementById("AHombres1").value);
+		document.getElementById('RepHombres1').value = repH1;
+		var RepHombres1 = document.getElementById("RepHombres1").value; 
+
+		//validar que el numero de Alumnos Reprobados no exceda al Existente y Aprobados 2
+		var repH2 = (document.getElementById("EHombres2").value) - (document.getElementById("AHombres2").value);
+		document.getElementById('RepHombres2').value = repH2;
+		var RepHombres2 = document.getElementById("RepHombres2").value; 
+
+		//validar que el numero de Alumnos Reprobados no exceda al Existente y Aprobados 3
+		var repH3 = (document.getElementById("EHombres3").value) - (document.getElementById("AHombres3").value);
+		document.getElementById('RepHombres3').value = repH3;
+		var RepHombres3 = document.getElementById("RepHombres3").value; 
+
+		var repM1 = (document.getElementById("EMujeres1").value) - (document.getElementById("AMujeres1").value);
+		document.getElementById('RepMujeres1').value = repM1;
+		var RepMujeres1 = document.getElementById("RepMujeres1").value; 		
+		
+		var repM2 = (document.getElementById("EMujeres2").value) - (document.getElementById("AMujeres2").value);
+		document.getElementById('RepMujeres2').value = repM2;
+		var RepMujeres2 = document.getElementById("RepMujeres2").value; 
+		
+		var repM3 = (document.getElementById("EMujeres3").value) - (document.getElementById("AMujeres3").value);
+		document.getElementById('RepMujeres3').value = repM3;
+		var RepMujeres3 = document.getElementById("RepMujeres3").value; 
+
+		var RepHombresTotal = parseInt(document.getElementById('RepHombres1').value) + parseInt(document.getElementById('RepHombres2').value) + parseInt(document.getElementById('RepHombres3').value);
+		document.getElementById('RepHombresTotal').value = RepHombresTotal;
+		
+		var RepMujeresTotal = parseInt(document.getElementById('RepMujeres1').value) + parseInt(document.getElementById('RepMujeres2').value) + parseInt(document.getElementById('RepMujeres3').value);
+		document.getElementById('RepMujeresTotal').value = RepMujeresTotal;
+
+		var RepTotal1 = parseInt(document.getElementById('RepHombres1').value) + parseInt(document.getElementById("RepMujeres1").value);
+		document.getElementById('RepTotal1').value = RepTotal1;
+		var RepTotal2 = parseInt(document.getElementById('RepHombres2').value) + parseInt(document.getElementById("RepMujeres2").value);
+		document.getElementById('RepTotal2').value = RepTotal2;
+		var RepTotal3 = parseInt(document.getElementById('RepHombres3').value) + parseInt(document.getElementById("RepMujeres3").value);	
+		document.getElementById('RepTotal3').value = RepTotal3;
+		var RepTotalTotal = parseInt(RepTotal1) + parseInt(RepTotal2) + parseInt(RepTotal3);
+		document.getElementById('RepTotalTotal').value = RepTotalTotal;
+
+		//validar que el numero de Alumnos Reprobados Discapacidad no exceda a los Existentes Discapacidad
+		var repDis1 = (document.getElementById("EDiscapacidad1").value) - (document.getElementById("ADiscapacidad1").value);
+		document.getElementById('RepDiscapacidad1').value = repDis1;
+		var RepDiscapacidad1 = document.getElementById("RepDiscapacidad1").value; 
+		
+		var repDis2 = (document.getElementById("EDiscapacidad2").value) - (document.getElementById("ADiscapacidad2").value);
+		document.getElementById('RepDiscapacidad2').value = repDis2;
+		var RepDiscapacidad2 = document.getElementById("RepDiscapacidad2").value;
+		
+		var repDis3 = (document.getElementById("EDiscapacidad3").value) - (document.getElementById("ADiscapacidad3").value);
+		document.getElementById('RepDiscapacidad3').value = repDis3;
+		var RepDiscapacidad3 = document.getElementById("RepDiscapacidad3").value; 
+
+		var RepDiscapacidadTotal = parseInt(RepDiscapacidad1) + parseInt(RepDiscapacidad2) + parseInt(RepDiscapacidad3);
+		document.getElementById('RepDiscapacidadTotal').value = RepDiscapacidadTotal;
+		//fin validar que el numero de Alumnos Reprobados Discapacidad no exceda a los Existentes Discapacidad
+
+		//validar que el numero de Alumnos Reprobados Extranjeros no exceda a los Existentes Extranjeros
+		var repExt1 = (document.getElementById("EExtranjero1").value) - (document.getElementById("AExtranjero1").value);
+		document.getElementById('RepExtranjero1').value = repExt1;
+		var RepExtranjero1 = document.getElementById("RepExtranjero1").value; 
+		
+		var repExt2 = (document.getElementById("EExtranjero2").value) - (document.getElementById("AExtranjero2").value);
+		document.getElementById('RepExtranjero2').value = repExt2;
+		var RepExtranjero2 = document.getElementById("RepExtranjero2").value; 
+		
+		var repExt3 = (document.getElementById("EExtranjero3").value) - (document.getElementById("AExtranjero3").value);
+		document.getElementById('RepExtranjero3').value = repExt3;
+		var RepExtranjero3 = document.getElementById("RepExtranjero3").value; 
+
+		var RepExtranjeroTotal = parseInt(RepExtranjero1) + parseInt(RepExtranjero2) + parseInt(RepExtranjero3);
+		document.getElementById('RepExtranjeroTotal').value = RepExtranjeroTotal;
+		//fin validar que el numero de Alumnos Reprobados Extranjeros no exceda a los Existentes Extranjeros
+
+		//validar que el numero de Alumnos Reprobados Hablantes Indigenas no exceda a los Existentes Hablantes Indigenas
+		var repHab1 = (document.getElementById("EHablantes1").value) - (document.getElementById("AHablantes1").value);
+		document.getElementById('RepHablantes1').value = repHab1;
+		var RepHablantes1 = document.getElementById("RepHablantes1").value; 
+		
+		var repHab2 = (document.getElementById("EHablantes2").value) - (document.getElementById("AHablantes2").value);
+		document.getElementById('RepHablantes2').value = repHab2;
+		var RepHablantes2 = document.getElementById("RepHablantes2").value; 
+
+		var repHab3 = (document.getElementById("EHablantes3").value) - (document.getElementById("AHablantes3").value);
+		document.getElementById('RepHablantes3').value = repHab3;
+		var RepHablantes3 = document.getElementById("RepHablantes3").value; 
+		
+		var RepHablantesTotal = parseInt(RepHablantes1) + parseInt(RepHablantes2) + parseInt(RepHablantes3);
+		document.getElementById('RepHablantesTotal').value = RepHablantesTotal;
+		//fin validar que el numero de Alumnos Reprobados Hablantes Indigenas no exceda a los Existentes Hablantes Indigenas
+
+		//validar que el numero de Alumnos Reprobados Discapacidad no exceda a los Existentes Discapacidad
+		var repDis1 = (document.getElementById("EDiscapacidad1").value) - (document.getElementById("ADiscapacidad1").value);
+		document.getElementById('RepDiscapacidad1').value = repDis1;
+		var RepDiscapacidad1 = document.getElementById("RepDiscapacidad1").value; 
+		
+		var repDis2 = (document.getElementById("EDiscapacidad2").value) - (document.getElementById("ADiscapacidad2").value);
+		document.getElementById('RepDiscapacidad2').value = repDis2;
+		var RepDiscapacidad2 = document.getElementById("RepDiscapacidad2").value; 
+		
+		var repDis3 = (document.getElementById("EDiscapacidad3").value) - (document.getElementById("ADiscapacidad3").value);
+		document.getElementById('RepDiscapacidad3').value = repDis3;
+		var RepDiscapacidad3 = document.getElementById("RepDiscapacidad3").value; 
+		
+		var RepDiscapacidadTotal = parseInt(RepDiscapacidad1) + parseInt(RepDiscapacidad2) + parseInt(RepDiscapacidad3);
+		document.getElementById('RepDiscapacidadTotal').value = RepDiscapacidadTotal;
+		//fin validar que el numero de Alumnos Reprobados Discapacidad no exceda a los Existentes Discapacidad
+
+		//validar que el numero de Alumnos Reprobados Extranjeros no exceda a los Existentes Extranjeros
+		var repExt1 = (document.getElementById("EExtranjero1").value) - (document.getElementById("AExtranjero1").value);
+		document.getElementById('RepExtranjero1').value = repExt1;
+		var RepExtranjero1 = document.getElementById("RepExtranjero1").value; 
+		
+		var repExt2 = (document.getElementById("EExtranjero2").value) - (document.getElementById("AExtranjero2").value);
+		document.getElementById('RepExtranjero2').value = repExt2;
+		var RepExtranjero2 = document.getElementById("RepExtranjero2").value; 
+
+		var repExt3 = (document.getElementById("EExtranjero3").value) - (document.getElementById("AExtranjero3").value);
+		document.getElementById('RepExtranjero3').value = repExt3;
+		var RepExtranjero3 = document.getElementById("RepExtranjero3").value; 
+		
+		var RepExtranjeroTotal = parseInt(RepExtranjero1) + parseInt(RepExtranjero2) + parseInt(RepExtranjero3);		
+		document.getElementById('RepExtranjeroTotal').value = RepExtranjeroTotal;
+		//fin validar que el numero de Alumnos Reprobados Extranjeros no exceda a los Existentes Extranjeros
+
+		//validar que el numero de Alumnos Reprobados Hablantes Indigenas no exceda a los Existentes Hablantes Indigenas
+		var repHab1 = (document.getElementById("EHablantes1").value) - (document.getElementById("AHablantes1").value);
+		document.getElementById('RepHablantes1').value = repHab1;
+		var RepHablantes1 = document.getElementById("RepHablantes1").value;
+
+		var repHab2 = (document.getElementById("EHablantes2").value) - (document.getElementById("AHablantes2").value);
+		document.getElementById('RepHablantes2').value = repHab2;
+		var RepHablantes2 = document.getElementById("RepHablantes2").value; 
+
+		var repHab3 = (document.getElementById("EHablantes3").value) - (document.getElementById("AHablantes3").value);
+		document.getElementById('RepHablantes3').value = repHab3;
+		var RepHablantes3 = document.getElementById("RepHablantes3").value; 
+		
+		var RepHablantesTotal = parseInt(RepHablantes1) + parseInt(RepHablantes2) + parseInt(RepHablantes3);		
+		document.getElementById('RepHablantesTotal').value = RepHablantesTotal;
+		//fin validar que el numero de Alumnos Reprobados Hablantes Indigenas no exceda a los Existentes Hablantes Indigenas
+
+		
+	}
+
+	function sumarRegulares() {
+		var RegHombres1 = 0;		var RegHombres2 = 0;		var RegHombres3 = 0;		var RegHombresTotal = 0;
+		var RegMujeres1 = 0;		var RegMujeres2 = 0;		var RegMujeres3 = 0;		var RegMujeresTotal = 0;
+		var RegTotal1 = 0;		var RegTotal2 = 0;		var RegTotal3 = 0;		var RegTotalTotal = 0;
+
+		//validar que el numero de Alumnos Regularizados no exceda al Reprobados 1
+		var RegHombres1 = document.getElementById("RegHombres1").value; 
+		if (parseInt(RegHombres1) > parseInt(document.getElementById("RepHombres1").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("RepHombres1").value);
+			var RegHombres1 = document.getElementById("RegHombres1").value = 0;
+		} else {
+			var RegTotal1 = parseInt(RegHombres1) + parseInt(RegMujeres1);
+		}
+
+		var RegMujeres1 = document.getElementById("RegMujeres1").value; 
+		if (parseInt(RegMujeres1) > parseInt(document.getElementById("RepMujeres1").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("RepMujeres1").value);
+			var RegMujeres1 = document.getElementById("RegMujeres1").value = 0;
+		} else {	
+			var RegTotal1 = parseInt(RegHombres1) + parseInt(RegMujeres1);
+		}
+		document.getElementById('RegTotal1').value = RegTotal1;
+		//fin validar Alumnos Regularizados no exceda al Reprobados 1
+
+		//validar que el numero de Alumnos Regularizados no exceda al Reprobados 2
+		var RegHombres2 = document.getElementById("RegHombres2").value; 
+		if (parseInt(RegHombres2) > parseInt(document.getElementById("RepHombres2").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("RepHombres2").value);
+			var RegHombres2 = document.getElementById("RegHombres2").value = 0;
+		} else {
+			var RegTotal2 = parseInt(RegHombres2) + parseInt(RegMujeres2);
+		}
+
+		var RegMujeres2 = document.getElementById("RegMujeres2").value; 
+		if (parseInt(RegMujeres2) > parseInt(document.getElementById("RepMujeres2").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("RepMujeres2").value);
+			var RegMujeres2 = document.getElementById("RegMujeres2").value = 0;
+		} else {	
+			var RegTotal2 = parseInt(RegHombres2) + parseInt(RegMujeres2);
+		}
+		document.getElementById('RegTotal2').value = RegTotal2;
+		//fin validar Alumnos Regularizados no exceda al Reprobados 2
+
+		//validar que el numero de Alumnos Regularizados no exceda al Reprobados 3
+		var RegHombres3 = document.getElementById("RegHombres3").value; 
+		if (parseInt(RegHombres3) > parseInt(document.getElementById("RepHombres3").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("RepHombres3").value);
+			var RegHombres3 = document.getElementById("RegHombres3").value = 0;
+		} else {
+			var RegTotal3 = parseInt(RegHombres3) + parseInt(RegMujeres3);
+		}
+
+		var RegMujeres3 = document.getElementById("RegMujeres3").value; 
+		if (parseInt(RegMujeres3) > parseInt(document.getElementById("RepMujeres3").value) ) {
+			alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("RepMujeres3").value);
+			var RegMujeres3 = document.getElementById("RegMujeres3").value = 0;
+		} else {	
+			var RegTotal3 = parseInt(RegHombres3) + parseInt(RegMujeres3);
+		}
+		document.getElementById('RegTotal3').value = RegTotal3;
+		//fin validar Alumnos Regularizados no exceda al Reprobados 3
+
+		var RegHombresTotal = parseInt(RegHombres1) + parseInt(RegHombres2) + parseInt(RegHombres3);
+		document.getElementById('RegHombresTotal').value = RegHombresTotal;
+		
+		var RegMujeresTotal = parseInt(RegMujeres1) + parseInt(RegMujeres2) + parseInt(RegMujeres3);
+		document.getElementById('RegMujeresTotal').value = RegMujeresTotal;
+		
+		var RegTotalTotal = parseInt(RegTotal1) + parseInt(RegTotal2) + parseInt(RegTotal3);
+		document.getElementById('RegTotalTotal').value = RegTotalTotal;
+
 	}
 
     function sumarAbandonoEscIntra() {
@@ -1793,27 +2402,19 @@
             document.getElementById("OHombres1").value = 0;
             document.getElementById("AEIHombresTTotal1").value = 0;
 
+            document.getElementById("BATAmbos1").value = 0;
+            document.getElementById("BAAmbos1").value = 0;
+            document.getElementById("BADAmbos1").value = 0;
+            document.getElementById("CPAmbos1").value = 0;
+            document.getElementById("FEAmbos1").value = 0;
+            document.getElementById("EMAmbos1").value = 0;
+            document.getElementById("CRAmbos1").value = 0;
+            document.getElementById("OAmbos1").value = 0;
+
             
             document.getElementById("AEITotalTotal1").value = 0;
         } else {
-            document.getElementById("BATHombres1").value = BATHombres1;
-            document.getElementById("BAHombres1").value = BAHombres1;
-            document.getElementById("BADHombres1").value = BADHombres1;
-            document.getElementById("CPHombres1").value = CPHombres1;
-            document.getElementById("FEHombres1").value = FEHombres1;
-            document.getElementById("EMHombres1").value = EMHombres1;
-            document.getElementById("CRHombres1").value = CRHombres1;
-            document.getElementById("OHombres1").value = OHombres1;
-            
-            document.getElementById("BATAmbos1").value = BATAmbos1;
-            document.getElementById("BAAmbos1").value = BAAmbos1;
-            document.getElementById("BADAmbos1").value = BADAmbos1;
-            document.getElementById("CPAmbos1").value = CPAmbos1;
-            document.getElementById("FEAmbos1").value = FEAmbos1;
-            document.getElementById("EMAmbos1").value = EMAmbos1;
-            document.getElementById("CRAmbos1").value = CRAmbos1;
-            document.getElementById("OAmbos1").value = OAmbos1;
-
+                        
             document.getElementById('AEIHombresTTotal1').value = AEIHombresTTotal1;
 
             var AEITotalTotal1 = 0;
@@ -1837,25 +2438,17 @@
             document.getElementById("OMujeres1").value = 0;
             document.getElementById("AEIMujeresTTotal1").value = 0;
 
+            document.getElementById("BATAmbos1").value = 0;
+            document.getElementById("BAAmbos1").value = 0;
+            document.getElementById("BADAmbos1").value = 0;
+            document.getElementById("CPAmbos1").value = 0;
+            document.getElementById("FEAmbos1").value = 0;
+            document.getElementById("EMAmbos1").value = 0;
+            document.getElementById("CRAmbos1").value = 0;
+            document.getElementById("OAmbos1").value = 0;
+
             document.getElementById("AEITotalTotal1").value = 0;
         } else {
-            document.getElementById("BATMujeres1").value = BATMujeres1;
-            document.getElementById("BAMujeres1").value = BAMujeres1;
-            document.getElementById("BADMujeres1").value = BADMujeres1;
-            document.getElementById("CPMujeres1").value = CPMujeres1;
-            document.getElementById("FEMujeres1").value = FEMujeres1;
-            document.getElementById("EMMujeres1").value = EMMujeres1;
-            document.getElementById("CRMujeres1").value = CRMujeres1;
-            document.getElementById("OMujeres1").value = OMujeres1;
-            
-            document.getElementById("BATAmbos1").value = BATAmbos1;
-            document.getElementById("BAAmbos1").value = BAAmbos1;
-            document.getElementById("BADAmbos1").value = BADAmbos1;
-            document.getElementById("CPAmbos1").value = CPAmbos1;
-            document.getElementById("FEAmbos1").value = FEAmbos1;
-            document.getElementById("EMAmbos1").value = EMAmbos1;
-            document.getElementById("CRAmbos1").value = CRAmbos1;
-            document.getElementById("OAmbos1").value = OAmbos1;
 
             document.getElementById('AEIMujeresTTotal1').value = AEIMujeresTTotal1;
 
@@ -1879,25 +2472,19 @@
             document.getElementById("EMHombres2").value = 0;
             document.getElementById("CRHombres2").value = 0;
             document.getElementById("OHombres2").value = 0;
+
             document.getElementById("AEIHombresTTotal2").value = 0;
+
+            document.getElementById("BATAmbos2").value = 0;
+            document.getElementById("BAAmbos2").value = 0;
+            document.getElementById("BADAmbos2").value = 0;
+            document.getElementById("CPAmbos2").value = 0;
+            document.getElementById("FEAmbos2").value = 0;
+            document.getElementById("EMAmbos2").value = 0;
+            document.getElementById("CRAmbos2").value = 0;
+            document.getElementById("OAmbos2").value = 0;
+
         } else {
-            document.getElementById("BATHombres2").value = BATHombres2;
-            document.getElementById("BAHombres2").value = BAHombres2;
-            document.getElementById("BADHombres2").value = BADHombres2;
-            document.getElementById("CPHombres2").value = CPHombres2;
-            document.getElementById("FEHombres2").value = FEHombres2;
-            document.getElementById("EMHombres2").value = EMHombres2;
-            document.getElementById("CRHombres2").value = CRHombres2;
-            document.getElementById("OHombres2").value = OHombres2;
-            
-            document.getElementById("BATAmbos2").value = BATAmbos2;
-            document.getElementById("BAAmbos2").value = BAAmbos2;
-            document.getElementById("BADAmbos2").value = BADAmbos2;
-            document.getElementById("CPAmbos2").value = CPAmbos2;
-            document.getElementById("FEAmbos2").value = FEAmbos2;
-            document.getElementById("EMAmbos2").value = EMAmbos2;
-            document.getElementById("CRAmbos2").value = CRAmbos2;
-            document.getElementById("OAmbos2").value = OAmbos2;
 
             document.getElementById('AEIHombresTTotal2').value = AEIHombresTTotal2;
 
@@ -1909,6 +2496,7 @@
         var AEIMujeresTTotal2 = 0;
         AEIMujeresTTotal2 = parseInt(BATMujeres2) + parseInt(BAMujeres2) + parseInt(BADMujeres2) + parseInt(CPMujeres2) + parseInt(FEMujeres2) + parseInt(EMMujeres2) + parseInt(CRMujeres2) + parseInt(OMujeres2);
         document.getElementById('AEIMujeresTTotal2').value = AEIMujeresTTotal2;
+
         if (parseInt(AEIMujeresTTotal2) > parseInt(document.getElementById('AEIMujeres2').value) ) {
             alertify.alert('El número máximo de Alumnos debe ser: '+ document.getElementById("AEIMujeres2").value);
             document.getElementById("BATMujeres2").value = 0;
@@ -1920,24 +2508,17 @@
             document.getElementById("CRMujeres2").value = 0;
             document.getElementById("OMujeres2").value = 0;
             document.getElementById("AEIMujeresTTotal2").value = 0;
-        } else {
-            document.getElementById("BATMujeres2").value = BATMujeres2;
-            document.getElementById("BAMujeres2").value = BAMujeres2;
-            document.getElementById("BADMujeres2").value = BADMujeres2;
-            document.getElementById("CPMujeres2").value = CPMujeres2;
-            document.getElementById("FEMujeres2").value = FEMujeres2;
-            document.getElementById("EMMujeres2").value = EMMujeres2;
-            document.getElementById("CRMujeres2").value = CRMujeres2;
-            document.getElementById("OMujeres2").value = OMujeres2;
-            
-            document.getElementById("BATAmbos2").value = BATAmbos2;
-            document.getElementById("BAAmbos2").value = BAAmbos2;
-            document.getElementById("BADAmbos2").value = BADAmbos2;
-            document.getElementById("CPAmbos2").value = CPAmbos2;
-            document.getElementById("FEAmbos2").value = FEAmbos2;
-            document.getElementById("EMAmbos2").value = EMAmbos2;
-            document.getElementById("CRAmbos2").value = CRAmbos2;
-            document.getElementById("OAmbos2").value = OAmbos2;
+
+            document.getElementById("BATAmbos2").value = 0;
+            document.getElementById("BAAmbos2").value = 0;
+            document.getElementById("BADAmbos2").value = 0;
+            document.getElementById("CPAmbos2").value = 0;
+            document.getElementById("FEAmbos2").value = 0;
+            document.getElementById("EMAmbos2").value = 0;
+            document.getElementById("CRAmbos2").value = 0;
+            document.getElementById("OAmbos2").value = 0; 
+        
+        } else {           
 
             document.getElementById('AEIMujeresTTotal2').value = AEIMujeresTTotal2;
         }
@@ -1956,25 +2537,17 @@
             document.getElementById("CRHombres3").value = 0;
             document.getElementById("OHombres3").value = 0;
             document.getElementById("AEIHombresTTotal3").value = 0;
-        } else {
-            document.getElementById("BATHombres3").value = BATHombres3;
-            document.getElementById("BAHombres3").value = BAHombres3;
-            document.getElementById("BADHombres3").value = BADHombres3;
-            document.getElementById("CPHombres3").value = CPHombres3;
-            document.getElementById("FEHombres3").value = FEHombres3;
-            document.getElementById("EMHombres3").value = EMHombres3;
-            document.getElementById("CRHombres3").value = CRHombres3;
-            document.getElementById("OHombres3").value = OHombres3;
-            
-            document.getElementById("BATAmbos3").value = BATAmbos3;
-            document.getElementById("BAAmbos3").value = BAAmbos3;
-            document.getElementById("BADAmbos3").value = BADAmbos3;
-            document.getElementById("CPAmbos3").value = CPAmbos3;
-            document.getElementById("FEAmbos3").value = FEAmbos3;
-            document.getElementById("EMAmbos3").value = EMAmbos3;
-            document.getElementById("CRAmbos3").value = CRAmbos3;
-            document.getElementById("OAmbos3").value = OAmbos3;
 
+            document.getElementById("BATAmbos3").value = 0;
+            document.getElementById("BAAmbos3").value = 0;
+            document.getElementById("BADAmbos3").value = 0;
+            document.getElementById("CPAmbos3").value = 0;
+            document.getElementById("FEAmbos3").value = 0;
+            document.getElementById("EMAmbos3").value = 0;
+            document.getElementById("CRAmbos3").value = 0;
+            document.getElementById("OAmbos3").value = 0;
+        
+        } else {
             document.getElementById('AEIHombresTTotal3').value = AEIHombresTTotal3;
             
             var AEITotalTotal3 = 0;
@@ -1996,26 +2569,19 @@
             document.getElementById("CRMujeres3").value = 0;
             document.getElementById("OMujeres3").value = 0;
             document.getElementById("AEIMujeresTTotal3").value = 0;
-        } else {
-            document.getElementById("BATMujeres3").value = BATMujeres3;
-            document.getElementById("BAMujeres3").value = BAMujeres3;
-            document.getElementById("BADMujeres3").value = BADMujeres3;
-            document.getElementById("CPMujeres3").value = CPMujeres3;
-            document.getElementById("FEMujeres3").value = FEMujeres3;
-            document.getElementById("EMMujeres3").value = EMMujeres3;
-            document.getElementById("CRMujeres3").value = CRMujeres3;
-            document.getElementById("OMujeres3").value = OMujeres3;
-            
-            document.getElementById("BATAmbos3").value = BATAmbos3;
-            document.getElementById("BAAmbos3").value = BAAmbos3;
-            document.getElementById("BADAmbos3").value = BADAmbos3;
-            document.getElementById("CPAmbos3").value = CPAmbos3;
-            document.getElementById("FEAmbos3").value = FEAmbos3;
-            document.getElementById("EMAmbos3").value = EMAmbos3;
-            document.getElementById("CRAmbos3").value = CRAmbos3;
-            document.getElementById("OAmbos3").value = OAmbos3;
 
+            document.getElementById("BATAmbos3").value = 0;
+            document.getElementById("BAAmbos3").value = 0;
+            document.getElementById("BADAmbos3").value = 0;
+            document.getElementById("CPAmbos3").value = 0;
+            document.getElementById("FEAmbos3").value = 0;
+            document.getElementById("EMAmbos3").value = 0;
+            document.getElementById("CRAmbos3").value = 0;
+            document.getElementById("OAmbos3").value = 0;
+        } else {            
+            
             document.getElementById('AEIMujeresTTotal3').value = AEIMujeresTTotal3;
+
             var AEITotalTotal3 = 0;
             AEITotalTotal3 = parseInt(BATAmbos3) + parseInt(BAAmbos3) + parseInt(BADAmbos3) + parseInt(CPAmbos3) + parseInt(FEAmbos3) + parseInt(EMAmbos3) + parseInt(CRAmbos3) + parseInt(OAmbos3);
             document.getElementById('AEITotalTotal3').value = AEITotalTotal3;

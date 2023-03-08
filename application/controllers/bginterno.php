@@ -46,10 +46,11 @@
 			$peridoAct = $data['periodoAct'][0]['PAnio'].'-'.$data['periodoAct'][0]['PPeriodo'];
 
 			$selectPlan = "CPLClave, CPLNombre, CPLCCT, CPLTipo, CPLTurnos, PEIdPlanEstudios, PEIdPlantel, PETurnoPlantel, PEActualizacionAnio, PEActualizacionMes, PEActualizacionDia, PEUsuarioRealizo, UNombre, UApellido_pat, UApellido_mat, PEFechaRealizo, PEObservaciones";
-			$this->db->join('planteles','CPLClave = PEIdPlantel');
-			$this->db->join('veusuario','UNCI_usuario = PEUsuarioRealizo');
+			$this->db->join('planteles','CPLClave = PEIdPlantel', 'LEFT');
+			$this->db->join('veusuario','UNCI_usuario = PEUsuarioRealizo','LEFT');
 			$this->db->where('PEIdPlantel', $idPlantel);
 			$this->db->where('PETurnoPlantel', $turno);
+			$this->db->where('PEPeriodo',$peridoAct);
 			$data['PlanEstudios'] = $this->bgplanestudios_model->find(null, $selectPlan);
 			
 			$this->db->where('EIdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
@@ -169,19 +170,32 @@
 
 		public function savePlanEstudio_skip() {
 			$data = post_to_array('_skip');
+			$periodo = array();
+			$this->db->where('PEstatus',1);
+			$periodo = $this->generaperiodo_model->find();
 			
-			if ($data['PEIdPlanEstudios'] == '') {
+			$peridoAct = $periodo['PAnio'].'-'.$periodo['PPeriodo'];
+
+			//$this->db->where('PEFinalizado', 'No');
+			$this->db->where('PEIdPlantel', $data['PEIdPlantel']);
+			$this->db->where('PETurnoPlantel', $data['PETurnoPlantel']);
+			$this->db->where('PEPeriodo', $peridoAct);
+			//$this->db->where('EIdBgPlanEstudios', $data['EIdBgPlanEstudios']);
+			$exitstencias = $this->bgplanestudios_model->find_all();
+			
+			if (count($exitstencias) == 0 && $data['PEIdPlanEstudios'] == '') {
+				$data['PEPeriodo'] = $peridoAct;
+				$data['PEFinalizado'] = 'No';
+
 				$data['idPlanEstudio'] = $this->bgplanestudios_model->insert($data);
 				
 				echo "OK;;";
 				echo $data['idPlanEstudio'].";;";
-				
 			} else {
-				$this->bgplanestudios_model->update($data['PEIdPlanEstudios'], $data);
-				
 				echo "OK;;";
 				echo $data['PEIdPlanEstudios'].";;";
 			}
+			
 		}
 
 		public function saveExistenciaAprob_skip() {
@@ -505,11 +519,11 @@
 
 			}
 
-			
 			$arreglo = array(
 				'PEUsuarioRealizo' => $data['PEUsuarioRealizo'], 
 				'PEFechaRealizo' => date('Y-m-d'), 
-				'PEObservaciones' => $data['FObservaciones']
+				'PEObservaciones' => $data['FObservaciones'],
+				'PEFinalizado' => 'Si'
 			);
 
 			$this->db->set($arreglo);
