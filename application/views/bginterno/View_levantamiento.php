@@ -1274,7 +1274,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Formación para el Trabajo</label>
-                        <input id="PEActualizacionAnioMFT" name="PEActualizacionAnioMFT" type="text" class="form-control numeros" value="<?= count($formaciones)?>" disabled>	
+                        <input id="PEActualizacionAnioMFT" name="PEActualizacionAnioMFT" type="text" class="form-control numeros" value="<?= $contarFor ?>" disabled>	
                     </div>
                 </div>
             </div>							
@@ -1357,7 +1357,8 @@
                             <tr>
                                 <td></td>
                                 <td></td>
-                                <td><b><input type="hidden" name="PEUsuarioRealizo" id="PEUsuarioRealizo" value="<?php if($PlanEstudios['PEUsuarioRealizo'] != 0) { echo $PlanEstudios['PEUsuarioRealizo']; } else { echo get_session('UNCI_usuario'); } ?>"><?php if($PlanEstudios['PEUsuarioRealizo'] != 0) { echo $PlanEstudios['UNombre'].' '.$PlanEstudios['UApellido_pat'].' '.$PlanEstudios['UApellido_mat'] ; } else { echo get_session('UNombre'); } ?></b></td>
+                                <td><b><input type="hidden" name="PEUsuarioRealizo" id="PEUsuarioRealizo" value="<?php if($PlanEstudios['PEFinalizado'] == 'Si') { echo $PlanEstudios['PEUsuarioRealizo']; } else { echo get_session('UNCI_usuario'); } ?>">
+                                <?php if($PlanEstudios['PEFinalizado'] == 'Si') { echo $PlanEstudios['UNombre'].' '.$PlanEstudios['UApellido_pat'].' '.$PlanEstudios['UApellido_mat'] ; } else { echo get_session('UNombre'); } ?></b></td>
                             </tr>
                             <tr>
                                 <td></td>											
@@ -1374,19 +1375,24 @@
                                 <td></td>
                                 <td>
                                     <div class="row">
+                                        <?php 
+                                        if ($PlanEstudios['PEFinalizado'] == 'Si') {
+                                            $fecha = explode('-', $PlanEstudios['PEFechaRealizo']); 
+                                            }
+                                        ?>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                Año: <b><?php if ($PlanEstudios['PEFechaRealizo'] == '') { echo date("Y"); } else { echo $fecha[0]; } ?></b>
+                                                Año: <b><?php if ($PlanEstudios['PEFinalizado'] == 'No') { echo date("Y"); } else { echo $fecha[0]; } ?></b>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                Mes: <b><?php if ($PlanEstudios['PEFechaRealizo'] == '') { echo ver_mes(date("m")); } else { echo ver_mes($fecha[1]); } ?></b>
+                                                Mes: <b><?php if ($PlanEstudios['PEFinalizado'] == 'No') { echo ver_mes(date("m")); } else { echo ver_mes($fecha[1]); } ?></b>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                Día: <b><?php if ($PlanEstudios['PEFechaRealizo'] == '') { echo date("d"); } else { echo $fecha[2]; } ?></b>
+                                                Día: <b><?php if ($PlanEstudios['PEFinalizado'] == 'No') { echo date("d"); } else { echo $fecha[2]; } ?></b>
                                             </div>
                                         </div>
                                     </div>																								
@@ -1440,7 +1446,7 @@
 					return true;
 				}
 
-				var form = $(this);
+                var form = $(this);
 
 				// Clean up if user went backward before
 				if (currentIndex < newIndex)
@@ -1466,17 +1472,53 @@
                         actualizarMat();
 					}
 
+                    var AEIHombres1 = parseInt(document.getElementById("AEIHombres1").value);
+                    var AEIHombresTTotal1 = parseInt(document.getElementById("AEIHombresTTotal1").value);
+
+                
                     if(newIndex == '4'){
 						saveAbandono();
-                        if( form.valid() ){
+                        var AEIHombres1 = parseInt(document.getElementById("AEIHombres1").value);
+                        var AEIHombresTTotal1 = parseInt(document.getElementById("AEIHombresTTotal1").value);
+                        var AEIMujeres1 = parseInt(document.getElementById("AEIMujeres1").value);
+                        var AEIMujeresTTotal1 = parseInt(document.getElementById("AEIMujeresTTotal1").value);
+                        if( AEIHombresTTotal1 != AEIHombres1 ) {
+                            alertify.alert('El número de Alumnos Hombres de 1er Semestre debe ser igual a: ' + document.getElementById("AEIHombres1").value);
+                            return false;
+                        } else if( AEIMujeresTTotal1 != AEIMujeres1 ) { 
+                            alertify.alert('El número de Alumnos Mujeres de 1er Semestre debe ser igual a: ' + document.getElementById("AEIMujeres1").value);
+                            return false;
+                        } else if( form.valid() ) { 
                             saveAbandonoInt1();
                         }
-                        if( form.valid() ){
+
+                        var AEIHombres2 = parseInt(document.getElementById("AEIHombres2").value);
+                        var AEIHombresTTotal2 = parseInt(document.getElementById("AEIHombresTTotal2").value);
+                        var AEIMujeres2 = parseInt(document.getElementById("AEIMujeres2").value);
+                        var AEIMujeresTTotal2 = parseInt(document.getElementById("AEIMujeresTTotal2").value);
+                        if( AEIHombresTTotal2 != AEIHombres2 ) {
+                            alertify.alert('El número de Alumnos Hombres de 3er Semestre debe ser igual a: ' + document.getElementById("AEIHombres2").value);
+                            return false;
+                        } else if( AEIMujeresTTotal2 != AEIMujeres2 ) { 
+                            alertify.alert('El número de Alumnos Mujeres de 3er Semestre debe ser igual a: ' + document.getElementById("AEIMujeres2").value);
+                            return false;
+                        } else if( form.valid() ) { 
                             saveAbandonoInt3();
                         }
-                        if( form.valid() ){
+                        
+                        var AEIHombres3 = parseInt(document.getElementById("AEIHombres3").value);
+                        var AEIHombresTTotal3 = parseInt(document.getElementById("AEIHombresTTotal3").value);
+                        var AEIMujeres3 = parseInt(document.getElementById("AEIMujeres3").value);
+                        var AEIMujeresTTotal3 = parseInt(document.getElementById("AEIMujeresTTotal3").value);
+                        if( AEIHombresTTotal3 != AEIHombres3 ) {
+                            alertify.alert('El número de Alumnos Hombres de 5o Semestre debe ser igual a: ' + document.getElementById("AEIHombres3").value);
+                            return false;
+                        } else if( AEIMujeresTTotal3 != AEIMujeres3 ) { 
+                            alertify.alert('El número de Alumnos Mujeres de 5o Semestre debe ser igual a: ' + document.getElementById("AEIMujeres3").value);
+                            return false;
+                        } else if( form.valid() ) { 
                             saveAbandonoInt5();
-                        }
+                        }                        
 					}
                     
 					if(newIndex == '5'){
@@ -1492,7 +1534,20 @@
 						saveDual();                        
 					}
 					if(newIndex == '8'){
-						saveDocentes();
+                        var DocHombres = parseInt(document.getElementById("DocHombres").value);
+                        var PDHombresTotal = parseInt(document.getElementById("PDHombresTotal").value);
+                        var DocMujeres = parseInt(document.getElementById("DocMujeres").value);
+                        var PDMujeresTotal = parseInt(document.getElementById("PDMujeresTotal").value);
+                        if( PDHombresTotal != DocHombres ) {
+                            alertify.alert('El número de Docentes Hombres ser igual a: ' + document.getElementById("DocHombres").value);
+                            return false;
+                        } else if( PDMujeresTotal != DocMujeres ) { 
+                            alertify.alert('El número de Docentes Mujeres ser igual a: ' + document.getElementById("DocMujeres").value);
+                            return false;
+                        } else if( form.valid() ) { 
+                            saveDocentes();
+                        }
+
 					}
 					/*if(newIndex == '9'){
 						documetos();

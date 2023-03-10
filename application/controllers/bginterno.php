@@ -45,7 +45,7 @@
 			$data['periodoAct'] = $this->generaperiodo_model->find_all();
 			$peridoAct = $data['periodoAct'][0]['PAnio'].'-'.$data['periodoAct'][0]['PPeriodo'];
 
-			$selectPlan = "CPLClave, CPLNombre, CPLCCT, CPLTipo, CPLTurnos, PEIdPlanEstudios, PEIdPlantel, PETurnoPlantel, PEActualizacionAnio, PEActualizacionMes, PEActualizacionDia, PEUsuarioRealizo, UNombre, UApellido_pat, UApellido_mat, PEFechaRealizo, PEObservaciones";
+			$selectPlan = "CPLClave, CPLNombre, CPLCCT, CPLTipo, CPLTurnos, PEIdPlanEstudios, PEIdPlantel, PETurnoPlantel, PEActualizacionAnio, PEActualizacionMes, PEActualizacionDia, PEUsuarioRealizo, UNombre, UApellido_pat, UApellido_mat, PEFechaRealizo, PEObservaciones, PEFinalizado";
 			$this->db->join('planteles','CPLClave = PEIdPlantel', 'LEFT');
 			$this->db->join('veusuario','UNCI_usuario = PEUsuarioRealizo','LEFT');
 			$this->db->where('PEIdPlantel', $idPlantel);
@@ -65,7 +65,7 @@
 			$semestres = $this->grupos_model->find_all(null, $semAnt);
 			
 			foreach($semestres as $s => $list){
-				$select = 'GRSemestre, SUM(GRMasculino) Hombres, SUM(GRFemenino) Mujeres, SUM(GRCupo) Total, SUM(GRTurno) Grupos';
+				$select = 'GRSemestre, SUM(GRMasculino) Hombres, SUM(GRFemenino) Mujeres, SUM(GRCupo) Total, COUNT(GRTurno) Grupos';
 				$this->db->where('GRCPlantel', $idPlantel);
 				$this->db->where('GRPeriodo', $peridoAnt);
 				$this->db->where('GRTurno', $turno);				
@@ -94,7 +94,7 @@
 				$this->db->where('MIIdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
 				$data['matricula'] = $this->bgmatriculains_model->find();
 			} else {
-				$semAct = 'GRSemestre, SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, SUM(GRTurno) TGrupos ';
+				$semAct = 'GRSemestre, SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, COUNT(GRTurno) TGrupos ';
 				$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
 				$this->db->where('GRCPlantel', $idPlantel);
 				$this->db->where('GRTurno', $turno);	
@@ -102,7 +102,7 @@
 				$data['matriculaGrupo'] = $this->grupos_model->find_all(null, $semAct);
 			}
 			
-			$semAct = 'GRSemestre, SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, SUM(GRTurno) TGrupos ';
+			$semAct = 'GRSemestre, SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, COUNT(GRTurno) TGrupos, COUNT(GRCClave) Capacitaciones ';
 			$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
 			$this->db->where('GRCPlantel', $idPlantel);
 			$this->db->where('GRTurno', $turno);	
@@ -134,7 +134,7 @@
 			$this->db->where('DIdBgPlan',$data['PlanEstudios']['PEIdPlanEstudios']);
 			$data['docentes'] = $this->bgdocentes_model->find();
 
-			$semAl = 'SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, SUM(GRTurno) TGrupos ';
+			$semAl = 'SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, COUNT(GRTurno) TGrupos ';
 			$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
 			$this->db->where('GRCPlantel', $idPlantel);
 			$this->db->where('GRTurno', $turno);	
@@ -150,13 +150,20 @@
 			$data['formaciones']  = $this->plantel_model->find_all(null, $selectForm);
 
 			foreach ($data['formaciones']  as $f => $listF) {
-				$selFor = 'SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, SUM(GRTurno) TGrupos, FNombre';
+				$selFor = 'SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, COUNT(GRTurno) TGrupos, FNombre';
 				$this->db->join('formacion','FIdFormacion = GRCClave','left');
 				$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
 				$this->db->where('GRCPlantel', $idPlantel);
 				$this->db->where('GRTurno', $turno);	
 				$this->db->where('GRCClave',$listF['idFFormacion']);
 				$data['formaciones'][$f]['AlumForma'] = $this->grupos_model->find(null, $selFor);
+				
+			}
+
+			$data['contarFor'] = 0;
+			foreach ($data['formaciones'] as $f => $listF) { 
+				$data['contarFor'] += count($listF['AlumForma']['Total']);
+				
 			}
 
 			$this->db->where('CPLClave',$idPlantel);
