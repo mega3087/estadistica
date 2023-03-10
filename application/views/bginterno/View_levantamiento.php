@@ -740,7 +740,7 @@
                                 <td><input type="text" id="MSEDiscapacidadTotal" name="MSEDiscapacidadTotal" class="form-control" value="<?= nvl($matricula['MDInsTotal']) ?>" disabled></td>
                                 <td><input type="text" id="MSEHablantesTotal" name="MSEHablantesTotal" class="form-control" value="<?= nvl($matricula['MHaInsTotal']) ?>" disabled></td>
                                 <td><input type="text" id="MSEExtranjeroTotal" name="MSEExtranjeroTotal" class="form-control" value="<?= nvl($matricula['MEInsTotal']) ?>" disabled></td>
-                                <td><input type="text" id="MSEGruposTotal" name="MSEGruposTotal" class="form-control" value="<?= $matricula['MInsGruposTotal']; ?>" disabled></td>
+                                <td><input type="text" id="MSEGruposTotal" name="MSEGruposTotal" class="form-control" value="<?= nvl($matricula['MInsGruposTotal']); ?>" disabled></td>
                             </tr>
                             <?php } ?>
                         </tbody>
@@ -774,39 +774,39 @@
                         <tbody>
                             <tr>
                                 <td><label>2do.</label></td>
-                                <td><input type="text" id="CLPHombres1" name="CLPHombres1" class="form-control" value="0" onkeyup="sumarPresencial();"></td>
-                                <td><input type="text" id="CLPMujeres1" name="CLPMujeres1" class="form-control" value="0" onkeyup="sumarPresencial();"></td>
-                                <td><input type="text" id="CLPTotal1" name="CLPTotal1" class="form-control" value="0" onkeyup="sumarPresencial();" disabled></td>
-                                <td><input type="text" id="CLDHombres1" name="CLDHombres1" class="form-control" value="0" onkeyup="sumarPresencial();"></td>
-                                <td><input type="text" id="CLDMujeres1" name="CLDMujeres1" class="form-control" value="0" onkeyup="sumarPresencial();"></td>
-                                <td><input type="text" id="CLDTotal1" name="CLDTotal1" class="form-control" value="0" onkeyup="sumarPresencial();" disabled></td>
+                                <td><input type="text" id="CLPHombres1" name="CLPHombres1" class="form-control" value="<?php if ($matcemsad['MCHPre2o'] == '') { echo 0; } else { echo $matcemsad['MCHPre2o'];}?>" onkeyup="sumarPresencial();"></td>
+                                <td><input type="text" id="CLPMujeres1" name="CLPMujeres1" class="form-control" value="<?php if ($matcemsad['MCMPre2o'] == '') { echo 0; } else { echo $matcemsad['MCMPre2o'];}?>" onkeyup="sumarPresencial();"></td>
+                                <td><input type="text" id="CLPTotal1" name="CLPTotal1" class="form-control" value="<?php if ($matcemsad['MCTPre2o'] == '') { echo 0; } else { echo $matcemsad['MCTPre2o'];}?>" onkeyup="sumarPresencial();" disabled></td>
+                                <td><input type="text" id="CLDHombres1" name="CLDHombres1" class="form-control" value="<?php if ($matcemsad['MCHDis2o'] == '') { echo 0; } else { echo $matcemsad['MCHDis2o'];}?>" onkeyup="sumarPresencial();"></td>
+                                <td><input type="text" id="CLDMujeres1" name="CLDMujeres1" class="form-control" value="<?php if ($matcemsad['MCMDis2o'] == '') { echo 0; } else { echo $matcemsad['MCMDis2o'];}?>" onkeyup="sumarPresencial();"></td>
+                                <td><input type="text" id="CLDTotal1" name="CLDTotal1" class="form-control" value="<?php if ($matcemsad['MCTDis2o'] == '') { echo 0; } else { echo $matcemsad['MCTDis2o'];}?>" onkeyup="sumarPresencial();" disabled></td>
                             </tr>
                             <tr>
                                 <td><label>4to.</label></td>
-                                <td><input type="text" id="CLPHombres2" name="CLPHombres2" class="form-control" value="0" onkeyup="sumarPresencial();"></td>
-                                <td><input type="text" id="CLPMujeres2" name="CLPMujeres2" class="form-control" value="0" onkeyup="sumarPresencial();"></td>
-                                <td><input type="text" id="CLPTotal2" name="CLPTotal2" class="form-control" value="0" onkeyup="sumarPresencial();" disabled></td>
-                                <td><input type="text" id="CLDHombres2" name="CLDHombres2" class="form-control" value="0" onkeyup="sumarPresencial();"></td>
-                                <td><input type="text" id="CLDMujeres2" name="CLDMujeres2" class="form-control" value="0" onkeyup="sumarPresencial();"></td>
-                                <td><input type="text" id="CLDTotal2" name="CLDTotal2" class="form-control" value="0" onkeyup="sumarPresencial();" disabled></td>
+                                <td><input type="text" id="CLPHombres2" name="CLPHombres2" class="form-control" value="<?php if ($matcemsad['MCHPre4o'] == '') { echo 0; } else { echo $matcemsad['MCHPre4o'];}?>" onkeyup="sumarPresencial();"></td>
+                                <td><input type="text" id="CLPMujeres2" name="CLPMujeres2" class="form-control" value="<?php if ($matcemsad['MCMPre4o'] == '') { echo 0; } else { echo $matcemsad['MCMPre4o'];}?>" onkeyup="sumarPresencial();"></td>
+                                <td><input type="text" id="CLPTotal2" name="CLPTotal2" class="form-control" value="<?php if ($matcemsad['MCTPre4o'] == '') { echo 0; } else { echo $matcemsad['MCTPre4o'];}?>" onkeyup="sumarPresencial();" disabled></td>
+                                <td><input type="text" id="CLDHombres2" name="CLDHombres2" class="form-control" value="<?php if ($matcemsad['MCHDis4o'] == '') { echo 0; } else { echo $matcemsad['MCHDis4o'];}?>" onkeyup="sumarPresencial();"></td>
+                                <td><input type="text" id="CLDMujeres2" name="CLDMujeres2" class="form-control" value="<?php if ($matcemsad['MCMDis4o'] == '') { echo 0; } else { echo $matcemsad['MCMDis4o'];}?>" onkeyup="sumarPresencial();"></td>
+                                <td><input type="text" id="CLDTotal2" name="CLDTotal2" class="form-control" value="<?php if ($matcemsad['MCTDis4o'] == '') { echo 0; } else { echo $matcemsad['MCTDis4o'];}?>" onkeyup="sumarPresencial();" disabled></td>
                             </tr>
                             <tr>
                                 <td><label>6to.</label></td>
-                                <td><input type="text" id="CLPHombres3" name="CLPHombres3" class="form-control" value="0" onkeyup="sumarPresencial();"></td>
-                                <td><input type="text" id="CLPMujeres3" name="CLPMujeres3" class="form-control" value="0" onkeyup="sumarPresencial();"></td>
-                                <td><input type="text" id="CLPTotal3" name="CLPTotal3" class="form-control" value="0" onkeyup="sumarPresencial();" disabled></td>
-                                <td><input type="text" id="CLDHombres3" name="CLDHombres3" class="form-control" value="0" onkeyup="sumarPresencial();"></td>
-                                <td><input type="text" id="CLDMujeres3" name="CLDMujeres3" class="form-control" value="0" onkeyup="sumarPresencial();"></td>
-                                <td><input type="text" id="CLDTotal3" name="CLDTotal3" class="form-control" value="0" onkeyup="sumarPresencial();" disabled></td>
+                                <td><input type="text" id="CLPHombres3" name="CLPHombres3" class="form-control" value="<?php if ($matcemsad['MCHPre6o'] == '') { echo 0; } else { echo $matcemsad['MCHPre6o'];}?>" onkeyup="sumarPresencial();"></td>
+                                <td><input type="text" id="CLPMujeres3" name="CLPMujeres3" class="form-control" value="<?php if ($matcemsad['MCMPre6o'] == '') { echo 0; } else { echo $matcemsad['MCMPre6o'];}?>" onkeyup="sumarPresencial();"></td>
+                                <td><input type="text" id="CLPTotal3" name="CLPTotal3" class="form-control" value="<?php if ($matcemsad['MCTPre6o'] == '') { echo 0; } else { echo $matcemsad['MCTPre6o'];}?>" onkeyup="sumarPresencial();" disabled></td>
+                                <td><input type="text" id="CLDHombres3" name="CLDHombres3" class="form-control" value="<?php if ($matcemsad['MCHDis6o'] == '') { echo 0; } else { echo $matcemsad['MCHDis6o'];}?>" onkeyup="sumarPresencial();"></td>
+                                <td><input type="text" id="CLDMujeres3" name="CLDMujeres3" class="form-control" value="<?php if ($matcemsad['MCMDis6o'] == '') { echo 0; } else { echo $matcemsad['MCMDis6o'];}?>" onkeyup="sumarPresencial();"></td>
+                                <td><input type="text" id="CLDTotal3" name="CLDTotal3" class="form-control" value="<?php if ($matcemsad['MCTDis6o'] == '') { echo 0; } else { echo $matcemsad['MCTDis6o'];}?>" onkeyup="sumarPresencial();" disabled></td>
                             </tr>
                             <tr>
                                 <td><label>Total</label></td>
-                                <td><input type="text" id="CLPHombresTotal" name="CLPHombresTotal" class="form-control" value="0" onkeyup="sumarPresencial();" disabled></td>
-                                <td><input type="text" id="CLPMujeresTotal" name="CLPMujeresTotal" class="form-control" value="0" onkeyup="sumarPresencial();" disabled></td>
-                                <td><input type="text" id="CLPTotal" name="CLPTotal" class="form-control" value="0" onkeyup="sumarPresencial();" disabled></td>
-                                <td><input type="text" id="CLDHombresTotal" name="CLDHombresTotal" class="form-control" value="0" onkeyup="sumarPresencial();" disabled></td>
-                                <td><input type="text" id="CLDMujeresTotal" name="CLDMujeresTotal" class="form-control" value="0" onkeyup="sumarPresencial();" disabled></td>
-                                <td><input type="text" id="CLDTotal" name="CLDTotal" class="form-control" value="0" onkeyup="sumarPresencial();" disabled></td>
+                                <td><input type="text" id="CLPHombresTotal" name="CLPHombresTotal" class="form-control" value="<?php if ($matcemsad['MCHPreTotal'] == '') { echo 0; } else { echo $matcemsad['MCHPreTotal'];}?>" onkeyup="sumarPresencial();" disabled></td>
+                                <td><input type="text" id="CLPMujeresTotal" name="CLPMujeresTotal" class="form-control" value="<?php if ($matcemsad['MCMPreTotal'] == '') { echo 0; } else { echo $matcemsad['MCMPreTotal'];}?>" onkeyup="sumarPresencial();" disabled></td>
+                                <td><input type="text" id="CLPTotal" name="CLPTotal" class="form-control" value="<?php if ($matcemsad['MCTPreTotal'] == '') { echo 0; } else { echo $matcemsad['MCTPreTotal'];}?>" onkeyup="sumarPresencial();" disabled></td>
+                                <td><input type="text" id="CLDHombresTotal" name="CLDHombresTotal" class="form-control" value="<?php if ($matcemsad['MCHDisTotal'] == '') { echo 0; } else { echo $matcemsad['MCHDisTotal'];}?>" onkeyup="sumarPresencial();" disabled></td>
+                                <td><input type="text" id="CLDMujeresTotal" name="CLDMujeresTotal" class="form-control" value="<?php if ($matcemsad['MCMDisTotal'] == '') { echo 0; } else { echo $matcemsad['MCMDisTotal'];}?>" onkeyup="sumarPresencial();" disabled></td>
+                                <td><input type="text" id="CLDTotal" name="CLDTotal" class="form-control" value="<?php if ($matcemsad['MCTDisTotal'] == '') { echo 0; } else { echo $matcemsad['MCTDisTotal'];}?>" onkeyup="sumarPresencial();" disabled></td>
                             </tr>
                         </tbody>
                     </table>
@@ -831,27 +831,27 @@
                         <tbody>
                             <tr>
                                 <td><label>Segundo.</label></td>
-                                <td><input type="text" id="RHombres1" name="RHombres1" class="form-control numeros" value="0" onkeyup="sumarRepetidores();"></td>
-                                <td><input type="text" id="RMujeres1" name="RMujeres1" class="form-control numeros" value="0" onkeyup="sumarRepetidores();"></td>
-                                <td><input type="text" id="RTotal1" name="RTotal1" class="form-control numeros" value="0" onkeyup="sumarRepetidores();" disabled></td>
+                                <td><input type="text" id="RHombres1" name="RHombres1" class="form-control numeros" value="<?php if ($repcemsad['RCHRepe2o'] == '') { echo 0; } else { echo $repcemsad['RCHRepe2o'];}?>" onkeyup="sumarRepetidores();"></td>
+                                <td><input type="text" id="RMujeres1" name="RMujeres1" class="form-control numeros" value="<?php if ($repcemsad['RCMRepe2o'] == '') { echo 0; } else { echo $repcemsad['RCMRepe2o'];}?>" onkeyup="sumarRepetidores();"></td>
+                                <td><input type="text" id="RTotal1" name="RTotal1" class="form-control numeros" value="<?php if ($repcemsad['RCTRepe2o'] == '') { echo 0; } else { echo $repcemsad['RCTRepe2o'];}?>" onkeyup="sumarRepetidores();" disabled></td>
                             </tr>
                             <tr>
                                 <td><label>Cuarto.</label></td>
-                                <td><input type="text" id="RHombres2" name="RHombres2" class="form-control numeros" value="0" onkeyup="sumarRepetidores();"></td>
-                                <td><input type="text" id="RMujeres2" name="RMujeres2" class="form-control numeros" value="0" onkeyup="sumarRepetidores();"></td>
-                                <td><input type="text" id="RTotal2" name="RTotal2" class="form-control numeros" value="0" onkeyup="sumarRepetidores();" disabled></td>
+                                <td><input type="text" id="RHombres2" name="RHombres2" class="form-control numeros" value="<?php if ($repcemsad['RCHRepe4o'] == '') { echo 0; } else { echo $repcemsad['RCHRepe4o'];}?>" onkeyup="sumarRepetidores();"></td>
+                                <td><input type="text" id="RMujeres2" name="RMujeres2" class="form-control numeros" value="<?php if ($repcemsad['RCMRepe4o'] == '') { echo 0; } else { echo $repcemsad['RCMRepe4o'];}?>" onkeyup="sumarRepetidores();"></td>
+                                <td><input type="text" id="RTotal2" name="RTotal2" class="form-control numeros" value="<?php if ($repcemsad['RCTRepe4o'] == '') { echo 0; } else { echo $repcemsad['RCTRepe4o'];}?>" onkeyup="sumarRepetidores();" disabled></td>
                             </tr>
                             <tr>
                                 <td><label>Sexto.</label></td>
-                                <td><input type="text" id="RHombres3" name="RHombres3" class="form-control numeros" value="0" onkeyup="sumarRepetidores();"></td>
-                                <td><input type="text" id="RMujeres3" name="RMujeres3" class="form-control numeros" value="0" onkeyup="sumarRepetidores();"></td>
-                                <td><input type="text" id="RTotal3" name="RTotal3" class="form-control numeros" value="0" onkeyup="sumarRepetidores();" disabled></td>
+                                <td><input type="text" id="RHombres3" name="RHombres3" class="form-control numeros" value="<?php if ($repcemsad['RCHRepe6o'] == '') { echo 0; } else { echo $repcemsad['RCHRepe6o'];}?>" onkeyup="sumarRepetidores();"></td>
+                                <td><input type="text" id="RMujeres3" name="RMujeres3" class="form-control numeros" value="<?php if ($repcemsad['RCMRepe6o'] == '') { echo 0; } else { echo $repcemsad['RCMRepe6o'];}?>" onkeyup="sumarRepetidores();"></td>
+                                <td><input type="text" id="RTotal3" name="RTotal3" class="form-control numeros" value="<?php if ($repcemsad['RCTRepe6o'] == '') { echo 0; } else { echo $repcemsad['RCTRepe6o'];}?>" onkeyup="sumarRepetidores();" disabled></td>
                             </tr>
                             <tr>
                             <td><label>Total</label></td>
-                                <td><input type="text" id="RHombresTotal" name="RHombresTotal" class="form-control numeros" value="0" onkeyup="sumarRepetidores();" disabled></td>
-                                <td><input type="text" id="RMujeresTotal" name="RMujeresTotal" class="form-control numeros" value="0" onkeyup="sumarRepetidores();" disabled></td>
-                                <td><input type="text" id="RTotalTotal" name="RTotalTotal" class="form-control numeros" value="0" onkeyup="sumarRepetidores();" disabled></td>
+                                <td><input type="text" id="RHombresTotal" name="RHombresTotal" class="form-control numeros" value="<?php if ($repcemsad['RCHRepeTotal'] == '') { echo 0; } else { echo $repcemsad['RCHRepeTotal'];}?>" onkeyup="sumarRepetidores();" disabled></td>
+                                <td><input type="text" id="RMujeresTotal" name="RMujeresTotal" class="form-control numeros" value="<?php if ($repcemsad['RCMRepeTotal'] == '') { echo 0; } else { echo $repcemsad['RCMRepeTotal'];}?>" onkeyup="sumarRepetidores();" disabled></td>
+                                <td><input type="text" id="RTotalTotal" name="RTotalTotal" class="form-control numeros" value="<?php if ($repcemsad['RCTRepeTotal'] == '') { echo 0; } else { echo $repcemsad['RCTRepeTotal'];}?>" onkeyup="sumarRepetidores();" disabled></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1357,8 +1357,8 @@
                             <tr>
                                 <td></td>
                                 <td></td>
-                                <td><b><input type="hidden" name="PEUsuarioRealizo" id="PEUsuarioRealizo" value="<?php if($PlanEstudios['PEFinalizado'] == 'Si') { echo $PlanEstudios['PEUsuarioRealizo']; } else { echo get_session('UNCI_usuario'); } ?>">
-                                <?php if($PlanEstudios['PEFinalizado'] == 'Si') { echo $PlanEstudios['UNombre'].' '.$PlanEstudios['UApellido_pat'].' '.$PlanEstudios['UApellido_mat'] ; } else { echo get_session('UNombre'); } ?></b></td>
+                                <td><b><input type="hidden" name="PEUsuarioRealizo" id="PEUsuarioRealizo" value="<?php if(nvl($PlanEstudios['PEFinalizado']) == 'Si') { echo $PlanEstudios['PEUsuarioRealizo']; } else { echo get_session('UNCI_usuario'); } ?>">
+                                <?php if(nvl($PlanEstudios['PEFinalizado']) == 'Si') { echo $PlanEstudios['UNombre'].' '.$PlanEstudios['UApellido_pat'].' '.$PlanEstudios['UApellido_mat'] ; } else { echo get_session('UNombre'); } ?></b></td>
                             </tr>
                             <tr>
                                 <td></td>											
@@ -1374,28 +1374,47 @@
                                 <td></td>
                                 <td></td>
                                 <td>
+                                    <?php if(!empty($PlanEstudios)) { ?>
                                     <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                Año: <b><?php echo date("Y"); ?></b>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                Mes: <b><?php echo ver_mes(date("m")); ?></b>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                Día: <b><?php echo date("d"); ?></b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php } else { ?> 
                                         <?php 
-                                        if ($PlanEstudios['PEFinalizado'] == 'Si') {
+                                        if (nvl($PlanEstudios['PEFinalizado']) == 'Si') {
                                             $fecha = explode('-', $PlanEstudios['PEFechaRealizo']); 
                                             }
                                         ?>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                Año: <b><?php if ($PlanEstudios['PEFinalizado'] == 'No') { echo date("Y"); } else { echo $fecha[0]; } ?></b>
+                                                Año: <b><?php if (nvl($PlanEstudios['PEFinalizado']) == 'No') { echo date("Y"); } else { echo $fecha[0]; } ?></b>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                Mes: <b><?php if ($PlanEstudios['PEFinalizado'] == 'No') { echo ver_mes(date("m")); } else { echo ver_mes($fecha[1]); } ?></b>
+                                                Mes: <b><?php if (nvl($PlanEstudios['PEFinalizado']) == 'No') { echo ver_mes(date("m")); } else { echo ver_mes($fecha[1]); } ?></b>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                Día: <b><?php if ($PlanEstudios['PEFinalizado'] == 'No') { echo date("d"); } else { echo $fecha[2]; } ?></b>
+                                                Día: <b><?php if (nvl($PlanEstudios['PEFinalizado']) == 'No') { echo date("d"); } else { echo $fecha[2]; } ?></b>
                                             </div>
                                         </div>
-                                    </div>																								
+                                    </div>
+                                    <?php } ?>
                                 </td>
                             </tr>
                             <tr>
@@ -1460,7 +1479,9 @@
                             if( form.valid() ){
                                 savePlanEstudio();
                             }
-                        } 						
+                        } else {
+                            return false;
+                        }					
 					}
 					if(newIndex == '2'){
 						saveExistencia_Aprob();
@@ -1471,10 +1492,6 @@
 						saveMat911();
                         actualizarMat();
 					}
-
-                    var AEIHombres1 = parseInt(document.getElementById("AEIHombres1").value);
-                    var AEIHombresTTotal1 = parseInt(document.getElementById("AEIHombresTTotal1").value);
-
                 
                     if(newIndex == '4'){
 						saveAbandono();

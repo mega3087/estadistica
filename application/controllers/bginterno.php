@@ -45,8 +45,7 @@
 			$data['periodoAct'] = $this->generaperiodo_model->find_all();
 			$peridoAct = $data['periodoAct'][0]['PAnio'].'-'.$data['periodoAct'][0]['PPeriodo'];
 
-			$selectPlan = "CPLClave, CPLNombre, CPLCCT, CPLTipo, CPLTurnos, PEIdPlanEstudios, PEIdPlantel, PETurnoPlantel, PEActualizacionAnio, PEActualizacionMes, PEActualizacionDia, PEUsuarioRealizo, UNombre, UApellido_pat, UApellido_mat, PEFechaRealizo, PEObservaciones, PEFinalizado";
-			$this->db->join('planteles','CPLClave = PEIdPlantel', 'LEFT');
+			$selectPlan = "CPLClave, CPLNombre, CPLCCT, CPLTipo, CPLTurnos, PEIdPlanEstudios, PEIdPlantel, PETurnoPlantel, PEActualizacionAnio, PEActualizacionMes, PEActualizacionDia, PEUsuarioRealizo, UNombre, UApellido_pat, UApellido_mat, PEFechaRealizo, PEObservaciones, PEFinalizado";			$this->db->join('planteles','CPLClave = PEIdPlantel', 'LEFT');
 			$this->db->join('veusuario','UNCI_usuario = PEUsuarioRealizo','LEFT');
 			$this->db->where('PEIdPlantel', $idPlantel);
 			$this->db->where('PETurnoPlantel', $turno);
@@ -101,6 +100,13 @@
 				$this->db->group_by('GRSemestre');
 				$data['matriculaGrupo'] = $this->grupos_model->find_all(null, $semAct);
 			}
+
+
+			$this->db->where('MCIdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
+			$data['matcemsad'] = $this->bgmatriculacemsad_model->find();
+
+			$this->db->where('RCIdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
+			$data['repcemsad'] = $this->bgrepecemsad_model->find();
 			
 			$semAct = 'GRSemestre, SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, COUNT(GRTurno) TGrupos, COUNT(GRCClave) Capacitaciones ';
 			$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
