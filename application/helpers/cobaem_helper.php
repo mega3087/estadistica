@@ -428,9 +428,8 @@
 		return $texto;
 	}
 	
-	function folio($folio='',$numero='5'){
-		if($folio)
-			$folio = str_pad($folio, $numero, "0", STR_PAD_LEFT);
+	function folio($folio='',$numero='5',$completa='0'){
+		$folio = str_pad($folio, $numero, $completa, STR_PAD_LEFT);
 		return ($folio);
 	}
 	

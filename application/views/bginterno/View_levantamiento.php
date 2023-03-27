@@ -9,6 +9,7 @@
     <!--.........................................-->				
     <h1> Características del Plan de Estudios</h1>
     <fieldset>
+        
         <input type="hidden" name="idPlanEstudio" id="idPlanEstudio" value="<?= nvl($PlanEstudios['PEIdPlanEstudios'])?>">
         <input type="hidden" name="CPLTipo" id="CPLTipo" value="<?= nvl($planteles['CPLTipo'])?>">
         <input type="hidden" name="CPLClave" id="CPLClave" value="<?= nvl($planteles['CPLClave'])?>">
@@ -814,9 +815,9 @@
             </div>
             
             <br>
-
+        <?php } ?>    
         <h2><label>REPETIDOR</label> </h2>       						
-        <p style="font-size: 14px;"> 3. De los alumnos reportados en el punto anterior, desglosa los alumnos repetidores (son los que reprueban 5 o más materias, y que, por lo tanto, está repitiendo todo el semestre), por género y grado.</p>
+        <p style="font-size: 14px;"> <?php if ($planteles['CPLTipo'] == 36) { echo  "3"; } else { echo "2"; }?>. De los alumnos reportados en el punto anterior, desglosa los alumnos repetidores (son los que reprueban 5 o más materias, y que, por lo tanto, está repitiendo todo el semestre), por género y grado.</p>
             <div class="row">
                 <div class="col-lg-7">
                     <table class="table table-bordered">
@@ -856,8 +857,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div> 
-            <?php } ?>     						
+            </div> 		
     </fieldset>	
 
     <!--.........................................-->
@@ -1051,13 +1051,13 @@
         <h2>¿El Centro Educativo cuenta con alumnos que participan en el Modelo Dual?.</h2>
             <div class="row">
                 <div class="col-md-5">
-                    <label>Si </label><input type="radio" name="PEServicioEducativoDual" id="PEServicioEducativoDual1" class="" onclick="selectModelo()" value="1" <?php if ($dual['MDSerEduc'] == 1) echo "checked";  ?>/>
+                    <label>Si </label><input type="radio" name="PEServicioEducativoDual" id="PEServicioEducativoDual1" class="" onclick="selectModelo()" value="1" <?php if ($dual['MDSerEduc'] == 1) echo "checked";  ?> required/>
                 </div>
             </div>	
             <br>
             <div class="row">
                 <div class="col-md-5">
-                    <label>No </label><input type="radio" name="PEServicioEducativoDual" id="PEServicioEducativoDual2" class="" onclick="selectModelo()" value="2" <?php if ($dual['MDSerEduc'] == 2) echo "checked"; ?>/>
+                    <label>No </label><input type="radio" name="PEServicioEducativoDual" id="PEServicioEducativoDual2" class="" onclick="selectModelo()" value="2" <?php if ($dual['MDSerEduc'] == 2) echo "checked"; ?> required/>
                 </div>
             </div>
             <br><br>
@@ -1294,15 +1294,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($formaciones as $f => $listF) {?>
-                            <tr>
-                                <td><input type="text" id="MClaveF[]" name="MClaveF[]" class="form-control" ></td>
-                                <td><input type="text" id="MNombreF[]" name="MNombreF[]" class="form-control" value="<?= $listF['FNombre'] ?>" disabled size="95"></td>
-                                <td><input type="text" id="MHF[]" name="MHF[]" class="form-control" value="<?php if( $listF['AlumForma']['THombres'] == '') { echo 0; } else { echo $listF['AlumForma']['THombres'];} ?>" disabled></td>
-                                <td><input type="text" id="MMF[]" name="MMF[]" class="form-control" value="<?php if( $listF['AlumForma']['TMujeres'] == '') { echo 0; } else { echo $listF['AlumForma']['TMujeres'];} ?>" disabled></td>
-                                <td><input type="text" id="MTF[]" name="MTF[]" class="form-control" value="<?php if( $listF['AlumForma']['Total'] == '') { echo 0; } else { echo $listF['AlumForma']['Total'];} ?>" disabled></td>											
-                            </tr>
-                            <?php } ?>
+                        <?php if (empty($formacionesTrab)) {
+                                    foreach ($formaciones as $f => $listF) {?>
+                                        <tr>
+                                            <td><input type="text" id="MClaveF[]" name="MClaveF[]" class="form-control" value=""></td>
+                                            <td><input type="text" id="MNombreF[]" name="MNombreF[]" class="form-control" value="<?= $listF['FNombre'] ?>" disabled size="95"></td>
+                                            <td><input type="text" id="MHF[]" name="MHF[]" class="form-control" value="<?php if( $listF['AlumForma']['THombres'] == '') { echo 0; } else { echo $listF['AlumForma']['THombres'];} ?>" disabled></td>
+                                            <td><input type="text" id="MMF[]" name="MMF[]" class="form-control" value="<?php if( $listF['AlumForma']['TMujeres'] == '') { echo 0; } else { echo $listF['AlumForma']['TMujeres'];} ?>" disabled></td>
+                                            <td><input type="text" id="MTF[]" name="MTF[]" class="form-control" value="<?php if( $listF['AlumForma']['Total'] == '') { echo 0; } else { echo $listF['AlumForma']['Total'];} ?>" disabled></td>											
+                                        </tr>
+                                    <?php }
+                                } else { 
+                                    foreach ($formacionesTrab as $f => $listF) {?>
+                                    <tr>
+                                            <td><input type="text" id="MClaveF[]" name="MClaveF[]" class="form-control" value="<?php if( $listF['FClave'] != '') { echo $listF['FClave']; }?>"></td>
+                                            <td><input type="text" id="MNombreF[]" name="MNombreF[]" class="form-control" value="<?= $listF['FNombreFormacion'] ?>" disabled size="95"></td>
+                                            <td><input type="text" id="MHF[]" name="MHF[]" class="form-control" value="<?php if( $listF['FHombres'] == '') { echo 0; } else { echo $listF['FHombres'];} ?>" disabled></td>
+                                            <td><input type="text" id="MMF[]" name="MMF[]" class="form-control" value="<?php if( $listF['FMujeres'] == '') { echo 0; } else { echo $listF['FMujeres'];} ?>" disabled></td>
+                                            <td><input type="text" id="MTF[]" name="MTF[]" class="form-control" value="<?php if( $listF['FTotal'] == '') { echo 0; } else { echo $listF['FTotal'];} ?>" disabled></td>											
+                                        </tr>
+                                <?php } }?>
                             <tr>
                                 <td></td>
                                 <td>Total</td>												
@@ -1541,10 +1552,10 @@
 					if(newIndex == '5'){
 						savematriculaIns();
                         selectModelo();
+                        saveRepetidores();
                         var CPLTipo = document.getElementById("CPLTipo").value;
                         if (CPLTipo == 36) {
                             savePresenciales();
-                            saveRepetidores();
                         }
 					}
 					if(newIndex == '7'){
@@ -1642,6 +1653,11 @@
 			checkboxClass: 'icheckbox_square-green',
 			radioClass: 'iradio_square-green',
 		});	
+
+        var idPlanEstudio = document.getElementById("idPlanEstudio").value;
+
+        idPlanEstudio = window.btoa(unescape(encodeURIComponent(idPlanEstudio))).replace("=","").replace("=","");
+        $("#ImprimirIntersemestral").attr("href","<?php echo base_url("bginterno/imprimirIntersemestral_skip"); ?>/"+idPlanEstudio);
 	});
 
 </script>

@@ -11,7 +11,9 @@
 				<h2><label>
 					Levantamiento Estadístico Interno Intersemestral.
 				</label></h2><br>
-				<h2> Datos de Identificación</h2><br>
+				<h2> Datos de Identificación</h2>
+				
+				<br>
 					<div class="row">
 						<label class="col-md-2" style="text-align:right">Centro Educativo:</label>
 							<div class="col-md-2">
@@ -57,6 +59,9 @@
 						<div class="col-md-3">
 							<div class="i-checks"> <label>Presencial:  &nbsp;&nbsp;</label><input type="radio" name="presencial" id="presencial" class="form-control "  value="presencial" checked/> </div>
 						</div>
+						<div class="col-md-3" id="imprimirInter" style="display: none;">
+						<a href="" target="_blank"  id="ImprimirIntersemestral" type="button" class="btn btn-primary btn-block btn-rounded btn-sm pull-center"><i class="fa fa-print"></i> Imprimir</a>
+						</div>
 					</div>
 					<br><br>
 
@@ -99,11 +104,15 @@ $(document).ready(function(){
             },
             success: function(data){
 				var data = data.split("::");
-
+				if (data[1] == 'Si') {
+					$('#imprimirInter').show();
+				} else {
+					$('#imprimirInter').hide();
+				}
 				document.getElementById('cct').value = data[0];
-                $(".msgLevantamineto").empty();
+				$(".msgLevantamineto").empty();
                 $(".resultLevantamineto").empty();
-                $(".resultLevantamineto").append(data[1]);
+                $(".resultLevantamineto").append(data[2]);
                 $(".loading").empty();
             }
         });
