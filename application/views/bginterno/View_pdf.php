@@ -33,7 +33,7 @@
         </tr>
         </table><br></td>
     </tr>    
-  </table><?=br(5)?>
+  </table><?= br(5) ?>
   <p class="text-m text-justify"><b>IMPORTANTE:</b> La información estadística es una herramienta fundamental para la planeación y la toma acertada de decisiones. Los cuestionarios 911 son los medios para recolipar la información básica de educación media superior.</p>
   <p class="text-m text-justify">Los cuestionarios impresos son apoyos para contestar el cuestionario electrónico, o bien para que los utilicen las escuelas que manifiestan no estar en la posibilidad de contestar el cuestionario electrónico.</p>
   <p class="text-m text-justify"><b>Nota:</b> Los alumnos de PLANTELES DE EXTENSIÓN O ANEXOS deberán ser reportados en un centro independiente.</p>

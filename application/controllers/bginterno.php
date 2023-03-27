@@ -94,12 +94,14 @@
 				$this->db->where('MIIdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
 				$data['matricula'] = $this->bgmatriculains_model->find();
 			} else {
+			
 				$semAct = 'GRSemestre, SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, COUNT(GRTurno) TGrupos ';
 				$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
-				$this->db->where('GRCPlantel', nvl($data['idPlanEstudio']['PEIdPlantel']));
-				$this->db->where('GRTurno', nvl($data['idPlanEstudio']['PETurnoPlantel']));	
+				$this->db->where('GRCPlantel', $idPlantel);
+				$this->db->where('GRTurno', $turno);	
 				$this->db->group_by('GRSemestre');
 				$data['matriculaGrupo'] = $this->grupos_model->find_all(null, $semAct);
+			
 			}
 
 			$this->db->where('MCIdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
