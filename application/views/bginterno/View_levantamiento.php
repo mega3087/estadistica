@@ -726,7 +726,7 @@
                             <tr>
                                 <td><label><?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "5o."; } else { echo "6o.";} ?></label></td>
                                 <td><input type="text" id="MSEHombres3" name="MSEHombres3" class="form-control" value="<?= nvl($matricula['MHIns6o']) ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeres3" name="MSEMujeres3" class="form-control" value="<?= nvl($matricula['MHIns6o']) ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeres3" name="MSEMujeres3" class="form-control" value="<?= nvl($matricula['MMIns6o']) ?>" disabled></td>
                                 <td><input type="text" id="MSETotal3" name="MSETotal3" class="form-control" value="<?= nvl($matricula['MTIns6o']) ?>" disabled></td>
                                 <td><input type="text" id="MSEDiscapacidad3" name="MSEDiscapacidad3" class="form-control numeros" value="<?= nvl($matricula['MDIns6o']) ?>" onkeyup="sumarMatSem();"></td>
                                 <td><input type="text" id="MSEHablantes3" name="MSEHablantes3" class="form-control numeros" value="<?= nvl($matricula['MHaIns6o']) ?>" onkeyup="sumarMatSem();"></td>
