@@ -9,7 +9,6 @@
     <!--.........................................-->				
     <h1> Características del Plan de Estudios</h1>
     <fieldset>
-        
         <input type="hidden" name="idPlanEstudio" id="idPlanEstudio" value="<?= nvl($PlanEstudios['PEIdPlanEstudios'])?>">
         <input type="hidden" name="CPLTipo" id="CPLTipo" value="<?= nvl($planteles['CPLTipo'])?>">
         <input type="hidden" name="CPLClave" id="CPLClave" value="<?= nvl($planteles['CPLClave'])?>">
@@ -661,37 +660,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (count($matriculaGrupo) != 0) { ?>
+                            <?php if (count($datosAct) != 0) { 
+                                foreach ($datosAct as $d => $listD) { ?>
                             <tr>
-                                <td><label> <?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "1o."; } else { echo "2o.";} ?></label></td>
-                                <td><input type="text" id="MSEHombres1" name="MSEHombres1" class="form-control" value="<?= nvl($matriculaGrupo[0]['THombres']) ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeres1" name="MSEMujeres1" class="form-control" value="<?= nvl($matriculaGrupo[0]['TMujeres']) ?>" disabled></td>
-                                <td><input type="text" id="MSETotal1" name="MSETotal1" class="form-control" value="<?= nvl($matriculaGrupo[0]['Total']) ?>" disabled></td>
-                                <td><input type="text" id="MSEDiscapacidad1" name="MSEDiscapacidad1" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEHablantes1" name="MSEHablantes1" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEExtranjero1" name="MSEExtranjero1" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEGrupos1" name="MSEGrupos1" class="form-control" value="<?= nvl($matriculaGrupo[0]['TGrupos'])?>" disabled></td>												
+                                <td><label> <?php echo $listD['GRSemestre']; ?></label></td>
+                                <?php if (empty($listD['matriculaGrupo'])) { ?>
+                                    <td><input type="text" id="MSEHombres<?= $listD['GRSemestre']?>" name="MSEHombres<?= $listD['GRSemestre']?>" class="form-control" value="0" disabled></td>
+                                    <td><input type="text" id="MSEMujeres<?= $listD['GRSemestre']?>" name="MSEMujeres<?= $listD['GRSemestre']?>" class="form-control" value="0" disabled></td>
+                                    <td><input type="text" id="MSETotal<?= $listD['GRSemestre']?>" name="MSETotal<?= $listD['GRSemestre']?>" class="form-control" value="0" disabled></td>
+                                    <td><input type="text" id="MSEDiscapacidad<?= $listD['GRSemestre']?>" name="MSEDiscapacidad<?= $listD['GRSemestre']?>" class="form-control numeros" value="0" disabled></td>
+                                    <td><input type="text" id="MSEHablantes<?= $listD['GRSemestre']?>" name="MSEHablantes<?= $listD['GRSemestre']?>" class="form-control numeros" value="0" disabled></td>
+                                    <td><input type="text" id="MSEExtranjero<?= $listD['GRSemestre']?>" name="MSEExtranjero<?= $listD['GRSemestre']?>" class="form-control numeros" value="0" disabled></td>
+                                    <td><input type="text" id="MSEGrupos<?= $listD['GRSemestre']?>" name="MSEGrupos<?= $listD['GRSemestre']?>" class="form-control" value="0" disabled></td>												
+                                <?php } else { ?>
+                                <?php foreach($listD['matriculaGrupo'] as $l => $sems) { ?>
+                                <td><input type="text" id="MSEHombres<?= $listD['GRSemestre']?>" name="MSEHombres<?= $listD['GRSemestre']?>" class="form-control" value="<?= $sems['THombres'] ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeres<?= $listD['GRSemestre']?>" name="MSEMujeres<?= $listD['GRSemestre']?>" class="form-control" value="<?= $sems['TMujeres'] ?>" disabled></td>
+                                <td><input type="text" id="MSETotal<?= $listD['GRSemestre']?>" name="MSETotal<?= $listD['GRSemestre']?>" class="form-control" value="<?= $sems['Total'] ?>" disabled></td>
+                                <td><input type="text" id="MSEDiscapacidad<?= $listD['GRSemestre']?>" name="MSEDiscapacidad<?= $listD['GRSemestre']?>" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEHablantes<?= $listD['GRSemestre']?>" name="MSEHablantes<?= $listD['GRSemestre']?>" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEExtranjero<?= $listD['GRSemestre']?>" name="MSEExtranjero<?= $listD['GRSemestre']?>" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEGrupos<?= $listD['GRSemestre']?>" name="MSEGrupos<?= $listD['GRSemestre']?>" class="form-control" value="<?= $sems['TGrupos'] ?>" disabled></td>												
+                                <?php } } ?>
+
                             </tr>
-                            <tr>
-                                <td><label><?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "3o."; } else { echo "4o.";} ?></label></td>
-                                <td><input type="text" id="MSEHombres2" name="MSEHombres2" class="form-control" value="<?= nvl($matriculaGrupo[1]['THombres']) ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeres2" name="MSEMujeres2" class="form-control" value="<?= nvl($matriculaGrupo[1]['TMujeres']) ?>" disabled></td>
-                                <td><input type="text" id="MSETotal2" name="MSETotal2" class="form-control" value="<?= nvl($matriculaGrupo[1]['Total']) ?>" disabled></td>
-                                <td><input type="text" id="MSEDiscapacidad2" name="MSEDiscapacidad2" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEHablantes2" name="MSEHablantes2" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEExtranjero2" name="MSEExtranjero2" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEGrupos2" name="MSEGrupos2" class="form-control" value="<?= nvl($matriculaGrupo[1]['TGrupos'])?>" disabled></td>
-                            </tr>
-                            <tr>
-                                <td><label><?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "5o."; } else { echo "6o.";} ?></label></td>
-                                <td><input type="text" id="MSEHombres3" name="MSEHombres3" class="form-control" value="<?= nvl($matriculaGrupo[2]['THombres']) ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeres3" name="MSEMujeres3" class="form-control" value="<?= nvl($matriculaGrupo[2]['TMujeres']) ?>" disabled></td>
-                                <td><input type="text" id="MSETotal3" name="MSETotal3" class="form-control" value="<?= nvl($matriculaGrupo[2]['Total']) ?>" disabled></td>
-                                <td><input type="text" id="MSEDiscapacidad3" name="MSEDiscapacidad3" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEHablantes3" name="MSEHablantes3" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEExtranjero3" name="MSEExtranjero3" class="form-control numeros" value="0" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEGrupos3" name="MSEGrupos3" class="form-control" value="<?= nvl($matriculaGrupo[2]['TGrupos'])?>" disabled></td>												
-                            </tr>
+
+                            <?php } 
+                         ?>
                             <tr>
                             <td><label>Total</label></td>
                                 <td><input type="text" id="MSEHombresTotal" name="MSEHombresTotal" class="form-control" value="<?php $totalHombres = nvl($matriculaGrupo[0]['THombres']) + nvl($matriculaGrupo[1]['THombres']) + nvl($matriculaGrupo[2]['THombres']); echo $totalHombres; ?>" disabled></td>
@@ -705,33 +700,33 @@
                             <?php } else { ?>
                                 <tr>
                                 <td><label> <?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "1o."; } else { echo "2o.";} ?></label></td>
-                                <td><input type="text" id="MSEHombres1" name="MSEHombres1" class="form-control" value="<?= nvl($matricula['MHIns2o']) ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeres1" name="MSEMujeres1" class="form-control" value="<?= nvl($matricula['MMIns2o']) ?>" disabled></td>
-                                <td><input type="text" id="MSETotal1" name="MSETotal1" class="form-control" value="<?= nvl($matricula['MTIns2o']) ?>" disabled></td>
-                                <td><input type="text" id="MSEDiscapacidad1" name="MSEDiscapacidad1" class="form-control numeros" value="<?= nvl($matricula['MDIns2o']) ?>" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEHablantes1" name="MSEHablantes1" class="form-control numeros" value="<?= nvl($matricula['MHaIns2o']) ?>" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEExtranjero1" name="MSEExtranjero1" class="form-control numeros" value="<?= nvl($matricula['MEIns2o']) ?>" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEGrupos1" name="MSEGrupos1" class="form-control" value="<?= nvl($matricula['MInsGrupos2o'])?>" disabled></td>												
+                                <td><input type="text" id="MSEHombres2" name="MSEHombres2" class="form-control" value="<?= nvl($matricula['MHIns2o']) ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeres2" name="MSEMujeres2" class="form-control" value="<?= nvl($matricula['MMIns2o']) ?>" disabled></td>
+                                <td><input type="text" id="MSETotal2" name="MSETotal2" class="form-control" value="<?= nvl($matricula['MTIns2o']) ?>" disabled></td>
+                                <td><input type="text" id="MSEDiscapacidad2" name="MSEDiscapacidad2" class="form-control numeros" value="<?= nvl($matricula['MDIns2o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEHablantes2" name="MSEHablantes2" class="form-control numeros" value="<?= nvl($matricula['MHaIns2o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEExtranjero2" name="MSEExtranjero2" class="form-control numeros" value="<?= nvl($matricula['MEIns2o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEGrupos2" name="MSEGrupos2" class="form-control" value="<?= nvl($matricula['MInsGrupos2o'])?>" disabled></td>												
                             </tr>
                             <tr>
                                 <td><label><?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "3o."; } else { echo "4o.";} ?></label></td>
-                                <td><input type="text" id="MSEHombres2" name="MSEHombres2" class="form-control" value="<?= nvl($matricula['MHIns4o']) ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeres2" name="MSEMujeres2" class="form-control" value="<?= nvl($matricula['MMIns4o']) ?>" disabled></td>
-                                <td><input type="text" id="MSETotal2" name="MSETotal2" class="form-control" value="<?= nvl($matricula['MTIns4o']) ?>" disabled></td>
-                                <td><input type="text" id="MSEDiscapacidad2" name="MSEDiscapacidad2" class="form-control numeros" value="<?= nvl($matricula['MDIns4o']) ?>" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEHablantes2" name="MSEHablantes2" class="form-control numeros" value="<?= nvl($matricula['MHaIns4o']) ?>" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEExtranjero2" name="MSEExtranjero2" class="form-control numeros" value="<?= nvl($matricula['MEIns4o']) ?>" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEGrupos2" name="MSEGrupos2" class="form-control" value="<?= nvl($matricula['MInsGrupos4o'])?>" disabled></td>
+                                <td><input type="text" id="MSEHombres4" name="MSEHombres4" class="form-control" value="<?= nvl($matricula['MHIns4o']) ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeres4" name="MSEMujeres4" class="form-control" value="<?= nvl($matricula['MMIns4o']) ?>" disabled></td>
+                                <td><input type="text" id="MSETotal4" name="MSETotal4" class="form-control" value="<?= nvl($matricula['MTIns4o']) ?>" disabled></td>
+                                <td><input type="text" id="MSEDiscapacidad4" name="MSEDiscapacidad4" class="form-control numeros" value="<?= nvl($matricula['MDIns4o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEHablantes4" name="MSEHablantes4" class="form-control numeros" value="<?= nvl($matricula['MHaIns4o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEExtranjero4" name="MSEExtranjero4" class="form-control numeros" value="<?= nvl($matricula['MEIns4o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEGrupos4" name="MSEGrupos4" class="form-control" value="<?= nvl($matricula['MInsGrupos4o'])?>" disabled></td>
                             </tr>
                             <tr>
                                 <td><label><?php if ($periodoAct[0]['PPeriodo'] == 2) {echo "5o."; } else { echo "6o.";} ?></label></td>
-                                <td><input type="text" id="MSEHombres3" name="MSEHombres3" class="form-control" value="<?= nvl($matricula['MHIns6o']) ?>" disabled></td>
-                                <td><input type="text" id="MSEMujeres3" name="MSEMujeres3" class="form-control" value="<?= nvl($matricula['MMIns6o']) ?>" disabled></td>
-                                <td><input type="text" id="MSETotal3" name="MSETotal3" class="form-control" value="<?= nvl($matricula['MTIns6o']) ?>" disabled></td>
-                                <td><input type="text" id="MSEDiscapacidad3" name="MSEDiscapacidad3" class="form-control numeros" value="<?= nvl($matricula['MDIns6o']) ?>" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEHablantes3" name="MSEHablantes3" class="form-control numeros" value="<?= nvl($matricula['MHaIns6o']) ?>" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEExtranjero3" name="MSEExtranjero3" class="form-control numeros" value="<?= nvl($matricula['MEIns6o']) ?>" onkeyup="sumarMatSem();"></td>
-                                <td><input type="text" id="MSEGrupos3" name="MSEGrupos3" class="form-control" value="<?= nvl($matricula['MInsGrupos6o'])?>" disabled></td>												
+                                <td><input type="text" id="MSEHombres6" name="MSEHombres6" class="form-control" value="<?= nvl($matricula['MHIns6o']) ?>" disabled></td>
+                                <td><input type="text" id="MSEMujeres6" name="MSEMujeres6" class="form-control" value="<?= nvl($matricula['MMIns6o']) ?>" disabled></td>
+                                <td><input type="text" id="MSETotal6" name="MSETotal6" class="form-control" value="<?= nvl($matricula['MTIns6o']) ?>" disabled></td>
+                                <td><input type="text" id="MSEDiscapacidad6" name="MSEDiscapacidad6" class="form-control numeros" value="<?= nvl($matricula['MDIns6o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEHablantes6" name="MSEHablantes6" class="form-control numeros" value="<?= nvl($matricula['MHaIns6o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEExtranjero6" name="MSEExtranjero6" class="form-control numeros" value="<?= nvl($matricula['MEIns6o']) ?>" onkeyup="sumarMatSem();"></td>
+                                <td><input type="text" id="MSEGrupos6" name="MSEGrupos3" class="form-control" value="<?= nvl($matricula['MInsGrupos6o'])?>" disabled></td>												
                             </tr>
                             <tr>
                             <td><label>Total</label></td>
@@ -1353,7 +1348,7 @@
                             <tr>
                                 <td></td>
                                 <td></td>
-                                <td><b><?= $director['CPLDirector'] ?></b></td>
+                                <td><b><?php echo $director['DIFin']?$director['DIFin']:$director['DIInicio']; ?></b></td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -3070,21 +3065,21 @@
 
     function sumarMatSem() {
         
-        var MSEDiscapacidad1 = document.getElementById("MSEDiscapacidad1").value; if (MSEDiscapacidad1 == '') { MSEDiscapacidad1 = 0; } 
-		var MSEDiscapacidad2 = document.getElementById("MSEDiscapacidad2").value; if (MSEDiscapacidad2 == '') { MSEDiscapacidad2 = 0; } 
-		var MSEDiscapacidad3 = document.getElementById("MSEDiscapacidad3").value; if (MSEDiscapacidad3 == '') { MSEDiscapacidad3 = 0; } 
-		var MSEDiscapacidadTotal = parseInt(MSEDiscapacidad1) + parseInt(MSEDiscapacidad2) + parseInt(MSEDiscapacidad3);
+        var MSEDiscapacidad1 = document.getElementById("MSEDiscapacidad2").value; if (MSEDiscapacidad1 == '') { MSEDiscapacidad1 = 0; } 
+		var MSEDiscapacidad2 = document.getElementById("MSEDiscapacidad4").value; if (MSEDiscapacidad2 == '') { MSEDiscapacidad2 = 0; } 
+		var MSEDiscapacidad3 = document.getElementById("MSEDiscapacidad6").value; if (MSEDiscapacidad3 == '') { MSEDiscapacidad3 = 0; } 
+        var MSEDiscapacidadTotal = parseInt(MSEDiscapacidad1) + parseInt(MSEDiscapacidad2) + parseInt(MSEDiscapacidad3);
 		document.getElementById('MSEDiscapacidadTotal').value = MSEDiscapacidadTotal;
 
-		var MSEHablantes1 = document.getElementById("MSEHablantes1").value; if (MSEHablantes1 == '') { MSEHablantes1 = 0; } 
-		var MSEHablantes2 = document.getElementById("MSEHablantes2").value; if (MSEHablantes2 == '') { MSEHablantes2 = 0; } 
-		var MSEHablantes3 = document.getElementById("MSEHablantes3").value; if (MSEHablantes3 == '') { MSEHablantes3 = 0; } 
+		var MSEHablantes1 = document.getElementById("MSEHablantes2").value; if (MSEHablantes1 == '') { MSEHablantes1 = 0; } 
+		var MSEHablantes2 = document.getElementById("MSEHablantes4").value; if (MSEHablantes2 == '') { MSEHablantes2 = 0; } 
+		var MSEHablantes3 = document.getElementById("MSEHablantes6").value; if (MSEHablantes3 == '') { MSEHablantes3 = 0; } 
 		var MSEHablantesTotal = parseInt(MSEHablantes1) + parseInt(MSEHablantes2) + parseInt(MSEHablantes3);
 		document.getElementById('MSEHablantesTotal').value = MSEHablantesTotal;
 
-		var MSEExtranjero1 = document.getElementById("MSEExtranjero1").value; if (MSEExtranjero1 == '') { MSEExtranjero1 = 0; } 
-		var MSEExtranjero2 = document.getElementById("MSEExtranjero2").value; if (MSEExtranjero2 == '') { MSEExtranjero2 = 0; } 
-		var MSEExtranjero3 = document.getElementById("MSEExtranjero3").value; if (MSEExtranjero3 == '') { MSEExtranjero3 = 0; } 
+		var MSEExtranjero1 = document.getElementById("MSEExtranjero2").value; if (MSEExtranjero1 == '') { MSEExtranjero1 = 0; } 
+		var MSEExtranjero2 = document.getElementById("MSEExtranjero4").value; if (MSEExtranjero2 == '') { MSEExtranjero2 = 0; } 
+		var MSEExtranjero3 = document.getElementById("MSEExtranjero6").value; if (MSEExtranjero3 == '') { MSEExtranjero3 = 0; } 
 		var MSEExtranjeroTotal = parseInt(MSEExtranjero1) + parseInt(MSEExtranjero2) + parseInt(MSEExtranjero3);
 		document.getElementById('MSEExtranjeroTotal').value = MSEExtranjeroTotal;
 	}
@@ -3093,39 +3088,39 @@
         let formData = new FormData(); 
         
         formData.append("MIIdBgPlanEstudios", document.getElementById("idPlanEstudio").value);
-        formData.append("MHIns2o", document.getElementById("MSEHombres1").value);
-        formData.append("MHIns4o", document.getElementById("MSEHombres2").value);
-        formData.append("MHIns6o", document.getElementById("MSEHombres3").value);
+        formData.append("MHIns2o", document.getElementById("MSEHombres2").value);
+        formData.append("MHIns4o", document.getElementById("MSEHombres4").value);
+        formData.append("MHIns6o", document.getElementById("MSEHombres6").value);
         formData.append("MHInsTotal", document.getElementById("MSEHombresTotal").value);
 
-        formData.append("MMIns2o", document.getElementById("MSEMujeres1").value);
-        formData.append("MMIns4o", document.getElementById("MSEMujeres2").value);
-        formData.append("MMIns6o", document.getElementById("MSEMujeres3").value);
+        formData.append("MMIns2o", document.getElementById("MSEMujeres2").value);
+        formData.append("MMIns4o", document.getElementById("MSEMujeres4").value);
+        formData.append("MMIns6o", document.getElementById("MSEMujeres6").value);
         formData.append("MMInsTotal", document.getElementById("MSEMujeresTotal").value);
 
-        formData.append("MTIns2o", document.getElementById("MSETotal1").value);
-        formData.append("MTIns4o", document.getElementById("MSETotal2").value);
-        formData.append("MTIns6o", document.getElementById("MSETotal3").value);
+        formData.append("MTIns2o", document.getElementById("MSETotal2").value);
+        formData.append("MTIns4o", document.getElementById("MSETotal4").value);
+        formData.append("MTIns6o", document.getElementById("MSETotal6").value);
         formData.append("MTInsTotal", document.getElementById("MSETotalTotal").value);
         
-        formData.append("MDIns2o", document.getElementById("MSEDiscapacidad1").value);
-        formData.append("MDIns4o", document.getElementById("MSEDiscapacidad2").value);
-        formData.append("MDIns6o", document.getElementById("MSEDiscapacidad3").value);
+        formData.append("MDIns2o", document.getElementById("MSEDiscapacidad2").value);
+        formData.append("MDIns4o", document.getElementById("MSEDiscapacidad4").value);
+        formData.append("MDIns6o", document.getElementById("MSEDiscapacidad6").value);
         formData.append("MDInsTotal", document.getElementById("MSEDiscapacidadTotal").value);
 
-        formData.append("MEIns2o", document.getElementById("MSEExtranjero1").value);
-        formData.append("MEIns4o", document.getElementById("MSEExtranjero2").value);
-        formData.append("MEIns6o", document.getElementById("MSEExtranjero3").value);
+        formData.append("MEIns2o", document.getElementById("MSEExtranjero2").value);
+        formData.append("MEIns4o", document.getElementById("MSEExtranjero4").value);
+        formData.append("MEIns6o", document.getElementById("MSEExtranjero6").value);
         formData.append("MEInsTotal", document.getElementById("MSEExtranjeroTotal").value);
         
-        formData.append("MHaIns2o", document.getElementById("MSEHablantes1").value);
-        formData.append("MHaIns4o", document.getElementById("MSEHablantes2").value);
-        formData.append("MHaIns6o", document.getElementById("MSEHablantes3").value);
+        formData.append("MHaIns2o", document.getElementById("MSEHablantes2").value);
+        formData.append("MHaIns4o", document.getElementById("MSEHablantes4").value);
+        formData.append("MHaIns6o", document.getElementById("MSEHablantes6").value);
         formData.append("MHaInsTotal", document.getElementById("MSEHablantesTotal").value);
         
-        formData.append("MInsGrupos2o", document.getElementById("MSEGrupos1").value);
-        formData.append("MInsGrupos4o", document.getElementById("MSEGrupos2").value);
-        formData.append("MInsGrupos6o", document.getElementById("MSEGrupos3").value);
+        formData.append("MInsGrupos2o", document.getElementById("MSEGrupos2").value);
+        formData.append("MInsGrupos4o", document.getElementById("MSEGrupos4").value);
+        formData.append("MInsGrupos6o", document.getElementById("MSEGrupos6").value);
         formData.append("MInsGruposTotal", document.getElementById("MSEGruposTotal").value);
         
         $.ajax({

@@ -89,19 +89,35 @@
 			$matricula = $this->bgmatriculains_model->find();
 
 			if (count($matricula) > 1) {
-				$data['matriculaGrupo'] = array();
+				$data['datosAct'] = array();
 
 				$this->db->where('MIIdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
 				$data['matricula'] = $this->bgmatriculains_model->find();
 			} else {
-			
-				$semAct = 'GRSemestre, SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, COUNT(GRTurno) TGrupos ';
+
+				$consem = 'GRSemestre, SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, COUNT(GRTurno) TGrupos ';
 				$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
 				$this->db->where('GRCPlantel', $idPlantel);
 				$this->db->where('GRTurno', $turno);	
 				$this->db->group_by('GRSemestre');
-				$data['matriculaGrupo'] = $this->grupos_model->find_all(null, $semAct);
-			
+				$data['matriculaGrupo'] = $this->grupos_model->find_all(null, $consem);
+
+				$semAct = 'GRSemestre';
+				$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
+				$this->db->group_by('GRSemestre');
+				$data['datosAct'] = $this->grupos_model->find_all(null, $semAct);
+
+				foreach ($data['datosAct'] as $y => $sem) {
+					$consulta = 'GRSemestre, SUM(GRMasculino) THombres, SUM(GRFemenino) TMujeres, SUM(GRCupo) Total, COUNT(GRTurno) TGrupos ';
+					$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
+					$this->db->where('GRCPlantel', $idPlantel);
+					$this->db->where('GRTurno', $turno);
+					$this->db->where('GRSemestre', $sem['GRSemestre']);	
+					$this->db->group_by('GRSemestre');
+					$data['datosAct'][$y]['matriculaGrupo'] = $this->grupos_model->find_all(null, $consulta);
+				}
+				
+				
 			}
 
 			$this->db->where('MCIdBgPlanEstudios',$data['PlanEstudios']['PEIdPlanEstudios']);
@@ -162,7 +178,7 @@
 				$this->db->join('formacion','FIdFormacion = GRCClave','left');
 				$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
 				$this->db->where('GRCPlantel', $idPlantel);
-				$this->db->where('GRTurno', $turno);	
+				//$this->db->where('GRTurno', $turno);	
 				$this->db->where('GRCClave',$listF['idFFormacion']);
 				$data['formaciones'][$f]['AlumForma'] = $this->grupos_model->find(null, $selFor);
 				
@@ -177,8 +193,20 @@
 			$this->db->where('FIdBgPlan', $data['PlanEstudios']['PEIdPlanEstudios']);
 			$data['formacionesTrab']  = $this->bgformacion_model->find_all();
 
-			$this->db->where('CPLClave',$idPlantel);
-			$data['director'] = $this->plantel_model->find();
+
+			$this->db->select("*,SUM(PIMonto) AS SumMonto");
+			$this->db->join('datos_generales','CPLClave = DGIdPlantel','LEFT');
+			$this->db->join('infraestructura','CPLClave = InfIdPlantel','LEFT');
+			$this->db->join('terreno','CPLClave = TIdPlantel','LEFT');
+			$this->db->join('proginfraestructura','CPLClave = PIIdPlantel','LEFT');
+			$this->db->join('computo','CPLClave = COIdPlantel','LEFT');
+			$this->db->join('indicadores','CPLClave = IIdPlantel','LEFT');
+			$this->db->join('personal','CPLClave = PIdPlantel','LEFT');
+			$this->db->join('evaluaciones','CPLClave = EIdPlantel','LEFT');
+			$this->db->join('directores','CPLClave = DIIdPlantel','LEFT');
+			$this->db->join('archesemestral','CPLClave = AESIdArchivo','LEFT');
+			$this->db->where('DIEstatus', 1);
+			$data['director'] = $this->plantel_model->get( $idPlantel);
 
 			$data['turno'] = $turno;
 			echo nvl($data['planteles']['CPLCCT']).'::';

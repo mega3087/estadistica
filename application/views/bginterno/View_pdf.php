@@ -1657,7 +1657,7 @@
             <td>&nbsp;</td>		
             <td colspan="3" class="text-center">Por horas</td>
             <td>&nbsp;</td>		
-            <td colspan="3" class="text-center">Extranjeros</td>
+            <td colspan="3" class="text-center">Total</td>
           </tr>
           <tbody>
             <tr>

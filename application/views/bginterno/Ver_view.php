@@ -125,6 +125,8 @@ $(document).ready(function(){
 			radioClass: 'iradio_square-green',
 		});
 	});
+
+	
 </script>
 
 <script src="<?php echo base_url('assets/inspinia/js/plugins/iCheck/icheck.min.js'); ?>"></script>
