@@ -178,7 +178,7 @@
 				$this->db->join('formacion','FIdFormacion = GRCClave','left');
 				$this->db->where('GRPeriodo', $peridoAct); //Cambiar por periodo Actual
 				$this->db->where('GRCPlantel', $idPlantel);
-				//$this->db->where('GRTurno', $turno);	
+				$this->db->where('GRTurno', $turno); // Por turno de Plantel
 				$this->db->where('GRCClave',$listF['idFFormacion']);
 				$data['formaciones'][$f]['AlumForma'] = $this->grupos_model->find(null, $selFor);
 				
