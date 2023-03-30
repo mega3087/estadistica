@@ -193,20 +193,9 @@
 			$this->db->where('FIdBgPlan', $data['PlanEstudios']['PEIdPlanEstudios']);
 			$data['formacionesTrab']  = $this->bgformacion_model->find_all();
 
-
-			$this->db->select("*,SUM(PIMonto) AS SumMonto");
-			$this->db->join('datos_generales','CPLClave = DGIdPlantel','LEFT');
-			$this->db->join('infraestructura','CPLClave = InfIdPlantel','LEFT');
-			$this->db->join('terreno','CPLClave = TIdPlantel','LEFT');
-			$this->db->join('proginfraestructura','CPLClave = PIIdPlantel','LEFT');
-			$this->db->join('computo','CPLClave = COIdPlantel','LEFT');
-			$this->db->join('indicadores','CPLClave = IIdPlantel','LEFT');
-			$this->db->join('personal','CPLClave = PIdPlantel','LEFT');
-			$this->db->join('evaluaciones','CPLClave = EIdPlantel','LEFT');
 			$this->db->join('directores','CPLClave = DIIdPlantel','LEFT');
-			$this->db->join('archesemestral','CPLClave = AESIdArchivo','LEFT');
 			$this->db->where('DIEstatus', 1);
-			$data['director'] = $this->plantel_model->get( $idPlantel);
+			$data['director'] = $this->plantel_model->get( $data['idPlanEstudio']['PEIdPlantel']);
 
 			$data['turno'] = $turno;
 			echo nvl($data['planteles']['CPLCCT']).'::';
@@ -719,17 +708,7 @@
 			$this->db->where('FIdBgPlan', $idPlanEstudio);
 			$data['formacionesTrab']  = $this->bgformacion_model->find_all();
 
-			$this->db->select("*,SUM(PIMonto) AS SumMonto");
-			$this->db->join('datos_generales','CPLClave = DGIdPlantel','LEFT');
-			$this->db->join('infraestructura','CPLClave = InfIdPlantel','LEFT');
-			$this->db->join('terreno','CPLClave = TIdPlantel','LEFT');
-			$this->db->join('proginfraestructura','CPLClave = PIIdPlantel','LEFT');
-			$this->db->join('computo','CPLClave = COIdPlantel','LEFT');
-			$this->db->join('indicadores','CPLClave = IIdPlantel','LEFT');
-			$this->db->join('personal','CPLClave = PIdPlantel','LEFT');
-			$this->db->join('evaluaciones','CPLClave = EIdPlantel','LEFT');
 			$this->db->join('directores','CPLClave = DIIdPlantel','LEFT');
-			$this->db->join('archesemestral','CPLClave = AESIdArchivo','LEFT');
 			$this->db->where('DIEstatus', 1);
 			$data['director'] = $this->plantel_model->get( $data['idPlanEstudio']['PEIdPlantel']);
 
