@@ -195,7 +195,7 @@
 
 			$this->db->join('directores','CPLClave = DIIdPlantel','LEFT');
 			$this->db->where('DIEstatus', 1);
-			$data['director'] = $this->plantel_model->get( $data['idPlanEstudio']['PEIdPlantel']);
+			$data['director'] = $this->plantel_model->get( $idPlantel);
 
 			$data['turno'] = $turno;
 			echo nvl($data['planteles']['CPLCCT']).'::';
