@@ -1964,7 +1964,7 @@
           <tbody>
             <tr>
 				<td class="text-center"  colspan="13">
-					<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $director['CPLDirector'] ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= br(1) ?></u>
+					<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $director['DIFin']?$director['DIFin']:$director['DIInicio']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= br(1) ?></u>
 					Nombre y Firma del Director del Centro de Trabajo<?= br(4) ?>
 				</td>
             </tr>
