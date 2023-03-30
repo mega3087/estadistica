@@ -731,7 +731,7 @@
 			$this->db->join('directores','CPLClave = DIIdPlantel','LEFT');
 			$this->db->join('archesemestral','CPLClave = AESIdArchivo','LEFT');
 			$this->db->where('DIEstatus', 1);
-			$data['director'] = $this->plantel_model->get( $idPlantel);
+			$data['director'] = $this->plantel_model->get( $data['idPlanEstudio']['PEIdPlantel']);
 
 
 			$this->load->library('Dpdf');
